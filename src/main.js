@@ -1248,3 +1248,61 @@ const initSanctuary = () => {
 
 initSanctuary()
 
+const initMeetStatCounts = () => {
+  const roots = document.querySelectorAll('[data-meet-stats]')
+  if (!roots.length) return
+
+  const animateCount = (el) => {
+    const target = Number(el.getAttribute('data-count') || 0)
+    if (!Number.isFinite(target) || target <= 0) {
+      el.textContent = String(target || 0)
+      return
+    }
+
+    if (prefersReducedMotion) {
+      el.textContent = String(target)
+      return
+    }
+
+    const duration = target >= 800 ? 1600 : 1200
+    const start = performance.now()
+
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration)
+      const eased = 1 - Math.pow(1 - t, 3)
+      el.textContent = String(Math.round(target * eased))
+      if (t < 1) requestAnimationFrame(tick)
+      else el.textContent = String(target)
+    }
+
+    requestAnimationFrame(tick)
+  }
+
+  const run = (root) => {
+    if (root.dataset.counted === 'true') return
+    root.dataset.counted = 'true'
+    root.querySelectorAll('[data-count]').forEach(animateCount)
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    roots.forEach(run)
+    return
+  }
+
+  const spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          run(entry.target)
+          spy.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.35 },
+  )
+
+  roots.forEach((root) => spy.observe(root))
+}
+
+initMeetStatCounts()
+
