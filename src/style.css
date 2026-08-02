@@ -5084,11 +5084,20 @@ main,
 }
 
 .meet__lead {
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-size: clamp(0.95rem, 1.35vw, 1.2rem);
   color: #6b645c;
-  max-width: 36rem;
+  width: max-content;
+  max-width: 100%;
   margin: 0 auto;
   line-height: 1.5;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .meet__lead {
+    white-space: normal;
+    text-wrap: balance;
+  }
 }
 
 .meet__pair {
