@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=2" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48.png?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="O-Saar is a reflective therapy space to understand your patterns, emotions and inner world—without pressure to fix yourself."
+    />
+    <title>O-Saar | A reflective therapy space</title>
+    <script>
+      (function () {
+        try {
+          var path = location.pathname.replace(/\/+$/, '') || '/'
+          var isHome = path === '/' || /index\.html$/i.test(path)
+          if (!isHome) {
+            sessionStorage.setItem('osaar-site-tab', '1')
+            sessionStorage.setItem('osaar-intro-tab', '1')
+            return
+          }
+          var q = new URLSearchParams(location.search)
+          var force = q.get('intro') === '1' || q.get('play-intro') === '1'
+          var browsed = sessionStorage.getItem('osaar-site-tab') === '1' || sessionStorage.getItem('osaar-intro-tab') === '1'
+          var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0]
+          var isReload = nav ? nav.type === 'reload' : (performance.navigation && performance.navigation.type === 1)
+          var fromSite = false
+          try {
+            if (document.referrer) fromSite = new URL(document.referrer).origin === location.origin
+          } catch (e2) {}
+          // Maroon intro only for brand-new external/new-tab home landings
+          if (force || (!browsed && !isReload && !fromSite)) {
+            document.documentElement.classList.add('intro-pending')
+          }
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div
+      class="osaar-intro"
+      id="osaar-intro"
+      data-osaar-intro
+      hidden
+      aria-hidden="true"
+      role="dialog"
+      aria-label="O-SAAR opening experience"
+    >
+      <div class="osaar-intro__atmosphere" aria-hidden="true">
+        <span class="osaar-intro__orb osaar-intro__orb--1" data-intro-glow></span>
+        <span class="osaar-intro__orb osaar-intro__orb--2"></span>
+        <span class="osaar-intro__haze"></span>
+        <span class="osaar-intro__cursor-light"></span>
+      </div>
+
+      <canvas class="osaar-intro__canvas" data-intro-canvas aria-hidden="true"></canvas>
+
+      <div class="osaar-intro__stage" data-intro-stage>
+        <div class="osaar-intro__moth" data-intro-moth aria-hidden="true">
+          <div class="osaar-intro__moth-glow"></div>
+          <img
+            class="osaar-intro__moth-img"
+            src="/images/logo-icon-clear.png"
+            alt=""
+            width="120"
+            height="120"
+            draggable="false"
+          />
+          <svg class="osaar-intro__moth-wings" viewBox="0 0 120 100" aria-hidden="true">
+            <g class="osaar-intro__wing osaar-intro__wing--left" data-wing="left">
+              <path
+                d="M58 44C42 30 20 28 12 40c-6 9 2 20 15 27 9 5 20 7 26 3 1-7 3-16 5-26Z"
+                fill="url(#introWingSoft)"
+                opacity="0.35"
+              />
+            </g>
+            <g class="osaar-intro__wing osaar-intro__wing--right" data-wing="right">
+              <path
+                d="M62 44C78 30 100 28 108 40c6 9-2 20-15 27-9 5-20 7-26 3-1-7-3-16-5-26Z"
+                fill="url(#introWingSoft)"
+                opacity="0.35"
+              />
+            </g>
+            <defs>
+              <linearGradient id="introWingSoft" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#E0BC78" stop-opacity="0.0" />
+                <stop offset="50%" stop-color="#E0BC78" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#6E2A3A" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <span class="osaar-intro__ripple" data-intro-ripple aria-hidden="true"></span>
+      </div>
+
+      <button class="osaar-intro__skip" type="button" data-intro-skip>
+        Skip <span aria-hidden="true">→</span>
+      </button>
+      <button
+        class="osaar-intro__mute"
+        type="button"
+        data-intro-mute
+        aria-pressed="false"
+        title="Enable soft ambient sound"
+      >
+        Sound
+      </button>
+    </div>
+
+        <header class="site-header">
+      <div class="site-header__ambient" aria-hidden="true">
+        <span class="site-header__glow"></span>
+        <span class="site-header__dot site-header__dot--1"></span>
+        <span class="site-header__dot site-header__dot--2"></span>
+        <span class="site-header__dot site-header__dot--3"></span>
+        <span class="site-header__dot site-header__dot--4"></span>
+      </div>
+      <div class="site-header__shell">
+        <a class="brand" href="/" aria-label="O-Saar home">
+          <span class="brand__badge">
+            <img class="brand__mark" src="/images/logo-icon-clear.png" alt="" width="48" height="48" />
+          </span>
+          <span class="brand__text">
+            <span class="brand__name">O-SAAR</span>
+            <span class="brand__tagline">Zero to Essence</span>
+          </span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <span class="nav-toggle__bars" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </button>
+                        <nav class="nav" id="site-nav">
+          <div class="nav__group nav__group--primary">
+            <a class="nav__link" href="/" style="--nav-i:0" aria-current="page">Home</a>
+            <a class="nav__link" href="/about.html" style="--nav-i:1">About Us</a>
+            <a class="nav__link" href="/offerings.html" style="--nav-i:2">Services</a>
+          </div>
+          <span class="nav__sep" aria-hidden="true"></span>
+          <div class="nav__group nav__group--discover">
+            <div class="nav__discover">
+              <button
+                class="nav__discover-trigger"
+                type="button"
+                style="--nav-i:3"
+                aria-expanded="false"
+                aria-controls="nav-mega"
+                aria-haspopup="true"
+              >
+                Discover
+                <span class="nav__discover-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="nav__mega" id="nav-mega" role="region" aria-label="Discover">
+                <div class="nav__mega-ambient" aria-hidden="true">
+                  <span class="nav__mega-ambient-glow"></span>
+                  <svg class="nav__mega-ambient-leaf" viewBox="0 0 64 80" fill="none">
+                    <path d="M32 76C32 76 10 52 10 30C10 16 20 6 32 4C44 6 54 16 54 30C54 52 32 76 32 76Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                    <path d="M32 76V18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M32 34c-7-4-12-10-14-16M32 42c7-4 12-10 14-16" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+                  </svg>
+                </div>
+                <div class="nav__mega-layout">
+                  <div class="nav__mega-links">
+                    <a class="nav__mega-link" href="/testimonials.html" style="--mega-i:0">
+                      <span class="nav__mega-link-title">Testimonials</span>
+                      <span class="nav__mega-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="nav__mega-link" href="/newsletter.html" style="--mega-i:1">
+                      <span class="nav__mega-link-title">Newsletter</span>
+                      <span class="nav__mega-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="nav__mega-link" href="/faqs.html" style="--mega-i:2">
+                      <span class="nav__mega-link-title">FAQs</span>
+                      <span class="nav__mega-arrow" aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                  <a class="nav__mega-feature" href="/breathing.html" style="--mega-i:0">
+                    <span class="nav__mega-feature-glow" aria-hidden="true"></span>
+                    <span class="nav__mega-feature-eyebrow">Featured</span>
+                    <span class="nav__mega-feature-title">Breathing Exercises <span class="nav__mega-feature-arrow" aria-hidden="true">→</span></span>
+                    <span class="nav__mega-feature-desc">Return to rhythm, one breath at a time.</span>
+                  </a>
+                </div>
+                <div class="nav__mega-actions">
+                  <a class="nav__mega-pill" href="/workshops.html">
+                    <span class="nav__mega-pill-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 12.5V5.2c0-.4.2-.7.5-.9l3.5-2.1c.3-.2.7-.2 1 0l3.5 2.1c.3.2.5.5.5.9v7.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12.5v-3h4v3M8 2.2v3.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span>Workshops</span>
+                    <span class="nav__mega-pill-arrow" aria-hidden="true">→</span>
+                  </a>
+                  <a class="nav__mega-pill" href="/emergency.html">
+                    <span class="nav__mega-pill-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.6" stroke="currentColor" stroke-width="1.2"/><path d="M8 2.8v1.6M8 11.6v1.6M2.8 8h1.6M11.6 8h1.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                    </span>
+                    <span>Emergency Support</span>
+                    <span class="nav__mega-pill-arrow" aria-hidden="true">→</span>
+                  </a>
+                  <a class="nav__mega-pill" href="/resources.html">
+                    <span class="nav__mega-pill-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 3.2h7.2c.7 0 1.3.6 1.3 1.3v8.1c0 .4-.3.7-.7.7H4.8c-.7 0-1.3-.6-1.3-1.3V3.2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                    </span>
+                    <span>All Resources</span>
+                    <span class="nav__mega-pill-arrow" aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="nav__cta" href="/start.html" style="--nav-i:4">Book Session <span class="nav__cta-arrow" aria-hidden="true">→</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="O-Saar introduction">
+        <div class="hero__world" aria-hidden="true">
+          <div class="hero__paper"></div>
+          <div class="hero__sunrise"></div>
+          <div class="hero__rays"></div>
+          <div class="hero__geometry"></div>
+          <div class="hero__world-img" data-hpar="6"></div>
+          <div class="hero__aura" data-hpar="4">
+            <span class="hero__aura-wash hero__aura-wash--1"></span>
+            <span class="hero__aura-wash hero__aura-wash--2"></span>
+            <span class="hero__aura-wash hero__aura-wash--3"></span>
+            <span class="hero__aura-leak"></span>
+          </div>
+          <div class="hero__heart" data-hpar="3"><span class="hero__heart-glow"></span></div>
+          <div class="hero__botanicals" data-hpar="11">
+            <span class="hero__botanical hero__botanical--1"></span>
+            <span class="hero__botanical hero__botanical--2"></span>
+            <span class="hero__botanical hero__botanical--3"></span>
+          </div>
+          <div class="hero__leaves" data-hpar="14">
+            <span class="hero__leaf-drift hero__leaf-drift--1"></span>
+            <span class="hero__leaf-drift hero__leaf-drift--2"></span>
+            <span class="hero__leaf-drift hero__leaf-drift--3"></span>
+          </div>
+          <div class="hero__dust" data-hpar="12">
+            <span class="hero__mote hero__mote--1"></span>
+            <span class="hero__mote hero__mote--2"></span>
+            <span class="hero__mote hero__mote--3"></span>
+            <span class="hero__mote hero__mote--4"></span>
+            <span class="hero__mote hero__mote--5"></span>
+            <span class="hero__mote hero__mote--6"></span>
+            <span class="hero__mote hero__mote--7"></span>
+            <span class="hero__mote hero__mote--8"></span>
+          </div>
+          <div class="hero__mist"></div>
+          <div class="hero__veil"></div>
+          <div class="hero__grain"></div>
+          <div class="hero__cursorglow"></div>
+        </div>
+
+        <div class="hero__inner">
+          <div class="hero__copy">
+            <h1 class="hero__title">
+              <span class="hero__title-line">An unfolding</span>
+              <span class="hero__title-line"
+                >that <em class="hero__title-accent">moves with you</em>.</span
+              >
+            </h1>
+
+            <p class="hero__quote">
+              <svg class="hero__quote-pulse" viewBox="0 0 40 24" aria-hidden="true">
+                <path
+                  d="M2 12h6l3-7 5 14 3-9 3 4h4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M31 5a4 4 0 0 1 6 5l-5 5-5-5a4 4 0 0 1 4-5z" fill="currentColor" opacity="0.85" />
+              </svg>
+              <span>Healing begins when you feel safe enough to be seen.</span>
+            </p>
+
+            <p class="hero__text">
+              A reflective therapy space to understand your patterns, emotions and inner
+              world—without pressure to fix yourself.
+            </p>
+
+            <div class="hero__actions">
+              <a class="hero__btn hero__btn--primary" href="/start.html">
+                <span>Start Your Journey</span>
+                <svg class="hero__btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M5 12h12M13 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+
+            <div class="hero__trust">
+              <p class="hero__trust-rating">
+                <span class="hero__stars" aria-hidden="true">★★★★★</span>
+                <span class="hero__trust-label">Trusted by Individuals &amp; Families</span>
+              </p>
+              <ul class="hero__trust-list">
+                <li class="hero__badge">
+                  <span class="hero__badge-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M9.5 12l1.8 1.8L15 10"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </span>
+                  Confidential Care
+                </li>
+                <li class="hero__badge">
+                  <span class="hero__badge-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M12 20c-4-5-3-9 0-12 3 3 4 7 0 12z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                      />
+                      <path
+                        d="M12 8c2.2 0 4 1.2 4 3.2S14 15 12 17c-2-2-4-3.6-4-5.8S9.8 8 12 8z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        opacity=".7"
+                      />
+                    </svg>
+                  </span>
+                  Personalized Support
+                </li>
+                <li class="hero__badge">
+                  <span class="hero__badge-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="4" y="5" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" />
+                      <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                    </svg>
+                  </span>
+                  Online &amp; In-Person
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="release"
+        id="release"
+        aria-labelledby="release-title"
+        data-release
+        style="--rx: 0.5; --ry: 0.5; --scroll: 0"
+      >
+        <div class="release__atmosphere" aria-hidden="true">
+          <div class="release__wash"></div>
+          <div class="release__orb release__orb--1" data-release-layer="0.35"></div>
+          <div class="release__orb release__orb--2" data-release-layer="0.55"></div>
+          <div class="release__orb release__orb--3" data-release-layer="0.25"></div>
+          <svg class="release__wings" viewBox="0 0 1200 400" preserveAspectRatio="none" data-release-layer="0.4">
+            <path
+              class="release__wing release__wing--l"
+              d="M80 220C180 120 320 90 420 160C360 200 260 260 140 280C100 270 80 250 80 220Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.2"
+            />
+            <path
+              class="release__wing release__wing--r"
+              d="M1120 200C1020 110 880 90 780 150C840 200 940 250 1060 270C1100 260 1120 230 1120 200Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.2"
+            />
+          </svg>
+          <div class="release__masks" data-release-masks>
+            <span class="release__mask-shape release__mask-shape--a"></span>
+            <span class="release__mask-shape release__mask-shape--b"></span>
+            <span class="release__mask-shape release__mask-shape--c"></span>
+            <svg class="release__mask-line" viewBox="0 0 600 320" fill="none">
+              <ellipse cx="220" cy="150" rx="110" ry="130" stroke="currentColor" stroke-width="1" opacity="0.35" />
+              <ellipse cx="380" cy="160" rx="100" ry="120" stroke="currentColor" stroke-width="1" opacity="0.28" />
+              <path d="M160 120C200 80 280 70 320 110" stroke="currentColor" stroke-width="0.8" opacity="0.4" />
+              <path d="M280 200C340 170 420 180 460 220" stroke="currentColor" stroke-width="0.8" opacity="0.35" />
+            </svg>
+          </div>
+          <span class="release__dust release__dust--1"></span>
+          <span class="release__dust release__dust--2"></span>
+          <span class="release__dust release__dust--3"></span>
+          <span class="release__dust release__dust--4"></span>
+          <span class="release__dust release__dust--5"></span>
+          <span class="release__cursor-glow" data-release-glow></span>
+          <div class="release__grain"></div>
+        </div>
+
+        <div class="release__inner">
+          <header class="release__opening">
+            <div class="release__words" aria-hidden="true">
+              <p class="release__word release__word--masks" data-release-word="masks">MASKS.</p>
+              <p class="release__word release__word--expect" data-release-word="expect">EXPECTATIONS.</p>
+            </div>
+            <h2 class="release__question reveal" id="release-title">
+              What are you carrying that no longer needs to be?
+            </h2>
+          </header>
+
+          <div class="release__rule" aria-hidden="true"></div>
+
+          <div class="release__core reveal">
+            <p class="release__statement">
+              Therapy invites us to <em class="release__gently">gently</em> put them down.
+            </p>
+            <div class="release__lead">
+              <p class="release__eyebrow">O-SAAR</p>
+              <p class="release__lead-text">
+                A confidential, trauma-informed space where you can speak honestly, feel freely, and
+                reconnect with the parts of yourself that may have been hidden for years.
+              </p>
+            </div>
+          </div>
+
+          <div class="release__rule" aria-hidden="true"></div>
+
+          <div class="release__pillars" role="list">
+            <article class="release__pillar reveal" role="listitem">
+              <p class="release__pillar-meta">
+                <span class="release__pillar-num">01</span>
+                <span class="release__pillar-dot" aria-hidden="true">·</span>
+                <span class="release__pillar-eyebrow">Space</span>
+              </p>
+              <h3 class="release__pillar-title">Speak Honestly</h3>
+              <p class="release__pillar-text">Express what may be difficult to say.</p>
+            </article>
+            <article class="release__pillar reveal" role="listitem">
+              <p class="release__pillar-meta">
+                <span class="release__pillar-num">02</span>
+                <span class="release__pillar-dot" aria-hidden="true">·</span>
+                <span class="release__pillar-eyebrow">Presence</span>
+              </p>
+              <h3 class="release__pillar-title">Feel Freely</h3>
+              <p class="release__pillar-text">Experience your emotions without judgement.</p>
+            </article>
+            <article class="release__pillar reveal" role="listitem">
+              <p class="release__pillar-meta">
+                <span class="release__pillar-num">03</span>
+                <span class="release__pillar-dot" aria-hidden="true">·</span>
+                <span class="release__pillar-eyebrow">Return</span>
+              </p>
+              <h3 class="release__pillar-title">Reconnect</h3>
+              <p class="release__pillar-text">Rediscover parts of yourself that may have been hidden.</p>
+            </article>
+          </div>
+
+          <div class="release__rule" aria-hidden="true"></div>
+
+          <footer class="release__home">
+            <p class="release__home-setup reveal">
+              Because healing isn’t about becoming someone else.
+            </p>
+            <p class="release__home-climax reveal">
+              It’s about <em class="release__home-focus">coming home</em> to yourself.
+            </p>
+          </footer>
+        </div>
+      </section>
+
+      <section
+        class="note"
+        id="founder-note"
+        aria-labelledby="note-name"
+        data-note
+        style="--nx: 0.5; --ny: 0.5; --scroll: 0"
+      >
+        <div class="note__atmosphere" aria-hidden="true">
+          <div class="note__wash"></div>
+          <div class="note__vignette"></div>
+          <div class="note__glow note__glow--1"></div>
+          <div class="note__glow note__glow--2"></div>
+          <div class="note__glow note__glow--heading"></div>
+          <svg class="note__wings" viewBox="0 0 1200 420" preserveAspectRatio="none">
+            <path
+              class="note__wing note__wing--l"
+              d="M90 240C200 130 340 100 450 170C380 220 270 280 150 300C110 285 90 270 90 240Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.1"
+            />
+            <path
+              class="note__wing note__wing--r"
+              d="M1110 220C1000 120 860 95 760 160C820 215 930 270 1050 290C1090 275 1110 250 1110 220Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.1"
+            />
+          </svg>
+          <svg class="note__curve" viewBox="0 0 800 400" preserveAspectRatio="none">
+            <path
+              d="M40 320C180 180 320 80 520 140S740 280 780 60"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+            />
+          </svg>
+          <span class="note__dust note__dust--1"></span>
+          <span class="note__dust note__dust--2"></span>
+          <span class="note__dust note__dust--3"></span>
+          <span class="note__dust note__dust--4"></span>
+          <span class="note__dust note__dust--5"></span>
+          <span class="note__dust note__dust--6"></span>
+          <span class="note__cursor-glow" data-note-glow></span>
+          <div class="note__grain"></div>
+          <div class="note__paper"></div>
+        </div>
+
+        <div class="note__inner">
+          <div class="note__layout">
+            <aside class="note__intro">
+              <div class="note__portrait reveal" aria-hidden="true">
+                <svg class="note__portrait-orbits" viewBox="0 0 280 340" fill="none" aria-hidden="true">
+                  <ellipse
+                    class="note__orbit note__orbit--a"
+                    cx="140"
+                    cy="168"
+                    rx="118"
+                    ry="148"
+                    stroke="currentColor"
+                    stroke-width="0.9"
+                  />
+                  <ellipse
+                    class="note__orbit note__orbit--b"
+                    cx="140"
+                    cy="168"
+                    rx="98"
+                    ry="128"
+                    stroke="currentColor"
+                    stroke-width="0.7"
+                    stroke-dasharray="2 10"
+                  />
+                  <ellipse
+                    class="note__orbit note__orbit--c"
+                    cx="140"
+                    cy="168"
+                    rx="78"
+                    ry="104"
+                    stroke="currentColor"
+                    stroke-width="0.6"
+                  />
+                </svg>
+                <svg class="note__portrait-botany" viewBox="0 0 200 240" fill="none" aria-hidden="true">
+                  <path
+                    class="note__leaf-wrap"
+                    d="M28 70C42 40 78 28 96 48C78 62 52 78 34 92C30 84 28 78 28 70Z"
+                    fill="currentColor"
+                    opacity="0.35"
+                  />
+                  <path
+                    d="M30 88C58 58 110 48 148 78"
+                    stroke="currentColor"
+                    stroke-width="0.7"
+                    opacity="0.55"
+                  />
+                  <path
+                    d="M168 188C182 160 176 130 154 122C168 148 170 170 168 188Z"
+                    fill="currentColor"
+                    opacity="0.28"
+                  />
+                </svg>
+                <span class="note__portrait-halo"></span>
+                <span class="note__petal note__petal--1"></span>
+                <span class="note__petal note__petal--2"></span>
+                <span class="note__petal note__petal--3"></span>
+                <span class="note__sparkle note__sparkle--1"></span>
+                <span class="note__sparkle note__sparkle--2"></span>
+                <div class="note__portrait-frame">
+                  <img
+                    class="note__portrait-img"
+                    src="/images/team-jahanvi.png"
+                    alt=""
+                    width="480"
+                    height="640"
+                  />
+                </div>
+              </div>
+              <p class="note__eyebrow reveal">Founder’s note</p>
+              <h2 class="note__name reveal" id="note-name">Jahanvi Khurana</h2>
+            </aside>
+
+            <div class="note__letter">
+              <svg class="note__leaf note__leaf--title" viewBox="0 0 64 80" aria-hidden="true">
+                <path
+                  d="M32 74C18 52 10 30 22 12C36 8 48 22 50 40C46 56 40 68 32 74Z"
+                  fill="currentColor"
+                />
+                <path d="M24 18C30 34 34 50 32 72" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5" />
+              </svg>
+              <svg class="note__leaf note__leaf--quote" viewBox="0 0 48 60" aria-hidden="true">
+                <path
+                  d="M10 48C8 30 16 12 30 8C38 22 36 40 28 52C22 54 14 54 10 48Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <svg class="note__leaf note__leaf--cta" viewBox="0 0 40 52" aria-hidden="true">
+                <path
+                  d="M8 40C6 26 14 10 26 8C32 20 30 34 22 44C16 46 10 46 8 40Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <svg class="note__branch" viewBox="0 0 420 220" aria-hidden="true">
+                <path
+                  d="M20 180C90 120 160 60 250 80S380 140 410 40"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.1"
+                />
+                <path
+                  d="M180 90C196 72 210 68 222 78C208 90 192 98 180 90Z"
+                  fill="currentColor"
+                  opacity="0.55"
+                />
+                <path
+                  d="M280 96C298 78 316 76 328 90C310 102 292 106 280 96Z"
+                  fill="currentColor"
+                  opacity="0.4"
+                />
+              </svg>
+
+              <p class="note__belief-label reveal">O-Saar was born from one simple belief:</p>
+
+              <p class="note__belief reveal">
+                <span class="note__belief-lead">Everyone deserves</span>
+                a space where they don’t have to carry their world alone.
+              </p>
+
+              <div class="note__divider reveal" aria-hidden="true">
+                <span></span>
+                <svg class="note__divider-mark" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 20C8 14 6 9 9 4C13 3 17 7 18 12C16 16 14 19 12 20Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <span></span>
+              </div>
+
+              <ul class="note__quiet">
+                <li class="note__quiet-card reveal">
+                  <p class="note__quiet-line">A space where silence is welcome.</p>
+                </li>
+                <li class="note__quiet-card reveal">
+                  <p class="note__quiet-line">Where emotions aren’t judged.</p>
+                </li>
+                <li class="note__quiet-card reveal">
+                  <p class="note__quiet-line">Where healing isn’t rushed.</p>
+                </li>
+              </ul>
+
+              <blockquote class="note__core reveal">
+                <span class="note__core-mark" aria-hidden="true">❝</span>
+                <p class="note__core-body">
+                  Where you don’t have to become someone new— only
+                  <em class="note__reconnect">reconnect</em>
+                  with the person you’ve always been.
+                </p>
+                <span class="note__core-mark note__core-mark--close" aria-hidden="true">❞</span>
+                <span class="note__reconnect-rule" aria-hidden="true"></span>
+              </blockquote>
+
+              <p class="note__intimate reveal">
+                <span class="note__intimate-mark" aria-hidden="true">“</span>
+                If you’re here, I hope O-Saar can be that space for you.
+              </p>
+
+              <div class="note__cta reveal">
+                <p class="note__cta-lead">Get to know me, O-Saar, and the team.</p>
+                <a class="note__cta-link" href="/about.html">
+                  <span class="note__cta-label">About Us</span>
+                  <span class="note__cta-arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="here-if" id="discover">
+        <div class="here-if__atmosphere" aria-hidden="true">
+          <div class="here-if__glow"></div>
+          <div class="here-if__grain"></div>
+          <div class="here-if__blob here-if__blob--1"></div>
+          <div class="here-if__blob here-if__blob--2"></div>
+          <img class="here-if__deco here-if__deco--tl" src="/images/wash-left.svg" alt="" />
+          <img class="here-if__deco here-if__deco--tr" src="/images/wash-right.svg" alt="" />
+          <img class="here-if__deco here-if__deco--bl" src="/images/art-petals.jpg" alt="" />
+          <img class="here-if__deco here-if__deco--br" src="/images/wash-right.svg" alt="" />
+        </div>
+
+        <div class="here-if__inner">
+          <header class="here-if__header">
+            <h2 class="here-if__title reveal">You might be here if…</h2>
+            <p class="here-if__subtitle reveal">
+              Sometimes the hardest part isn’t knowing what’s wrong. It’s finding words for what
+              you’re feeling.
+            </p>
+          </header>
+
+          <div class="here-if__stage">
+            <svg class="here-if__journey" viewBox="0 0 1200 80" aria-hidden="true" preserveAspectRatio="none">
+              <path
+                d="M20 50 C 180 10, 320 70, 460 40 S 780 10, 980 45 S 1120 70, 1180 35"
+                fill="none"
+                stroke="#7A2438"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                opacity="0.12"
+              />
+            </svg>
+
+            <div class="here-if__grid">
+              <article class="here-if__card reveal">
+                <div class="here-if__icon" aria-hidden="true">
+                  <svg class="here-if__illu" viewBox="0 0 120 120" fill="none">
+                    <circle cx="60" cy="68" r="18" fill="#7A2438" opacity=".12" />
+                    <ellipse cx="60" cy="72" rx="14" ry="16" fill="#7A2438" opacity=".55" />
+                    <circle cx="60" cy="52" r="10" fill="#7A2438" opacity=".7" />
+                    <path
+                      d="M42 38c6-10 18-8 20 0M78 36c-5-9-16-7-18 1"
+                      stroke="#C4A890"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="38" cy="34" r="3" fill="#D9B97C" opacity=".7" />
+                    <circle cx="82" cy="32" r="2.5" fill="#AFC1AA" opacity=".8" />
+                    <circle cx="48" cy="26" r="2" fill="#7A2438" opacity=".35" />
+                    <circle cx="72" cy="24" r="2.2" fill="#D9B97C" opacity=".55" />
+                    <path
+                      d="M30 48c8-4 10 4 6 8M90 50c-8-5-11 3-7 8"
+                      stroke="#AFC1AA"
+                      stroke-width="1.3"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <h3 class="here-if__card-title">Overthinking</h3>
+                <p class="here-if__card-text">
+                  You replay conversations, decisions, and moments long after they’ve passed.
+                </p>
+              </article>
+
+              <article class="here-if__card reveal">
+                <div class="here-if__icon" aria-hidden="true">
+                  <svg class="here-if__illu" viewBox="0 0 120 120" fill="none">
+                    <path d="M28 78c12-18 22-28 32-28s20 10 32 28" fill="#C4A890" opacity=".25" />
+                    <ellipse cx="60" cy="88" rx="28" ry="6" fill="#D9B97C" opacity=".2" />
+                    <path d="M60 86c0-14 0-24 0-34" stroke="#7A2438" stroke-width="1.6" stroke-linecap="round" />
+                    <path d="M60 52c-8-12-4-22 0-26 4 4 8 14 0 26z" fill="#AFC1AA" opacity=".7" />
+                    <path d="M60 56c8-10 10-20 6-24-2 6-4 14-6 24z" fill="#7A2438" opacity=".28" />
+                    <circle cx="60" cy="48" r="2.5" fill="#D9B97C" opacity=".8" />
+                  </svg>
+                </div>
+                <h3 class="here-if__card-title">Feeling Stuck</h3>
+                <p class="here-if__card-text">
+                  You know something feels off, but can’t explain why.
+                </p>
+              </article>
+
+              <article class="here-if__card reveal">
+                <div class="here-if__icon" aria-hidden="true">
+                  <svg class="here-if__illu" viewBox="0 0 120 120" fill="none">
+                    <circle cx="60" cy="60" r="8" fill="#7A2438" opacity=".55" />
+                    <circle cx="60" cy="60" r="18" stroke="#C4A890" stroke-width="1.4" opacity=".7" />
+                    <circle cx="60" cy="60" r="28" stroke="#D9B97C" stroke-width="1.2" opacity=".55" />
+                    <circle cx="60" cy="60" r="38" stroke="#AFC1AA" stroke-width="1" opacity=".4" />
+                    <ellipse cx="78" cy="42" rx="4" ry="2.5" fill="#C4A890" opacity=".65" transform="rotate(-30 78 42)" />
+                    <ellipse cx="40" cy="74" rx="4" ry="2.5" fill="#D9B97C" opacity=".55" transform="rotate(25 40 74)" />
+                  </svg>
+                </div>
+                <h3 class="here-if__card-title">Repeating Patterns</h3>
+                <p class="here-if__card-text">
+                  You notice the same emotional cycles repeating again and again.
+                </p>
+              </article>
+
+              <article class="here-if__card reveal">
+                <div class="here-if__icon" aria-hidden="true">
+                  <svg class="here-if__illu" viewBox="0 0 120 120" fill="none">
+                    <circle cx="44" cy="56" r="14" fill="#F6EEE5" stroke="#7A2438" stroke-width="1.4" opacity=".9" />
+                    <circle cx="76" cy="56" r="14" fill="#FCF8F3" stroke="#C4A890" stroke-width="1.4" />
+                    <path d="M54 56h12" stroke="#D9B97C" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2 3" />
+                    <circle cx="41" cy="54" r="1.4" fill="#7A2438" opacity=".5" />
+                    <circle cx="47" cy="54" r="1.4" fill="#7A2438" opacity=".5" />
+                    <circle cx="73" cy="54" r="1.4" fill="#7A2438" opacity=".45" />
+                    <circle cx="79" cy="54" r="1.4" fill="#7A2438" opacity=".45" />
+                    <path d="M42 60c2 2 4 2 6 0" stroke="#7A2438" stroke-width="1.2" stroke-linecap="round" opacity=".45" />
+                    <path d="M74 60c2 2 4 2 6 0" stroke="#7A2438" stroke-width="1.2" stroke-linecap="round" opacity=".45" />
+                    <path d="M60 78c-4 6-2 12 0 14 2-2 4-8 0-14z" fill="#D9B97C" opacity=".55" />
+                  </svg>
+                </div>
+                <h3 class="here-if__card-title">Feeling Misunderstood</h3>
+                <p class="here-if__card-text">
+                  You’re tired of hearing “just be positive” when that’s not what you need.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div class="here-if__close reveal">
+            <div class="here-if__rule" aria-hidden="true"></div>
+            <p class="here-if__close-quote">
+              “You don’t need fixing.<br />
+              You need understanding.”
+            </p>
+            <p class="here-if__close-note">This is where O-SAAR begins.</p>
+            <svg class="here-if__lotus" viewBox="0 0 48 28" aria-hidden="true">
+              <path d="M24 26c-6-8-4-16 0-20 4 4 6 12 0 20z" fill="#7A2438" opacity=".35" />
+              <path d="M24 26c-10-6-12-14-8-18 6 4 8 10 8 18z" fill="#C4A890" opacity=".5" />
+              <path d="M24 26c10-6 12-14 8-18-6 4-8 10-8 18z" fill="#D9B97C" opacity=".45" />
+            </svg>
+            <div class="here-if__rule" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+
+<section class="topics" id="topics" aria-labelledby="topics-title">
+        <div class="topics__atmosphere" aria-hidden="true">
+          <div class="topics__wash"></div>
+          <div class="topics__rays"></div>
+          <svg class="topics__ghost topics__ghost--lotus" viewBox="0 0 120 72">
+            <path d="M60 66c-16-20-12-42 0-54 12 12 16 34 0 54z" fill="#D9B97C" />
+            <path d="M60 66c-26-14-32-36-20-48 14 10 20 28 20 48z" fill="#C4A890" />
+            <path d="M60 66c26-14 32-36 20-48-14 10-20 28-20 48z" fill="#7A2438" />
+          </svg>
+          <svg class="topics__ghost topics__ghost--leaf" viewBox="0 0 64 64">
+            <path d="M12 44c12-22 28-30 40-34-2 16-10 32-24 42-6 4-12 2-16-8z" fill="#C4A890" />
+          </svg>
+          <svg class="topics__ghost topics__ghost--ink" viewBox="0 0 200 80">
+            <path
+              d="M10 50c40-30 80 20 120-10s50-20 60 5"
+              fill="none"
+              stroke="#B7865B"
+              stroke-width="8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span class="topics__orbit topics__orbit--1"></span>
+          <span class="topics__orbit topics__orbit--2"></span>
+        </div>
+
+        <div class="topics__inner">
+          <header class="topics__header reveal">
+            <p class="topics__eyebrow">Common Experiences</p>
+            <h2 class="topics__title" id="topics-title">What Brings People Here</h2>
+            <div class="topics__divider" aria-hidden="true">
+              <span></span>
+              <svg viewBox="0 0 24 24" width="12" height="12">
+                <path
+                  d="M12 2l1.2 7.3L20 12l-6.8 2.7L12 22l-1.2-7.3L4 12l6.8-2.7L12 2z"
+                  fill="#B7865B"
+                />
+              </svg>
+              <span></span>
+            </div>
+            <p class="topics__lead">
+              You don’t need to fit into a diagnosis. Sometimes you simply need a place where your
+              experience is understood.
+            </p>
+          </header>
+
+          <div class="topics__stage">
+            <span class="topics__spark topics__spark--a" aria-hidden="true">✦</span>
+            <span class="topics__spark topics__spark--b" aria-hidden="true">·</span>
+            <span class="topics__spark topics__spark--c" aria-hidden="true">✦</span>
+
+            <div class="topics__grid">
+              <a class="topics__card topics__card--sage reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M18 22c8 2 14 10 16 18M34 18c6 6 10 14 8 24M22 38c6-2 14 0 20 6"
+                      fill="none"
+                      stroke="#7A2438"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="32" cy="32" r="3" fill="#C4A890" opacity=".7" />
+                    <path d="M40 20c4-6 10-8 12-4-2 6-8 10-12 4z" fill="#AFBFAA" opacity=".55" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Overthinking &amp; Anxiety</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--peach reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <circle cx="28" cy="30" r="12" fill="none" stroke="#B06B7A" stroke-width="1.5" />
+                    <circle cx="38" cy="34" r="12" fill="none" stroke="#D9B97C" stroke-width="1.5" />
+                    <path
+                      d="M32 40c2-6 8-8 12-6"
+                      fill="none"
+                      stroke="#7A2438"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>People Pleasing &amp; Boundaries</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--gold reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M16 46L32 18l16 28"
+                      fill="none"
+                      stroke="#B7865B"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M26 46c4-10 8-14 12-18"
+                      fill="none"
+                      stroke="#D9B97C"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="38" cy="28" r="2.5" fill="#E8D48A" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Feeling Stuck or Lost</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--blush reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M32 46V30"
+                      stroke="#7A2438"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M32 30c-6-8-2-14 0-16 2 2 6 8 0 16z"
+                      fill="#EFD8D5"
+                      stroke="#B06B7A"
+                      stroke-width="1.2"
+                    />
+                    <path d="M32 34c4-4 8-4 10-2-2 4-6 6-10 2z" fill="#C4A890" opacity=".55" />
+                    <circle cx="32" cy="46" r="3" fill="#D9B97C" opacity=".5" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Trauma &amp; Inner Child</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--beige reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <circle cx="32" cy="28" r="10" fill="#F6EEE5" stroke="#B7865B" stroke-width="1.4" />
+                    <path
+                      d="M22 28c0 8 4.5 14 10 18 5.5-4 10-10 10-18"
+                      fill="none"
+                      stroke="#D9B97C"
+                      stroke-width="1.3"
+                    />
+                    <path d="M32 38v10" stroke="#B7865B" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Low Mood &amp; Burnout</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--terra reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M32 48c0-16 10-24 18-28-2 12-8 22-18 28z"
+                      fill="#E8CFC0"
+                      stroke="#B06B7A"
+                      stroke-width="1.2"
+                    />
+                    <path
+                      d="M32 48c0-16-10-24-18-28 2 12 8 22 18 28z"
+                      fill="#F3DDD2"
+                      stroke="#7A2438"
+                      stroke-width="1.2"
+                      opacity=".85"
+                    />
+                    <path d="M32 48V22" stroke="#B7865B" stroke-width="1.4" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Family &amp; Relationships</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--warm-sage reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M32 44c-7-9-5-18 0-24 5 6 7 15 0 24z"
+                      fill="#C9D8C5"
+                      stroke="#7A2438"
+                      stroke-width="1.2"
+                    />
+                    <path d="M32 44c-10-6-12-14-8-20 6 4 8 12 8 20z" fill="#AFBFAA" opacity=".65" />
+                    <path d="M32 44c10-6 12-14 8-20-6 4-8 12-8 20z" fill="#D9B97C" opacity=".45" />
+                    <circle cx="32" cy="22" r="2.5" fill="#B7865B" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Self Worth &amp; Inner Healing</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+
+              <a class="topics__card topics__card--sunrise reveal" href="/start.html">
+                <div class="topics__badge" aria-hidden="true">
+                  <svg class="topics__illu" viewBox="0 0 64 64">
+                    <path
+                      d="M14 42c10-16 26-22 36-20"
+                      fill="none"
+                      stroke="#B7865B"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="44" cy="22" r="7" fill="#F6EEE5" stroke="#D9B97C" stroke-width="1.3" />
+                    <path d="M18 46h28" stroke="#E8DFD0" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="topics__card-body">
+                  <h3>Life Transitions &amp; Uncertainty</h3>
+                  <span class="topics__explore">Explore <span aria-hidden="true">→</span></span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <footer class="topics__close reveal">
+            <p class="topics__quote">
+              “You don’t need to experience all of these. If even one feels familiar, you’re not
+              alone.”
+            </p>
+            <svg class="topics__lotus" viewBox="0 0 48 28" aria-hidden="true">
+              <path d="M24 26c-6-8-4-16 0-20 4 4 6 12 0 20z" fill="#D9B97C" opacity=".8" />
+              <path d="M24 26c-10-6-12-14-8-18 6 4 8 10 8 18z" fill="#C4A890" opacity=".55" />
+              <path d="M24 26c10-6 12-14 8-18-6 4-8 10-8 18z" fill="#7A2438" opacity=".28" />
+            </svg>
+            <div class="topics__rule" aria-hidden="true"></div>
+          </footer>
+        </div>
+      </section>
+
+      <section
+        class="approach"
+        id="approach"
+        aria-labelledby="approach-title"
+        data-approach
+        style="--ax: 0.5; --ay: 0.5"
+      >
+        <div class="approach__atmosphere" aria-hidden="true">
+          <div class="approach__wash"></div>
+          <div class="approach__glow approach__glow--1"></div>
+          <div class="approach__glow approach__glow--2"></div>
+          <div class="approach__glow approach__glow--3"></div>
+          <div class="approach__glow approach__glow--deep"></div>
+          <div class="approach__side approach__side--l"></div>
+          <div class="approach__side approach__side--r"></div>
+          <svg class="approach__wings" viewBox="0 0 1200 360" preserveAspectRatio="none">
+            <path
+              class="approach__wing approach__wing--l"
+              d="M70 210C180 110 320 85 430 150C360 200 250 255 130 275C95 260 70 240 70 210Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.1"
+            />
+            <path
+              class="approach__wing approach__wing--r"
+              d="M1130 190C1020 100 870 80 770 140C830 195 940 245 1060 265C1100 250 1130 220 1130 190Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.1"
+            />
+            <path
+              class="approach__curve approach__curve--a"
+              d="M40 80C160 40 280 120 200 200C120 260 60 200 40 80Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="0.8"
+            />
+            <path
+              class="approach__curve approach__curve--b"
+              d="M1100 60C1180 140 1120 240 1020 200C980 140 1040 40 1100 60Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="0.8"
+            />
+          </svg>
+          <span class="approach__dust approach__dust--1"></span>
+          <span class="approach__dust approach__dust--2"></span>
+          <span class="approach__dust approach__dust--3"></span>
+          <span class="approach__dust approach__dust--4"></span>
+          <span class="approach__dust approach__dust--5"></span>
+          <span class="approach__cursor-glow" data-approach-glow></span>
+          <div class="approach__grain"></div>
+        </div>
+
+        <div class="approach__inner">
+          <header class="approach__header">
+            <p class="approach__eyebrow reveal">Our Approach</p>
+            <h2 class="approach__philosophy reveal" id="approach-title">
+              <span class="approach__philosophy-line">Therapy is not about becoming someone else.</span>
+              <span class="approach__philosophy-line approach__philosophy-line--soft">
+                It is about creating a safe space to understand,<br />
+                heal, and reconnect with yourself.
+              </span>
+            </h2>
+            <span class="visually-hidden">Our Approach to Therapy</span>
+          </header>
+
+          <div class="approach__rule reveal" aria-hidden="true"></div>
+
+          <p class="approach__intro reveal">
+            At O-SAAR, therapy is a collaborative and compassionate process. There is no single way
+            to heal, and no fixed timeline for growth. We meet you where you are and move at a pace
+            that feels right for you.
+          </p>
+
+          <div class="approach__rule reveal" aria-hidden="true"></div>
+
+          <div class="approach__journey">
+            <div class="approach__journey-track" aria-hidden="true">
+              <span class="approach__journey-line"></span>
+            </div>
+            <div class="approach__principles" role="list">
+              <article class="approach__principle reveal" role="listitem">
+                <span class="approach__node" aria-hidden="true"></span>
+                <span class="approach__num">01</span>
+                <h3 class="approach__principle-title">SAFETY FIRST</h3>
+                <p class="approach__principle-text">
+                  A space where you can speak openly, without fear of judgement or pressure.
+                </p>
+              </article>
+              <article class="approach__principle reveal" role="listitem">
+                <span class="approach__node" aria-hidden="true"></span>
+                <span class="approach__num">02</span>
+                <h3 class="approach__principle-title">YOU, NOT A FORMULA</h3>
+                <p class="approach__principle-text">
+                  Your experiences, needs, and pace are unique. Therapy is shaped around you.
+                </p>
+              </article>
+              <article class="approach__principle reveal" role="listitem">
+                <span class="approach__node" aria-hidden="true"></span>
+                <span class="approach__num">03</span>
+                <h3 class="approach__principle-title">UNDERSTANDING BEFORE CHANGE</h3>
+                <p class="approach__principle-text">
+                  We explore patterns, emotions, experiences, and relationships before deciding what
+                  needs to change.
+                </p>
+              </article>
+              <article class="approach__principle reveal" role="listitem">
+                <span class="approach__node" aria-hidden="true"></span>
+                <span class="approach__num">04</span>
+                <h3 class="approach__principle-title">HEALING AT YOUR PACE</h3>
+                <p class="approach__principle-text">
+                  Growth does not need to be rushed. We move gently, intentionally, and together.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div class="approach__rule approach__rule--soft reveal" aria-hidden="true"></div>
+
+          <div class="approach__closing">
+            <blockquote class="approach__quote reveal">
+              <span class="approach__quote-mark approach__quote-mark--open" aria-hidden="true">“</span>
+              <p class="approach__centerpiece">
+                You don’t have to have everything figured out before you
+                <em class="approach__begin">begin</em>.
+              </p>
+              <span class="approach__quote-mark approach__quote-mark--close" aria-hidden="true">”</span>
+            </blockquote>
+
+            <div class="approach__cta reveal">
+              <p class="approach__cta-ready">Ready to begin?</p>
+              <a class="approach__book" href="/start.html">
+                <span>Book a Session</span>
+                <span class="approach__book-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="approach__bridge" aria-hidden="true"></div>
+      </section>
+
+</main>
+
+    <footer class="site-footer" id="begin">
+      <div class="site-footer__edge" aria-hidden="true">
+        <span class="site-footer__edge-glow"></span>
+        <span class="site-footer__edge-line"></span>
+      </div>
+
+      <div class="site-footer__atmosphere" aria-hidden="true">
+        <span class="site-footer__glow site-footer__glow--brand"></span>
+        <span class="site-footer__glow site-footer__glow--soft"></span>
+        <span class="site-footer__wash site-footer__wash--1"></span>
+        <span class="site-footer__wash site-footer__wash--2"></span>
+        <span class="site-footer__grain"></span>
+        <svg class="site-footer__flow site-footer__flow--1" viewBox="0 0 800 240" fill="none">
+          <path d="M20 140C140 60 240 190 360 110S560 40 780 130" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <svg class="site-footer__flow site-footer__flow--2" viewBox="0 0 800 240" fill="none">
+          <path d="M40 90C180 160 280 40 420 120S620 200 760 80" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+        <span class="site-footer__mote site-footer__mote--1"></span>
+        <span class="site-footer__mote site-footer__mote--2"></span>
+        <span class="site-footer__mote site-footer__mote--3"></span>
+        <span class="site-footer__mote site-footer__mote--4"></span>
+      </div>
+
+      <div class="site-footer__shell">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand-card">
+            <a class="site-footer__brand" href="/" aria-label="O-Saar home">
+              <span class="site-footer__icon-wrap">
+                <span class="site-footer__brand-breath" aria-hidden="true"></span>
+                <img class="site-footer__icon" src="/images/logo-icon-clear.png" alt="" width="168" height="168" />
+              </span>
+              <span class="site-footer__name">O-SAAR</span>
+            </a>
+            <span class="site-footer__brand-rule" aria-hidden="true"></span>
+            <p class="site-footer__trust">A calm space for clarity, healing, and being gently understood.</p>
+          </div>
+
+          <div class="site-footer__col">
+            <h2 class="site-footer__heading">Explore</h2>
+            <ul class="site-footer__list">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about.html">About Us</a></li>
+              <li><a href="/offerings.html">Services</a></li>
+              <li><a href="/start.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer__col">
+            <h2 class="site-footer__heading">Quick Links</h2>
+            <ul class="site-footer__list">
+              <li><a href="/testimonials.html">Testimonials</a></li>
+              <li><a href="/resources.html">Resources</a></li>
+              <li><a href="/newsletter.html">Newsletter</a></li>
+              <li><a href="/faqs.html">FAQs</a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer__col">
+            <h2 class="site-footer__heading">Policies</h2>
+            <ul class="site-footer__list">
+              <li><a href="/privacy.html">Privacy Policy</a></li>
+              <li><a href="/terms.html">Terms &amp; Conditions</a></li>
+              <li><a href="/refund.html">Refund Policy</a></li>
+              <li><a href="/emergency.html">Emergency Support</a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer__col site-footer__col--connect">
+            <h2 class="site-footer__heading">Connect With Us</h2>
+            <div class="site-footer__connect">
+              <a class="site-footer__contact" href="https://wa.me/?text=Hello%20O-SAAR%2C%20I%27d%20like%20to%20begin%20a%20conversation." target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.04-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.81 2.41a8.2 8.2 0 0 1 2.42 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23z"/></svg>
+                <span>WhatsApp</span>
+              </a>
+              <a class="site-footer__contact" href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+                <span>Instagram</span>
+              </a>
+              <a class="site-footer__contact" href="mailto:info.osaar@gmail.com">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 4h-17A1.5 1.5 0 0 0 2 5.5v13A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 20.5 4zm0 2.25v.36l-8.5 5.4-8.5-5.4v-.36h17zM3.75 18.25v-9.2l7.9 5.02a1.3 1.3 0 0 0 1.4 0l7.9-5.02v9.2h-17.2z"/></svg>
+                <span>Email</span>
+              </a>
+              <a class="site-footer__contact" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.23 0z"/></svg>
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-footer__bar">
+          <p class="site-footer__copy">© <span data-year></span> O-SAAR · All Rights Reserved</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+    <script>
+      document.querySelectorAll('[data-year], #year').forEach((el) => { el.textContent = new Date().getFullYear() })
+    </script>
+  </body>
+</html>

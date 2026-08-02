@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 720" fill="none">
+  <defs>
+    <linearGradient id="stem" x1="210" y1="40" x2="210" y2="680" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8fad7a"/>
+      <stop offset="1" stop-color="#5f7a5a"/>
+    </linearGradient>
+    <linearGradient id="leafA" x1="80" y1="100" x2="200" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c5d9a8"/>
+      <stop offset="1" stop-color="#7a9a6e"/>
+    </linearGradient>
+    <linearGradient id="leafB" x1="220" y1="180" x2="340" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4e0b0"/>
+      <stop offset="1" stop-color="#8aaa74"/>
+    </linearGradient>
+    <linearGradient id="bud" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e8d48a"/>
+      <stop offset="1" stop-color="#c4a35a"/>
+    </linearGradient>
+  </defs>
+  <path d="M208 60c2 80 4 180 2 280s-8 180-6 300" stroke="url(#stem)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M206 140c-50-10-95 25-110 70 40 10 85-5 110-70z" fill="url(#leafA)" opacity=".9"/>
+  <path d="M210 200c48-8 100 20 120 70-42 12-88 0-120-70z" fill="url(#leafB)" opacity=".88"/>
+  <path d="M205 280c-55 5-100 45-108 95 48 5 95-15 108-95z" fill="url(#leafA)" opacity=".85"/>
+  <path d="M212 340c52 0 105 40 118 95-50 8-95-10-118-95z" fill="url(#leafB)" opacity=".82"/>
+  <path d="M204 420c-48 12-88 55-92 105 45 0 85-25 92-105z" fill="url(#leafA)" opacity=".8"/>
+  <path d="M214 480c45 8 85 50 90 100-42-2-80-30-90-100z" fill="url(#leafB)" opacity=".78"/>
+  <ellipse cx="195" cy="95" rx="7" ry="10" fill="url(#bud)" transform="rotate(-25 195 95)"/>
+  <ellipse cx="225" cy="115" rx="6" ry="9" fill="url(#bud)" transform="rotate(20 225 115)"/>
+  <ellipse cx="200" cy="125" rx="5" ry="8" fill="url(#bud)" transform="rotate(-10 200 125)"/>
+</svg>

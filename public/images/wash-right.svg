@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 600" fill="none">
+  <g opacity=".4">
+    <ellipse cx="220" cy="160" rx="100" ry="150" fill="#c9d4a5" transform="rotate(25 220 160)"/>
+    <ellipse cx="200" cy="340" rx="80" ry="120" fill="#dccba8" transform="rotate(-15 200 340)"/>
+    <ellipse cx="240" cy="480" rx="90" ry="110" fill="#b5c898"/>
+    <path d="M180 100c30 35 25 95-10 130 45-10 80-55 75-110-20-15-45-25-65-20z" fill="#8fad7a" opacity=".45"/>
+  </g>
+</svg>
