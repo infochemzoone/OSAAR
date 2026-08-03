@@ -857,20 +857,25 @@ const initRelease = () => {
 
   /* One-screen composition: reveal all copy together when section enters */
   const releaseReveals = section.querySelectorAll('.reveal')
+  const markReady = () => {
+    section.classList.add('is-ready')
+    releaseReveals.forEach((el) => el.classList.add('is-visible'))
+  }
+
   if (releaseReveals.length && 'IntersectionObserver' in window) {
     const revealAll = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
-          releaseReveals.forEach((el) => el.classList.add('is-visible'))
+          markReady()
           revealAll.disconnect()
         })
       },
-      { threshold: 0.2, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.18, rootMargin: '0px 0px -6% 0px' },
     )
     revealAll.observe(section)
   } else {
-    releaseReveals.forEach((el) => el.classList.add('is-visible'))
+    markReady()
   }
 }
 
