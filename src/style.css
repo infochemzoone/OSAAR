@@ -2933,7 +2933,8 @@ main,
 
 .release__home-setup {
   margin: 0;
-  max-width: 28ch;
+  max-width: none;
+  white-space: nowrap;
   font-family: var(--font-body);
   font-size: clamp(0.88rem, 1.2vw, 0.98rem);
   font-weight: 400;
@@ -3089,6 +3090,11 @@ main,
 
   .release__pillar-text {
     max-width: none;
+  }
+
+  .release__home-setup {
+    white-space: normal;
+    max-width: 36ch;
   }
 
   .release__home-climax {
