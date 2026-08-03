@@ -2788,25 +2788,18 @@ main,
 
 .release__home-climax {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2em;
+  white-space: nowrap;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.65rem, 3.4vw, 2.55rem);
-  line-height: 1.18;
+  font-size: clamp(1.45rem, 2.8vw, 2.25rem);
+  line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--rel-ivory);
 }
 
-.release__home-line {
-  display: block;
-}
-
 .release__home-focus {
-  display: block;
-  margin: 0.08em 0;
+  display: inline;
+  margin: 0;
   font-style: italic;
   font-weight: 500;
   color: var(--rel-gold-soft);
@@ -2932,7 +2925,8 @@ main,
   }
 
   .release__home-climax {
-    font-size: clamp(1.45rem, 6.5vw, 2rem);
+    font-size: clamp(1.2rem, 5vw, 1.75rem);
+    white-space: normal;
   }
 
   .release__orb--1,
