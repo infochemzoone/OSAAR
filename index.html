@@ -50,52 +50,56 @@
       role="dialog"
       aria-label="O-SAAR opening experience"
     >
-      <div class="osaar-intro__atmosphere" aria-hidden="true">
-        <span class="osaar-intro__orb osaar-intro__orb--1" data-intro-glow></span>
-        <span class="osaar-intro__orb osaar-intro__orb--2"></span>
-        <span class="osaar-intro__haze"></span>
-        <span class="osaar-intro__cursor-light"></span>
+      <div class="osaar-intro__cinema" data-intro-cinema aria-hidden="true">
+        <div class="osaar-intro__frame osaar-intro__frame--dark is-active" data-intro-frame="dark">
+          <picture>
+            <source srcset="/images/intro-darkness.webp" type="image/webp" />
+            <img
+              src="/images/intro-darkness.jpg"
+              alt=""
+              width="1536"
+              height="1024"
+              decoding="async"
+              fetchpriority="high"
+              draggable="false"
+            />
+          </picture>
+        </div>
+        <div class="osaar-intro__frame osaar-intro__frame--path" data-intro-frame="path">
+          <picture>
+            <source srcset="/images/intro-path.webp" type="image/webp" />
+            <img
+              src="/images/intro-path.jpg"
+              alt=""
+              width="1536"
+              height="1024"
+              decoding="async"
+              draggable="false"
+            />
+          </picture>
+        </div>
+        <div class="osaar-intro__frame osaar-intro__frame--walk" data-intro-frame="walk">
+          <picture>
+            <source srcset="/images/intro-walk.webp" type="image/webp" />
+            <img
+              src="/images/intro-walk.jpg"
+              alt=""
+              width="1536"
+              height="1024"
+              decoding="async"
+              draggable="false"
+            />
+          </picture>
+        </div>
+        <div class="osaar-intro__haze" data-intro-haze></div>
+        <div class="osaar-intro__beam" data-intro-beam></div>
+        <div class="osaar-intro__bloom" data-intro-bloom></div>
+        <div class="osaar-intro__grain"></div>
       </div>
 
-      <canvas class="osaar-intro__canvas" data-intro-canvas aria-hidden="true"></canvas>
-
-      <div class="osaar-intro__stage" data-intro-stage>
-        <div class="osaar-intro__moth" data-intro-moth aria-hidden="true">
-          <div class="osaar-intro__moth-glow"></div>
-          <img
-            class="osaar-intro__moth-img"
-            src="/images/logo-icon-clear.png"
-            alt=""
-            width="120"
-            height="120"
-            draggable="false"
-          />
-          <svg class="osaar-intro__moth-wings" viewBox="0 0 120 100" aria-hidden="true">
-            <g class="osaar-intro__wing osaar-intro__wing--left" data-wing="left">
-              <path
-                d="M58 44C42 30 20 28 12 40c-6 9 2 20 15 27 9 5 20 7 26 3 1-7 3-16 5-26Z"
-                fill="url(#introWingSoft)"
-                opacity="0.35"
-              />
-            </g>
-            <g class="osaar-intro__wing osaar-intro__wing--right" data-wing="right">
-              <path
-                d="M62 44C78 30 100 28 108 40c6 9-2 20-15 27-9 5-20 7-26 3-1-7-3-16-5-26Z"
-                fill="url(#introWingSoft)"
-                opacity="0.35"
-              />
-            </g>
-            <defs>
-              <linearGradient id="introWingSoft" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#E0BC78" stop-opacity="0.0" />
-                <stop offset="50%" stop-color="#E0BC78" stop-opacity="0.55" />
-                <stop offset="100%" stop-color="#6E2A3A" stop-opacity="0.0" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        <span class="osaar-intro__ripple" data-intro-ripple aria-hidden="true"></span>
+      <div class="osaar-intro__brand" data-intro-brand>
+        <p class="osaar-intro__mark">O-SAAR</p>
+        <p class="osaar-intro__tagline">An unfolding that moves with you.</p>
       </div>
 
       <button class="osaar-intro__skip" type="button" data-intro-skip>
@@ -377,141 +381,92 @@
         style="--rx: 0.5; --ry: 0.5; --scroll: 0"
       >
         <div class="release__atmosphere" aria-hidden="true">
+          <div class="release__breathe"></div>
           <div class="release__wash"></div>
-          <div class="release__orb release__orb--1" data-release-layer="0.35"></div>
-          <div class="release__orb release__orb--2" data-release-layer="0.55"></div>
-          <div class="release__orb release__orb--3" data-release-layer="0.25"></div>
-          <svg class="release__wings" viewBox="0 0 1200 400" preserveAspectRatio="none" data-release-layer="0.4">
-            <path
-              class="release__wing release__wing--l"
-              d="M80 220C180 120 320 90 420 160C360 200 260 260 140 280C100 270 80 250 80 220Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.2"
-            />
-            <path
-              class="release__wing release__wing--r"
-              d="M1120 200C1020 110 880 90 780 150C840 200 940 250 1060 270C1100 260 1120 230 1120 200Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.2"
-            />
-          </svg>
-          <div class="release__masks" data-release-masks>
-            <span class="release__mask-shape release__mask-shape--a"></span>
-            <span class="release__mask-shape release__mask-shape--b"></span>
-            <span class="release__mask-shape release__mask-shape--c"></span>
-            <svg class="release__mask-line" viewBox="0 0 600 320" fill="none">
-              <ellipse cx="220" cy="150" rx="110" ry="130" stroke="currentColor" stroke-width="1" opacity="0.35" />
-              <ellipse cx="380" cy="160" rx="100" ry="120" stroke="currentColor" stroke-width="1" opacity="0.28" />
-              <path d="M160 120C200 80 280 70 320 110" stroke="currentColor" stroke-width="0.8" opacity="0.4" />
-              <path d="M280 200C340 170 420 180 460 220" stroke="currentColor" stroke-width="0.8" opacity="0.35" />
-            </svg>
-          </div>
-          <span class="release__dust release__dust--1"></span>
-          <span class="release__dust release__dust--2"></span>
-          <span class="release__dust release__dust--3"></span>
-          <span class="release__dust release__dust--4"></span>
-          <span class="release__dust release__dust--5"></span>
-          <span class="release__dust release__dust--6"></span>
-          <span class="release__dust release__dust--7"></span>
-          <span class="release__speck release__speck--1"></span>
-          <span class="release__speck release__speck--2"></span>
-          <span class="release__speck release__speck--3"></span>
+          <div class="release__ray release__ray--l"></div>
+          <div class="release__ray release__ray--r"></div>
+          <canvas class="release__particles" data-release-particles></canvas>
           <span class="release__ring release__ring--1"></span>
           <span class="release__ring release__ring--2"></span>
-          <span class="release__ring release__ring--3"></span>
-          <span class="release__ring release__ring--4"></span>
-          <span class="release__glass release__glass--l"></span>
-          <span class="release__glass release__glass--r"></span>
-          <span class="release__side-orb release__side-orb--l"></span>
-          <span class="release__side-orb release__side-orb--r"></span>
-          <svg class="release__arc" viewBox="0 0 800 200" preserveAspectRatio="none">
+          <svg class="release__leaf release__leaf--1" viewBox="0 0 40 56" fill="none">
             <path
-              d="M40 140C180 40 320 30 400 80C480 130 620 150 760 70"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="0.8"
+              d="M20 52C12 36 8 22 12 10c8 4 14 14 16 28-4 4-6 9-8 14z"
+              fill="currentColor"
+              opacity="0.5"
+            />
+            <path d="M14 18c4 8 8 16 10 28" stroke="currentColor" stroke-width="0.7" opacity="0.55" />
+          </svg>
+          <svg class="release__leaf release__leaf--2" viewBox="0 0 40 56" fill="none">
+            <path
+              d="M18 50C28 34 34 20 28 8c-8 5-12 16-14 28 5 4 7 9 4 14z"
+              fill="currentColor"
+              opacity="0.42"
             />
           </svg>
-          <svg class="release__side-line release__side-line--l" viewBox="0 0 200 480" fill="none" aria-hidden="true">
-            <path d="M160 20C90 120 40 220 70 340C90 410 130 450 180 470" stroke="currentColor" stroke-width="0.7" />
-            <path d="M120 80C70 160 50 250 90 360" stroke="currentColor" stroke-width="0.5" opacity="0.55" />
-          </svg>
-          <svg class="release__side-line release__side-line--r" viewBox="0 0 200 480" fill="none" aria-hidden="true">
-            <path d="M40 20C110 120 160 220 130 340C110 410 70 450 20 470" stroke="currentColor" stroke-width="0.7" />
-            <path d="M80 80C130 160 150 250 110 360" stroke="currentColor" stroke-width="0.5" opacity="0.55" />
+          <svg class="release__butterfly" data-release-butterfly viewBox="0 0 64 48" fill="none">
+            <path
+              class="release__wing-l"
+              d="M32 24C24 10 10 8 6 16c6 6 14 10 26 8C28 36 14 40 10 34c6-2 14-6 22-10z"
+              fill="currentColor"
+              opacity="0.4"
+            />
+            <path
+              class="release__wing-r"
+              d="M32 24C40 10 54 8 58 16c-6 6-14 10-26 8C36 36 50 40 54 34c-6-2-14-6-22-10z"
+              fill="currentColor"
+              opacity="0.32"
+            />
+            <path d="M32 14v20" stroke="currentColor" stroke-width="0.8" opacity="0.5" />
           </svg>
           <div class="release__vignette"></div>
           <span class="release__cursor-glow" data-release-glow></span>
           <div class="release__grain"></div>
         </div>
 
-        <div class="release__inner">
-          <header class="release__opening">
-            <div class="release__heading-stage">
-              <span class="release__heading-shade" aria-hidden="true"></span>
-              <span class="release__heading-glow" aria-hidden="true"></span>
-              <div class="release__words" aria-hidden="true">
-                <p class="release__word release__word--masks" data-release-word="masks">MASKS?</p>
-                <p class="release__word release__word--expect" data-release-word="expect">EXPECTATIONS?</p>
-              </div>
-            </div>
-            <h2 class="release__question reveal" id="release-title">
-              What are you carrying that no longer needs to be?
+        <div class="release__compose">
+          <div class="release__col release__col--lead">
+            <h2 class="release__words" id="release-title" data-reveal>
+              <span class="release__word">MASKS?</span>
+              <span class="release__word">EXPECTATIONS?</span>
             </h2>
-          </header>
+            <p class="release__question" data-reveal>
+              What are you carrying that no longer needs to be?
+            </p>
+            <p class="release__home-setup" data-reveal>
+              Because healing isn’t about becoming someone else.
+            </p>
+          </div>
 
-          <div class="release__mid">
-            <div class="release__quote-wrap reveal">
-              <div class="release__quote-glow" aria-hidden="true"></div>
+          <div class="release__col release__col--stack">
+            <blockquote class="release__invite release__tilt" data-reveal data-release-tilt>
+              <span class="release__invite-sheen" aria-hidden="true"></span>
               <p class="release__statement">
                 Therapy invites us to <em class="release__gently">gently</em> put them down.
               </p>
-            </div>
+            </blockquote>
 
-            <div class="release__lead reveal">
-              <p class="release__eyebrow">
-                <span class="release__eyebrow-line" aria-hidden="true"></span>
-                <span class="release__eyebrow-text">O-SAAR</span>
-                <span class="release__eyebrow-line" aria-hidden="true"></span>
+            <article class="release__space-card release__tilt" data-reveal data-release-tilt>
+              <span class="release__space-stack" aria-hidden="true"></span>
+              <span class="release__space-stack release__space-stack--2" aria-hidden="true"></span>
+              <span class="release__invite-sheen" aria-hidden="true"></span>
+              <p class="release__card-eyebrow">
+                <span class="release__card-line" aria-hidden="true"></span>
+                <span class="release__card-brand">O-SAAR</span>
+                <span class="release__card-line" aria-hidden="true"></span>
               </p>
-              <p class="release__lead-text">
-                A confidential, trauma-informed space where you can speak honestly, feel freely, and
-                reconnect with the parts of yourself that may have been hidden for years.
-              </p>
-            </div>
-          </div>
+              <div class="release__card-blocks">
+                <p class="release__card-block">A confidential, trauma-informed space</p>
+                <p class="release__card-block">
+                  where you can safely explore your thoughts, emotions, and experiences at your own
+                  pace.
+                </p>
+              </div>
+            </article>
 
-          <div class="release__pillars" role="list">
-            <article class="release__pillar reveal" role="listitem">
-              <span class="release__pillar-num">01</span>
-              <span class="release__pillar-eyebrow">Space</span>
-              <h3 class="release__pillar-title">Speak Honestly</h3>
-              <p class="release__pillar-text">Express what may be difficult to say.</p>
-            </article>
-            <article class="release__pillar reveal" role="listitem">
-              <span class="release__pillar-num">02</span>
-              <span class="release__pillar-eyebrow">Presence</span>
-              <h3 class="release__pillar-title">Feel Freely</h3>
-              <p class="release__pillar-text">Experience your emotions without judgement.</p>
-            </article>
-            <article class="release__pillar reveal" role="listitem">
-              <span class="release__pillar-num">03</span>
-              <span class="release__pillar-eyebrow">Return</span>
-              <h3 class="release__pillar-title">Reconnect</h3>
-              <p class="release__pillar-text">Rediscover parts of yourself that may have been hidden.</p>
-            </article>
-          </div>
-
-          <footer class="release__home">
-            <p class="release__home-setup reveal">
-              Because healing isn’t about becoming someone else.
-            </p>
-            <p class="release__home-climax reveal">
+            <p class="release__home-climax" data-reveal>
               It’s about <em class="release__home-focus">coming home</em> to yourself.
             </p>
-          </footer>
+          </div>
         </div>
       </section>
 
@@ -520,217 +475,116 @@
         id="founder-note"
         aria-labelledby="note-name"
         data-note
-        style="--nx: 0.5; --ny: 0.5; --scroll: 0"
+        style="--nx: 0.5; --ny: 0.5"
       >
-        <div class="note__atmosphere" aria-hidden="true">
-          <div class="note__wash"></div>
-          <div class="note__vignette"></div>
-          <div class="note__glow note__glow--1"></div>
-          <div class="note__glow note__glow--2"></div>
-          <div class="note__glow note__glow--heading"></div>
-          <svg class="note__wings" viewBox="0 0 1200 420" preserveAspectRatio="none">
-            <path
-              class="note__wing note__wing--l"
-              d="M90 240C200 130 340 100 450 170C380 220 270 280 150 300C110 285 90 270 90 240Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.1"
-            />
-            <path
-              class="note__wing note__wing--r"
-              d="M1110 220C1000 120 860 95 760 160C820 215 930 270 1050 290C1090 275 1110 250 1110 220Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.1"
-            />
+        <div class="note__world" aria-hidden="true">
+          <div class="note__depth note__depth--back"></div>
+          <div class="note__depth note__depth--warm" data-note-layer="0.04"></div>
+          <div class="note__depth note__depth--glow" data-note-glow></div>
+          <div class="note__haze"></div>
+          <svg class="note__flow" data-note-layer="0.03" viewBox="0 0 1400 800" preserveAspectRatio="none" fill="none">
+            <path d="M-40 520C180 360 320 280 520 340C760 410 920 250 1180 180C1280 150 1380 140 1460 160" stroke="currentColor" stroke-width="0.8" opacity="0.35" />
+            <path d="M40 680C260 560 420 500 640 540C900 590 1080 470 1420 390" stroke="currentColor" stroke-width="0.6" opacity="0.22" />
           </svg>
-          <svg class="note__curve" viewBox="0 0 800 400" preserveAspectRatio="none">
-            <path
-              d="M40 320C180 180 320 80 520 140S740 280 780 60"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-            />
-          </svg>
-          <span class="note__dust note__dust--1"></span>
-          <span class="note__dust note__dust--2"></span>
-          <span class="note__dust note__dust--3"></span>
-          <span class="note__dust note__dust--4"></span>
-          <span class="note__dust note__dust--5"></span>
-          <span class="note__dust note__dust--6"></span>
-          <span class="note__cursor-glow" data-note-glow></span>
+          <canvas class="note__dust" data-note-particles></canvas>
           <div class="note__grain"></div>
-          <div class="note__paper"></div>
+          <div class="note__veil"></div>
         </div>
 
-        <div class="note__inner">
-          <div class="note__layout">
-            <aside class="note__intro">
-              <div class="note__portrait reveal" aria-hidden="true">
-                <svg class="note__portrait-orbits" viewBox="0 0 280 340" fill="none" aria-hidden="true">
-                  <ellipse
-                    class="note__orbit note__orbit--a"
-                    cx="140"
-                    cy="168"
-                    rx="118"
-                    ry="148"
-                    stroke="currentColor"
-                    stroke-width="0.9"
-                  />
-                  <ellipse
-                    class="note__orbit note__orbit--b"
-                    cx="140"
-                    cy="168"
-                    rx="98"
-                    ry="128"
-                    stroke="currentColor"
-                    stroke-width="0.7"
-                    stroke-dasharray="2 10"
-                  />
-                  <ellipse
-                    class="note__orbit note__orbit--c"
-                    cx="140"
-                    cy="168"
-                    rx="78"
-                    ry="104"
-                    stroke="currentColor"
-                    stroke-width="0.6"
-                  />
-                </svg>
-                <svg class="note__portrait-botany" viewBox="0 0 200 240" fill="none" aria-hidden="true">
-                  <path
-                    class="note__leaf-wrap"
-                    d="M28 70C42 40 78 28 96 48C78 62 52 78 34 92C30 84 28 78 28 70Z"
-                    fill="currentColor"
-                    opacity="0.35"
-                  />
-                  <path
-                    d="M30 88C58 58 110 48 148 78"
-                    stroke="currentColor"
-                    stroke-width="0.7"
-                    opacity="0.55"
-                  />
-                  <path
-                    d="M168 188C182 160 176 130 154 122C168 148 170 170 168 188Z"
-                    fill="currentColor"
-                    opacity="0.28"
-                  />
-                </svg>
-                <span class="note__portrait-halo"></span>
-                <span class="note__petal note__petal--1"></span>
-                <span class="note__petal note__petal--2"></span>
-                <span class="note__petal note__petal--3"></span>
-                <span class="note__sparkle note__sparkle--1"></span>
-                <span class="note__sparkle note__sparkle--2"></span>
-                <div class="note__portrait-frame">
-                  <img
-                    class="note__portrait-img"
-                    src="/images/team-jahanvi.png"
-                    alt=""
-                    width="480"
-                    height="640"
-                  />
-                </div>
-              </div>
-              <p class="note__eyebrow reveal">Founder’s note</p>
-              <h2 class="note__name reveal" id="note-name">Jahanvi Khurana</h2>
-            </aside>
-
-            <div class="note__letter">
-              <svg class="note__leaf note__leaf--title" viewBox="0 0 64 80" aria-hidden="true">
-                <path
-                  d="M32 74C18 52 10 30 22 12C36 8 48 22 50 40C46 56 40 68 32 74Z"
-                  fill="currentColor"
-                />
-                <path d="M24 18C30 34 34 50 32 72" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5" />
+        <div class="note__compose">
+          <figure class="note__hero" data-note-reveal="portrait">
+            <div class="note__portal" aria-hidden="true" data-note-layer="0.05">
+              <span class="note__portal-light"></span>
+              <svg class="note__portal-lines" viewBox="0 0 400 520" fill="none">
+                <path class="note__portal-arc note__portal-arc--a" d="M72 460C48 320 56 170 118 48" stroke="currentColor" stroke-width="0.7" />
+                <path class="note__portal-arc note__portal-arc--b" d="M328 458C352 318 344 168 282 46" stroke="currentColor" stroke-width="0.65" />
+                <path class="note__portal-arc note__portal-arc--c" d="M98 470C78 340 84 200 132 78" stroke="currentColor" stroke-width="0.55" opacity="0.55" />
+                <path class="note__portal-arc note__portal-arc--d" d="M302 468C322 336 316 198 268 76" stroke="currentColor" stroke-width="0.55" opacity="0.5" />
+                <path class="note__portal-arc note__portal-arc--e" d="M118 36C168 10 232 10 282 36" stroke="currentColor" stroke-width="0.6" opacity="0.4" />
               </svg>
-              <svg class="note__leaf note__leaf--quote" viewBox="0 0 48 60" aria-hidden="true">
-                <path
-                  d="M10 48C8 30 16 12 30 8C38 22 36 40 28 52C22 54 14 54 10 48Z"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg class="note__leaf note__leaf--cta" viewBox="0 0 40 52" aria-hidden="true">
-                <path
-                  d="M8 40C6 26 14 10 26 8C32 20 30 34 22 44C16 46 10 46 8 40Z"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg class="note__branch" viewBox="0 0 420 220" aria-hidden="true">
-                <path
-                  d="M20 180C90 120 160 60 250 80S380 140 410 40"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.1"
-                />
-                <path
-                  d="M180 90C196 72 210 68 222 78C208 90 192 98 180 90Z"
-                  fill="currentColor"
-                  opacity="0.55"
-                />
-                <path
-                  d="M280 96C298 78 316 76 328 90C310 102 292 106 280 96Z"
-                  fill="currentColor"
-                  opacity="0.4"
-                />
-              </svg>
-
-              <p class="note__belief-label reveal">O-Saar was born from one simple belief:</p>
-
-              <p class="note__belief reveal">
-                <span class="note__belief-lead">Everyone deserves</span>
-                <span class="note__belief-rest"
-                  >a space where they don’t have to carry their world alone.</span
-                >
-              </p>
-
-              <div class="note__divider reveal" aria-hidden="true">
-                <span></span>
-                <svg class="note__divider-mark" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 20C8 14 6 9 9 4C13 3 17 7 18 12C16 16 14 19 12 20Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span></span>
-              </div>
-
-              <ul class="note__quiet">
-                <li class="note__quiet-card reveal">
-                  <p class="note__quiet-line">A space where silence is welcome.</p>
-                </li>
-                <li class="note__quiet-card reveal">
-                  <p class="note__quiet-line">Where emotions aren’t judged.</p>
-                </li>
-                <li class="note__quiet-card reveal">
-                  <p class="note__quiet-line">Where healing isn’t rushed.</p>
-                </li>
-              </ul>
-
-              <blockquote class="note__core reveal">
-                <span class="note__core-mark" aria-hidden="true">❝</span>
-                <p class="note__core-body">
-                  Where you don’t have to become someone new— only
-                  <em class="note__reconnect">reconnect</em>
-                  with the person you’ve always been.
-                </p>
-                <span class="note__core-mark note__core-mark--close" aria-hidden="true">❞</span>
-                <span class="note__reconnect-rule" aria-hidden="true"></span>
-              </blockquote>
-
-              <p class="note__intimate reveal">
-                <span class="note__intimate-mark" aria-hidden="true">“</span>
-                If you’re here, I hope O-Saar can be that space for you.
-              </p>
-
-              <div class="note__cta reveal">
-                <p class="note__cta-lead">Get to know me, O-Saar, and the team.</p>
-                <a class="note__cta-link" href="/about.html">
-                  <span class="note__cta-label">About Us</span>
-                  <span class="note__cta-arrow" aria-hidden="true">→</span>
-                </a>
-              </div>
             </div>
+
+            <svg class="note__organic" data-note-layer="0.1" viewBox="0 0 180 480" fill="none" aria-hidden="true">
+              <path d="M108 460C58 320 40 210 78 36" stroke="currentColor" stroke-width="0.75" />
+              <path d="M78 130C110 92 142 70 170 58" stroke="currentColor" stroke-width="0.6" opacity="0.45" />
+              <path d="M70 240C40 200 18 192 10 214C26 236 50 242 70 240Z" fill="currentColor" opacity="0.1" />
+              <circle cx="132" cy="48" r="1.1" fill="currentColor" opacity="0.35" />
+              <circle cx="98" cy="86" r="0.8" fill="currentColor" opacity="0.25" />
+            </svg>
+
+            <div class="note__subject" data-note-layer="0.07">
+              <span class="note__subject-glow" aria-hidden="true"></span>
+              <span class="note__subject-haze" aria-hidden="true"></span>
+              <img
+                class="note__photo"
+                src="/images/team-jahanvi.png"
+                alt="Jahanvi Khurana, founder of O-SAAR"
+                width="560"
+                height="720"
+                decoding="async"
+              />
+              <span class="note__subject-rim" aria-hidden="true"></span>
+            </div>
+
+            <figcaption class="note__credit" data-note-reveal="credit">
+              <span class="note__credit-role">Founder</span>
+              <span class="note__credit-name" id="note-name">Jahanvi Khurana</span>
+            </figcaption>
+          </figure>
+
+          <div class="note__editorial">
+            <svg class="note__mark" data-note-meditate data-note-layer="0.05" viewBox="0 0 320 360" fill="none" aria-hidden="true">
+              <path class="note__mark-curve note__mark-curve--1" d="M36 210C70 80 120 36 160 36s90 44 124 174" stroke="currentColor" stroke-width="0.65" />
+              <path class="note__mark-curve note__mark-curve--2" d="M62 222C90 110 128 72 160 72s70 38 98 150" stroke="currentColor" stroke-width="0.55" />
+              <path class="note__mark-curve note__mark-curve--3" d="M90 232C112 140 138 108 160 108s48 32 70 124" stroke="currentColor" stroke-width="0.5" />
+              <path class="note__mark-curve note__mark-curve--4" d="M24 268C90 250 140 246 160 246s70 4 136 22" stroke="currentColor" stroke-width="0.45" opacity="0.55" />
+              <g class="note__mark-body" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="160" cy="148" r="11" />
+                <path d="M160 160v18" />
+                <path d="M134 240c10-30 16-44 26-50 10 6 16 20 26 50" />
+                <path d="M140 186c-10 4-18 14-22 26" />
+                <path d="M180 186c10 4 18 14 22 26" />
+                <path d="M142 240c4 12 8 18 16 24" />
+                <path d="M178 240c-4 12-8 18-16 24" />
+              </g>
+              <circle class="note__mark-spark" cx="160" cy="88" r="1.3" fill="currentColor" />
+            </svg>
+
+            <p class="note__eyebrow" data-note-reveal="eyebrow">One simple belief</p>
+            <p class="note__headline" data-note-reveal="headline">
+              Everyone deserves a space<br />
+              they don’t face <em class="note__alone">alone.</em>
+            </p>
+            <p class="note__lede" data-note-reveal="lede">
+              Healing doesn’t begin with answers.<br />
+              It begins with feeling safe.
+            </p>
+
+            <ul class="note__axioms" aria-label="Core principles" data-note-reveal="axioms">
+              <li>
+                <span class="note__axiom-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.2" stroke="currentColor" stroke-width="1"/><circle cx="12" cy="12" r="5.2" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><circle cx="12" cy="12" r="8.2" stroke="currentColor" stroke-width="0.65" opacity="0.2"/></svg>
+                </span>
+                Silence
+              </li>
+              <li>
+                <span class="note__axiom-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 5.5c1.4 2.5 3.6 4.3 6.5 5-2.9.7-5.1 2.5-6.5 5-1.4-2.5-3.6-4.3-6.5-5 2.9-.7 5.1-2.5 6.5-5z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+                </span>
+                No Judgement
+              </li>
+              <li>
+                <span class="note__axiom-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M7.5 16.2c2.4-4 5.5-6.2 9.5-7-.7 3.1-2.3 6-4.8 9-1.5-.7-3.1-1.4-4.7-2z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+                </span>
+                Your Pace
+              </li>
+            </ul>
+
+            <a class="note__link" href="/about.html" data-note-reveal="cta" data-note-magnetic>
+              <span>About OSAAR</span>
+              <span class="note__link-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
       </section>
@@ -1130,8 +984,13 @@
           <div class="approach__glow approach__glow--2"></div>
           <div class="approach__glow approach__glow--3"></div>
           <div class="approach__glow approach__glow--deep"></div>
+          <div class="approach__glow approach__glow--heading"></div>
           <div class="approach__side approach__side--l"></div>
           <div class="approach__side approach__side--r"></div>
+          <span class="approach__orbit approach__orbit--1"></span>
+          <span class="approach__orbit approach__orbit--2"></span>
+          <span class="approach__orbit approach__orbit--3"></span>
+          <span class="approach__orbit approach__orbit--4"></span>
           <svg class="approach__wings" viewBox="0 0 1200 360" preserveAspectRatio="none">
             <path
               class="approach__wing approach__wing--l"
@@ -1162,11 +1021,21 @@
               stroke-width="0.8"
             />
           </svg>
+          <svg class="approach__arc approach__arc--l" viewBox="0 0 200 420" fill="none">
+            <path d="M170 20C90 110 40 210 70 320C90 380 130 410 180 430" stroke="currentColor" stroke-width="0.7" />
+          </svg>
+          <svg class="approach__arc approach__arc--r" viewBox="0 0 200 420" fill="none">
+            <path d="M30 20C110 110 160 210 130 320C110 380 70 410 20 430" stroke="currentColor" stroke-width="0.7" />
+          </svg>
           <span class="approach__dust approach__dust--1"></span>
           <span class="approach__dust approach__dust--2"></span>
           <span class="approach__dust approach__dust--3"></span>
           <span class="approach__dust approach__dust--4"></span>
           <span class="approach__dust approach__dust--5"></span>
+          <span class="approach__dust approach__dust--6"></span>
+          <span class="approach__speck approach__speck--1"></span>
+          <span class="approach__speck approach__speck--2"></span>
+          <span class="approach__speck approach__speck--3"></span>
           <span class="approach__cursor-glow" data-approach-glow></span>
           <div class="approach__grain"></div>
         </div>
@@ -1177,65 +1046,98 @@
             <h2 class="approach__philosophy reveal" id="approach-title">
               <span class="approach__philosophy-line">Therapy is not about becoming someone else.</span>
               <span class="approach__philosophy-line approach__philosophy-line--soft">
-                It is about creating a safe space to understand,<br />
-                heal, and reconnect with yourself.
+                Creating space to understand, heal, and reconnect.
               </span>
             </h2>
             <span class="visually-hidden">Our Approach to Therapy</span>
           </header>
 
-          <div class="approach__rule reveal" aria-hidden="true"></div>
-
-          <p class="approach__intro reveal">
-            At O-SAAR, therapy is a collaborative and compassionate process. There is no single way
-            to heal, and no fixed timeline for growth. We meet you where you are and move at a pace
-            that feels right for you.
-          </p>
-
-          <div class="approach__rule reveal" aria-hidden="true"></div>
-
-          <div class="approach__journey">
-            <div class="approach__journey-track" aria-hidden="true">
-              <span class="approach__journey-line"></span>
-            </div>
-            <div class="approach__principles" role="list">
-              <article class="approach__principle reveal" role="listitem">
-                <span class="approach__node" aria-hidden="true"></span>
-                <span class="approach__num">01</span>
-                <h3 class="approach__principle-title">SAFETY FIRST</h3>
-                <p class="approach__principle-text">
-                  A space where you can speak openly, without fear of judgement or pressure.
-                </p>
-              </article>
-              <article class="approach__principle reveal" role="listitem">
-                <span class="approach__node" aria-hidden="true"></span>
-                <span class="approach__num">02</span>
-                <h3 class="approach__principle-title">YOU, NOT A FORMULA</h3>
-                <p class="approach__principle-text">
-                  Your experiences, needs, and pace are unique. Therapy is shaped around you.
-                </p>
-              </article>
-              <article class="approach__principle reveal" role="listitem">
-                <span class="approach__node" aria-hidden="true"></span>
-                <span class="approach__num">03</span>
-                <h3 class="approach__principle-title">UNDERSTANDING BEFORE CHANGE</h3>
-                <p class="approach__principle-text">
-                  We explore patterns, emotions, experiences, and relationships before deciding what
-                  needs to change.
-                </p>
-              </article>
-              <article class="approach__principle reveal" role="listitem">
-                <span class="approach__node" aria-hidden="true"></span>
-                <span class="approach__num">04</span>
-                <h3 class="approach__principle-title">HEALING AT YOUR PACE</h3>
-                <p class="approach__principle-text">
-                  Growth does not need to be rushed. We move gently, intentionally, and together.
-                </p>
-              </article>
+          <div class="approach__panel reveal">
+            <span class="approach__panel-glow" aria-hidden="true"></span>
+            <span class="approach__panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.2" />
+                <path
+                  d="M16 9c-1.2 4-4.2 7-7.5 9 4 1 7 4 8.5 8 1.5-4 4.5-7 8.5-8-3.3-2-6.3-5-7.5-9z"
+                  fill="currentColor"
+                  opacity=".55"
+                />
+              </svg>
+            </span>
+            <div class="approach__panel-body">
+              <p class="approach__panel-lead">
+                Therapy is collaborative, compassionate, and shaped around you.
+              </p>
+              <p class="approach__panel-points">
+                <span>No fixed timelines.</span>
+                <span>No one-size-fits-all approach.</span>
+              </p>
             </div>
           </div>
 
-          <div class="approach__rule approach__rule--soft reveal" aria-hidden="true"></div>
+          <div class="approach__principles" role="list">
+            <article class="approach__principle reveal" role="listitem">
+              <span class="approach__badge" aria-hidden="true">01</span>
+              <span class="approach__icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="1.2" />
+                  <path d="M14 8v6l3 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </span>
+              <h3 class="approach__principle-title">Safety First</h3>
+              <p class="approach__principle-text">
+                A space to speak openly, without judgement or pressure.
+              </p>
+            </article>
+            <article class="approach__principle reveal" role="listitem">
+              <span class="approach__badge" aria-hidden="true">02</span>
+              <span class="approach__icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none">
+                  <path
+                    d="M14 6c2.5 4 6 7 10 8-4 1-7.5 4-10 8-2.5-4-6-7-10-8 4-1 7.5-4 10-8z"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+              <h3 class="approach__principle-title">You, Not a Formula</h3>
+              <p class="approach__principle-text">
+                Your experiences and pace are unique. Therapy is shaped around you.
+              </p>
+            </article>
+            <article class="approach__principle reveal" role="listitem">
+              <span class="approach__badge" aria-hidden="true">03</span>
+              <span class="approach__icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none">
+                  <circle cx="10" cy="12" r="3" stroke="currentColor" stroke-width="1.2" />
+                  <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="1.2" />
+                  <path d="M12.5 13.5 15.5 14.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+              </span>
+              <h3 class="approach__principle-title">Understanding Before Change</h3>
+              <p class="approach__principle-text">
+                We explore patterns and emotions before deciding what needs to change.
+              </p>
+            </article>
+            <article class="approach__principle reveal" role="listitem">
+              <span class="approach__badge" aria-hidden="true">04</span>
+              <span class="approach__icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none">
+                  <path
+                    d="M7 18c3-6 7-9 14-10-1 5-3 10-7 14-2-1-5-2-7-4z"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+              <h3 class="approach__principle-title">Healing at Your Pace</h3>
+              <p class="approach__principle-text">
+                Growth need not be rushed. We move gently, intentionally, together.
+              </p>
+            </article>
+          </div>
 
           <div class="approach__closing">
             <blockquote class="approach__quote reveal">

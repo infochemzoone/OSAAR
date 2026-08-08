@@ -1,5 +1,9 @@
 import './style.css'
 import { initIntro, markSiteBrowsedInTab, dismissIntroShell } from './intro.js'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Mark browsing as early as possible on every page
 const isHome =
@@ -118,27 +122,50 @@ if (discover && discoverTrigger && discoverMega) {
 if (header) {
   let lastY = window.scrollY
   let ticking = false
+  let locked = false
+
+  const isNavBusy = () =>
+    Boolean(nav?.classList.contains('is-open') || discover?.classList.contains('is-open'))
+
+  const showHeader = () => {
+    header.classList.remove('is-hidden')
+  }
+
+  const hideHeader = () => {
+    if (isNavBusy()) return
+    header.classList.add('is-hidden')
+    closeDiscover()
+  }
 
   const syncHeader = () => {
-    const y = window.scrollY
+    ticking = false
+    if (locked) return
+
+    const y = Math.max(0, window.scrollY || window.pageYOffset || 0)
     const delta = y - lastY
-    const nearTop = y < 24
-    const menuOpen = nav?.classList.contains('is-open')
-    const megaOpen = discover?.classList.contains('is-open')
+    lastY = y
 
-    header.classList.toggle('is-scrolled', y > 16)
+    header.classList.toggle('is-scrolled', y > 12)
 
-    if (menuOpen || megaOpen || nearTop) {
-      header.classList.remove('is-hidden')
-    } else if (delta > 6 && y > 80) {
-      header.classList.add('is-hidden')
-      closeDiscover()
-    } else if (delta < -6) {
-      header.classList.remove('is-hidden')
+    /* Always visible at top or while menus are open */
+    if (y < 48 || isNavBusy()) {
+      showHeader()
+      return
     }
 
-    lastY = y
-    ticking = false
+    /* Ignore micro jitter */
+    if (Math.abs(delta) < 2) return
+
+    /* Scroll down → hide quickly once past hero strip */
+    if (delta > 0 && y > 72) {
+      hideHeader()
+      return
+    }
+
+    /* Scroll up → reveal immediately */
+    if (delta < 0) {
+      showHeader()
+    }
   }
 
   const onScroll = () => {
@@ -146,6 +173,22 @@ if (header) {
     ticking = true
     requestAnimationFrame(syncHeader)
   }
+
+  /* Pause hide/show while the user is interacting with the header */
+  header.addEventListener('mouseenter', () => {
+    locked = true
+    showHeader()
+  })
+  header.addEventListener('mouseleave', () => {
+    locked = false
+  })
+  header.addEventListener('focusin', () => {
+    locked = true
+    showHeader()
+  })
+  header.addEventListener('focusout', (event) => {
+    if (!header.contains(event.relatedTarget)) locked = false
+  })
 
   syncHeader()
   window.addEventListener('scroll', onScroll, { passive: true })
@@ -768,7 +811,7 @@ if (letterLine && 'IntersectionObserver' in window) {
   letterSpy.observe(letterLine)
 }
 
-/* Release — Masks / Expectations post-hero section */
+/* Release — living editorial micro-interactions */
 const initRelease = () => {
   const section = document.querySelector('[data-release]')
   if (!section) return
@@ -799,14 +842,11 @@ const initRelease = () => {
 
   const tickCursor = () => {
     cursorRaf = 0
-    cursorX += (targetX - cursorX) * 0.08
-    cursorY += (targetY - cursorY) * 0.08
+    cursorX += (targetX - cursorX) * 0.1
+    cursorY += (targetY - cursorY) * 0.1
     section.style.setProperty('--rx', cursorX.toFixed(4))
     section.style.setProperty('--ry', cursorY.toFixed(4))
-    if (
-      Math.abs(targetX - cursorX) > 0.001 ||
-      Math.abs(targetY - cursorY) > 0.001
-    ) {
+    if (Math.abs(targetX - cursorX) > 0.001 || Math.abs(targetY - cursorY) > 0.001) {
       cursorRaf = requestAnimationFrame(tickCursor)
     }
   }
@@ -855,59 +895,213 @@ const initRelease = () => {
     desktopMq.addEventListener('change', syncDesktopInteraction)
   }
 
-  /* One-screen composition: reveal all copy together when section enters */
-  const releaseReveals = section.querySelectorAll('.reveal')
-  const markReady = () => {
-    section.classList.add('is-ready')
-    releaseReveals.forEach((el) => el.classList.add('is-visible'))
+  const tiltCards = section.querySelectorAll('[data-release-tilt]')
+  const resetTilt = (card) => {
+    card.classList.remove('is-tilting')
+    gsap.to(card, {
+      '--tilt-x': '0deg',
+      '--tilt-y': '0deg',
+      '--tilt-lift': '0px',
+      '--sheen-x': '50%',
+      '--sheen-y': '50%',
+      duration: 0.7,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    })
   }
 
-  if (releaseReveals.length && 'IntersectionObserver' in window) {
-    const revealAll = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          markReady()
-          revealAll.disconnect()
-        })
-      },
-      { threshold: 0.18, rootMargin: '0px 0px -6% 0px' },
-    )
-    revealAll.observe(section)
-  } else {
-    markReady()
+  const attachTilt = () => {
+    if (prefersReducedMotion || !desktopMq.matches) {
+      tiltCards.forEach(resetTilt)
+      return
+    }
+    tiltCards.forEach((card) => {
+      if (card.dataset.tiltBound === '1') return
+      card.dataset.tiltBound = '1'
+      card.addEventListener('pointerenter', () => card.classList.add('is-tilting'))
+      card.addEventListener('pointerleave', () => resetTilt(card))
+      card.addEventListener(
+        'pointermove',
+        (event) => {
+          if (!desktopMq.matches) return
+          const rect = card.getBoundingClientRect()
+          const px = (event.clientX - rect.left) / Math.max(rect.width, 1)
+          const py = (event.clientY - rect.top) / Math.max(rect.height, 1)
+          gsap.to(card, {
+            '--tilt-x': `${((0.5 - py) * 8).toFixed(2)}deg`,
+            '--tilt-y': `${((px - 0.5) * 10).toFixed(2)}deg`,
+            '--tilt-lift': '-7px',
+            '--sheen-x': `${(px * 100).toFixed(1)}%`,
+            '--sheen-y': `${(py * 100).toFixed(1)}%`,
+            duration: 0.45,
+            ease: 'power3.out',
+            overwrite: 'auto',
+          })
+        },
+        { passive: true },
+      )
+    })
   }
+
+  attachTilt()
+
+  const canvas = section.querySelector('[data-release-particles]')
+  let particleRaf = 0
+
+  const initParticles = () => {
+    if (!canvas || prefersReducedMotion || !desktopMq.matches) return
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    let ctx = canvas.getContext('2d')
+    const resize = () => {
+      const rect = section.getBoundingClientRect()
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr))
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr))
+      canvas.style.width = `${rect.width}px`
+      canvas.style.height = `${rect.height}px`
+      ctx = canvas.getContext('2d')
+      if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    resize()
+    window.addEventListener('resize', resize, { passive: true })
+
+    const area = Math.max(1, section.clientWidth * section.clientHeight)
+    const count = Math.min(120, Math.max(80, Math.floor(area / 12000)))
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * section.clientWidth,
+      y: Math.random() * section.clientHeight,
+      r: 0.55 + Math.random() * 1.35,
+      vx: -0.07 + Math.random() * 0.14,
+      vy: -0.1 - Math.random() * 0.16,
+      a: 0.07 + Math.random() * 0.2,
+    }))
+
+    const tick = () => {
+      particleRaf = 0
+      if (!ctx) return
+      const w = section.clientWidth
+      const h = section.clientHeight
+      ctx.clearRect(0, 0, w, h)
+      for (const p of particles) {
+        p.x += p.vx
+        p.y += p.vy
+        if (p.y < -4) {
+          p.y = h + 4
+          p.x = Math.random() * w
+        }
+        if (p.x < -4) p.x = w + 4
+        if (p.x > w + 4) p.x = -4
+        ctx.beginPath()
+        ctx.fillStyle = `rgba(224, 188, 120, ${p.a})`
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      particleRaf = requestAnimationFrame(tick)
+    }
+    particleRaf = requestAnimationFrame(tick)
+  }
+
+  initParticles()
+
+  const butterfly = section.querySelector('[data-release-butterfly]')
+  const flyButterfly = () => {
+    if (!butterfly || prefersReducedMotion || !desktopMq.matches) return
+    const w = section.clientWidth
+    const h = section.clientHeight
+    const startY = h * (0.3 + Math.random() * 0.3)
+    const midY = startY - h * 0.08
+    const endY = h * (0.28 + Math.random() * 0.35)
+
+    gsap.killTweensOf(butterfly)
+    gsap.set(butterfly, { x: -48, y: startY, opacity: 0, rotate: -6 })
+    gsap
+      .timeline({
+        onComplete: () => gsap.delayedCall(9 + Math.random() * 9, flyButterfly),
+      })
+      .to(butterfly, { opacity: 0.55, duration: 0.9, ease: 'power2.out' })
+      .to(
+        butterfly,
+        {
+          keyframes: [
+            { x: w * 0.28, y: midY, rotate: 4, duration: 4.5, ease: 'sine.inOut' },
+            { x: w * 0.62, y: midY + 24, rotate: -3, duration: 4.5, ease: 'sine.inOut' },
+            { x: w + 56, y: endY, rotate: 5, duration: 5, ease: 'sine.inOut' },
+          ],
+        },
+        0,
+      )
+      .to(butterfly, { opacity: 0, duration: 1.1, ease: 'power2.in' }, '-=1.3')
+  }
+
+  const revealNodes = section.querySelectorAll('[data-reveal]')
+  const markAll = () => {
+    section.classList.add('is-ready')
+    revealNodes.forEach((el) => el.classList.add('is-visible'))
+  }
+
+  if (prefersReducedMotion) {
+    markAll()
+    return
+  }
+
+  section.classList.add('is-ready')
+  section.classList.add('is-gsap')
+  gsap.set(revealNodes, { opacity: 0, y: 16, filter: 'blur(5px)' })
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 74%',
+    once: true,
+    onEnter: () => {
+      gsap.to(revealNodes, {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 1.05,
+        stagger: 0.09,
+        ease: 'power3.out',
+        onStart: markAll,
+        onComplete: () => {
+          section.querySelectorAll('[data-release-tilt]').forEach((el) => {
+            gsap.set(el, { clearProps: 'transform,filter' })
+          })
+        },
+      })
+      gsap.delayedCall(1.3, flyButterfly)
+    },
+  })
 }
 
 initRelease()
 
-/* Note — Founder’s letter continuation */
+/* Note — Editorial founder composition */
 const initNote = () => {
   const section = document.querySelector('[data-note]')
   if (!section) return
 
   const desktopMq = window.matchMedia('(min-width: 861px)')
-  let scrollRaf = 0
   let cursorRaf = 0
   let cursorX = 0.5
   let cursorY = 0.5
   let targetX = 0.5
   let targetY = 0.5
 
-  const updateScrollProgress = () => {
-    scrollRaf = 0
-    const rect = section.getBoundingClientRect()
-    const view = window.innerHeight || 1
-    const total = rect.height + view
-    const traveled = view - rect.top
-    const progress = Math.max(0, Math.min(1, traveled / total))
-    section.style.setProperty('--scroll', progress.toFixed(4))
-  }
+  const layers = Array.from(section.querySelectorAll('[data-note-layer]')).map((el) => ({
+    el,
+    depth: Number(el.getAttribute('data-note-layer')) || 0.05,
+  }))
 
-  const onScroll = () => {
-    if (prefersReducedMotion) return
-    if (scrollRaf) return
-    scrollRaf = requestAnimationFrame(updateScrollProgress)
+  const revealOrder = ['portrait', 'credit', 'eyebrow', 'headline', 'lede', 'axioms', 'cta']
+  const reveals = revealOrder
+    .map((key) => section.querySelector(`[data-note-reveal="${key}"]`))
+    .filter(Boolean)
+
+  const applyLayers = () => {
+    const dx = cursorX - 0.5
+    const dy = cursorY - 0.5
+    layers.forEach(({ el, depth }) => {
+      el.style.setProperty('--plx', `${(dx * depth * 36).toFixed(2)}px`)
+      el.style.setProperty('--ply', `${(dy * depth * 24).toFixed(2)}px`)
+    })
   }
 
   const tickCursor = () => {
@@ -916,6 +1110,7 @@ const initNote = () => {
     cursorY += (targetY - cursorY) * 0.08
     section.style.setProperty('--nx', cursorX.toFixed(4))
     section.style.setProperty('--ny', cursorY.toFixed(4))
+    if (desktopMq.matches && !prefersReducedMotion) applyLayers()
     if (Math.abs(targetX - cursorX) > 0.001 || Math.abs(targetY - cursorY) > 0.001) {
       cursorRaf = requestAnimationFrame(tickCursor)
     }
@@ -927,23 +1122,13 @@ const initNote = () => {
     if (rect.height <= 0) return
     targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
     targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
-    section.classList.add('is-cursor')
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
   const onPointerLeave = () => {
-    section.classList.remove('is-cursor')
     targetX = 0.5
     targetY = 0.5
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
-  }
-
-  if (!prefersReducedMotion) {
-    updateScrollProgress()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
-  } else {
-    section.style.setProperty('--scroll', '0.4')
   }
 
   const syncDesktopInteraction = () => {
@@ -954,9 +1139,12 @@ const initNote = () => {
       section.addEventListener('pointermove', onPointerMove, { passive: true })
       section.addEventListener('pointerleave', onPointerLeave)
     } else {
-      section.classList.remove('is-cursor')
       section.style.setProperty('--nx', '0.5')
       section.style.setProperty('--ny', '0.5')
+      layers.forEach(({ el }) => {
+        el.style.setProperty('--plx', '0px')
+        el.style.setProperty('--ply', '0px')
+      })
     }
   }
 
@@ -964,9 +1152,125 @@ const initNote = () => {
   if (typeof desktopMq.addEventListener === 'function') {
     desktopMq.addEventListener('change', syncDesktopInteraction)
   }
+
+  const magnetic = section.querySelector('[data-note-magnetic]')
+  if (magnetic && !prefersReducedMotion) {
+    magnetic.addEventListener(
+      'pointermove',
+      (event) => {
+        if (!desktopMq.matches) return
+        const rect = magnetic.getBoundingClientRect()
+        const x = (event.clientX - rect.left) / rect.width - 0.5
+        const y = (event.clientY - rect.top) / rect.height - 0.5
+        gsap.to(magnetic, {
+          x: x * 6,
+          y: y * 3,
+          duration: 0.45,
+          ease: 'power3.out',
+          overwrite: 'auto',
+        })
+      },
+      { passive: true },
+    )
+    magnetic.addEventListener('pointerleave', () => {
+      gsap.to(magnetic, { x: 0, y: 0, duration: 0.65, ease: 'power3.out', overwrite: 'auto' })
+    })
+  }
+
+  const canvas = section.querySelector('[data-note-particles]')
+  if (canvas && !prefersReducedMotion && desktopMq.matches) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    let ctx = canvas.getContext('2d')
+    const resize = () => {
+      const rect = section.getBoundingClientRect()
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr))
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr))
+      canvas.style.width = `${rect.width}px`
+      canvas.style.height = `${rect.height}px`
+      ctx = canvas.getContext('2d')
+      if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    resize()
+    window.addEventListener('resize', resize, { passive: true })
+
+    const count = Math.min(28, Math.max(14, Math.floor((section.clientWidth * section.clientHeight) / 38000)))
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * section.clientWidth,
+      y: Math.random() * section.clientHeight,
+      r: 0.3 + Math.random() * 0.75,
+      vx: -0.02 + Math.random() * 0.04,
+      vy: -0.03 - Math.random() * 0.05,
+      a: 0.03 + Math.random() * 0.08,
+    }))
+
+    const tick = () => {
+      if (!ctx) return
+      const w = section.clientWidth
+      const h = section.clientHeight
+      ctx.clearRect(0, 0, w, h)
+      const driftX = (cursorX - 0.5) * 4
+      const driftY = (cursorY - 0.5) * 3
+      for (const p of particles) {
+        p.x += p.vx
+        p.y += p.vy
+        if (p.y < -4) {
+          p.y = h + 4
+          p.x = Math.random() * w
+        }
+        if (p.x < -4) p.x = w + 4
+        if (p.x > w + 4) p.x = -4
+        ctx.beginPath()
+        ctx.fillStyle = `rgba(224, 188, 120, ${p.a})`
+        ctx.arc(p.x + driftX, p.y + driftY, p.r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }
+
+  if (prefersReducedMotion) {
+    section.classList.add('is-ready')
+    reveals.forEach((el) => {
+      el.style.opacity = '1'
+    })
+    return
+  }
+
+  gsap.set(reveals, { opacity: 0, y: 14, filter: 'blur(4px)' })
+  const portrait = section.querySelector('[data-note-reveal="portrait"]')
+  if (portrait) gsap.set(portrait, { y: 18 })
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 72%',
+    once: true,
+    onEnter: () => {
+      section.classList.add('is-ready')
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      reveals.forEach((el, i) => {
+        const isPortrait = el.getAttribute('data-note-reveal') === 'portrait'
+        tl.to(
+          el,
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: isPortrait ? 1 : 0.85,
+            onComplete: () => {
+              gsap.set(el, { clearProps: 'transform,filter' })
+            },
+          },
+          i === 0 ? 0 : `-=${isPortrait ? 0.35 : 0.55}`,
+        )
+      })
+    },
+  })
 }
 
+
 initNote()
+
 
 /* Approach — Our Approach to Therapy */
 const initApproach = () => {
@@ -1025,6 +1329,28 @@ const initApproach = () => {
   syncDesktopInteraction()
   if (typeof desktopMq.addEventListener === 'function') {
     desktopMq.addEventListener('change', syncDesktopInteraction)
+  }
+
+  const reveals = section.querySelectorAll('.reveal')
+  const markReady = () => {
+    section.classList.add('is-ready')
+    reveals.forEach((el) => el.classList.add('is-visible'))
+  }
+
+  if (reveals.length && 'IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          markReady()
+          spy.disconnect()
+        })
+      },
+      { threshold: 0.18, rootMargin: '0px 0px -6% 0px' },
+    )
+    spy.observe(section)
+  } else {
+    markReady()
   }
 }
 
