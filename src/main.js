@@ -1081,8 +1081,10 @@ const initNote = () => {
   let portraitBoostT = 1
 
   const mothStage = section.querySelector('.note__moth-stage')
-  const wavesEl = section.querySelector('.note__waves')
+  const wavesEl = section.querySelector('.note__bg') || section.querySelector('.note__waves')
   const heroEl = section.querySelector('.note__hero')
+  const archEl = section.querySelector('[data-note-arch]') || section.querySelector('.note__arch')
+  const lotuses = Array.from(section.querySelectorAll('[data-note-lotus], [data-note-lotus-main]'))
 
   const layers = Array.from(section.querySelectorAll('[data-note-layer]')).map((el) => ({
     el,
@@ -1090,10 +1092,13 @@ const initNote = () => {
     zone: el.getAttribute('data-note-zone') || '',
   }))
 
-  const revealOrder = ['portrait', 'credit', 'eyebrow', 'headline', 'lede', 'axioms', 'cta']
+  const revealOrder = ['portrait', 'credit', 'eyebrow', 'headline', 'divider', 'lede', 'strip', 'expect']
   const reveals = revealOrder
     .map((key) => section.querySelector(`[data-note-reveal="${key}"]`))
     .filter(Boolean)
+
+  let archGlow = 0
+  let archGlowT = 0
 
   const zoneProximity = (el, nx, ny, radius = 0.28) => {
     if (!el) return 0
@@ -1106,6 +1111,17 @@ const initNote = () => {
     const d = Math.sqrt(dx * dx + dy * dy)
     return Math.max(0, 1 - d / radius)
   }
+
+  const stripEl = section.querySelector('[data-note-strip]')
+  const pillars = Array.from(section.querySelectorAll('[data-note-pillar]'))
+  const ctaEl = section.querySelector('[data-note-cta]')
+
+  let stripGlow = 0
+  let stripGlowT = 0
+  let stripX = 0.5
+  let stripY = 0.5
+  let stripXT = 0.5
+  let stripYT = 0.5
 
   const applyLayers = () => {
     const dx = cursorX - 0.5
@@ -1120,25 +1136,64 @@ const initNote = () => {
     })
     if (mothStage) mothStage.style.setProperty('--moth-boost', mothBoost.toFixed(3))
     if (wavesEl) wavesEl.style.setProperty('--wave-boost', waveBoost.toFixed(3))
-    if (heroEl) heroEl.style.setProperty('--portrait-boost', portraitBoost.toFixed(3))
+    if (heroEl) {
+      heroEl.style.setProperty('--portrait-boost', portraitBoost.toFixed(3))
+      heroEl.style.setProperty('--glow', archGlow.toFixed(3))
+    }
+    if (archEl) archEl.style.setProperty('--glow', archGlow.toFixed(3))
+    if (stripEl) {
+      stripEl.style.setProperty('--sx', stripX.toFixed(4))
+      stripEl.style.setProperty('--sy', stripY.toFixed(4))
+      stripEl.style.setProperty('--sg', stripGlow.toFixed(3))
+    }
   }
 
   const tickCursor = () => {
     cursorRaf = 0
-    cursorX += (targetX - cursorX) * 0.08
-    cursorY += (targetY - cursorY) * 0.08
-    mothBoost += (mothBoostT - mothBoost) * 0.1
-    waveBoost += (waveBoostT - waveBoost) * 0.1
-    portraitBoost += (portraitBoostT - portraitBoost) * 0.1
+    cursorX += (targetX - cursorX) * 0.22
+    cursorY += (targetY - cursorY) * 0.22
+    mothBoost += (mothBoostT - mothBoost) * 0.32
+    waveBoost += (waveBoostT - waveBoost) * 0.32
+    portraitBoost += (portraitBoostT - portraitBoost) * 0.32
+    archGlow += (archGlowT - archGlow) * 0.36
+    stripGlow += (stripGlowT - stripGlow) * 0.28
+    stripX += (stripXT - stripX) * 0.28
+    stripY += (stripYT - stripY) * 0.28
     section.style.setProperty('--nx', cursorX.toFixed(4))
     section.style.setProperty('--ny', cursorY.toFixed(4))
-    if (desktopMq.matches && !prefersReducedMotion) applyLayers()
+    if (desktopMq.matches && !prefersReducedMotion) {
+      applyLayers()
+      lotuses.forEach((lotus) => {
+        const g = zoneProximity(lotus, cursorX, cursorY, 0.18)
+        const prev = Number(lotus.style.getPropertyValue('--glow') || 0)
+        lotus.style.setProperty('--glow', (prev + (g - prev) * 0.4).toFixed(3))
+      })
+      section.querySelectorAll('.note__expect-item').forEach((item) => {
+        const g = zoneProximity(item, cursorX, cursorY, 0.16)
+        const prev = Number(item.style.getPropertyValue('--glow') || 0)
+        item.style.setProperty('--glow', (prev + (g - prev) * 0.35).toFixed(3))
+      })
+      pillars.forEach((pillar) => {
+        const g = zoneProximity(pillar, cursorX, cursorY, 0.14)
+        const prev = Number(pillar.style.getPropertyValue('--glow') || 0)
+        pillar.style.setProperty('--glow', (prev + (g - prev) * 0.38).toFixed(3))
+      })
+      if (ctaEl) {
+        const g = zoneProximity(ctaEl, cursorX, cursorY, 0.16)
+        const prev = Number(ctaEl.style.getPropertyValue('--glow') || 0)
+        ctaEl.style.setProperty('--glow', (prev + (g - prev) * 0.38).toFixed(3))
+      }
+    }
     const still =
       Math.abs(targetX - cursorX) > 0.001 ||
       Math.abs(targetY - cursorY) > 0.001 ||
       Math.abs(mothBoostT - mothBoost) > 0.002 ||
       Math.abs(waveBoostT - waveBoost) > 0.002 ||
-      Math.abs(portraitBoostT - portraitBoost) > 0.002
+      Math.abs(portraitBoostT - portraitBoost) > 0.002 ||
+      Math.abs(archGlowT - archGlow) > 0.002 ||
+      Math.abs(stripGlowT - stripGlow) > 0.002 ||
+      Math.abs(stripXT - stripX) > 0.001 ||
+      Math.abs(stripYT - stripY) > 0.001
     if (still) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
@@ -1148,23 +1203,49 @@ const initNote = () => {
     if (rect.height <= 0) return
     targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
     targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
+    section.classList.add('is-cursor')
 
     const nearMoth = zoneProximity(mothStage, targetX, targetY, 0.32)
     const nearWaves = zoneProximity(wavesEl, targetX, targetY, 0.4)
-    const nearPortrait = zoneProximity(heroEl, targetX, targetY, 0.3)
+    const nearPortrait = zoneProximity(heroEl, targetX, targetY, 0.28)
     mothBoostT = 1 + nearMoth * 0.85
     waveBoostT = 1 + nearWaves * 0.7
     portraitBoostT = 1 + nearPortrait * 0.55
+    archGlowT = nearPortrait
+
+    if (stripEl) {
+      const sRect = stripEl.getBoundingClientRect()
+      const inside =
+        event.clientX >= sRect.left &&
+        event.clientX <= sRect.right &&
+        event.clientY >= sRect.top &&
+        event.clientY <= sRect.bottom
+      if (inside && sRect.width > 0 && sRect.height > 0) {
+        stripXT = Math.max(0, Math.min(1, (event.clientX - sRect.left) / sRect.width))
+        stripYT = Math.max(0, Math.min(1, (event.clientY - sRect.top) / sRect.height))
+        stripGlowT = 1
+      } else {
+        const nearStrip = zoneProximity(stripEl, targetX, targetY, 0.22)
+        stripGlowT = nearStrip * 0.55
+        stripXT = 0.5 + (targetX - 0.5) * 0.35
+        stripYT = 0.5
+      }
+    }
 
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
   const onPointerLeave = () => {
+    section.classList.remove('is-cursor')
     targetX = 0.5
     targetY = 0.5
     mothBoostT = 1
     waveBoostT = 1
     portraitBoostT = 1
+    archGlowT = 0
+    stripGlowT = 0
+    stripXT = 0.5
+    stripYT = 0.5
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
@@ -1200,9 +1281,9 @@ const initNote = () => {
         const x = (event.clientX - rect.left) / rect.width - 0.5
         const y = (event.clientY - rect.top) / rect.height - 0.5
         gsap.to(magnetic, {
-          x: x * 10,
-          y: y * 5,
-          duration: 0.4,
+          x: x * 14,
+          y: y * 7,
+          duration: 0.35,
           ease: 'power3.out',
           overwrite: 'auto',
         })
@@ -1457,6 +1538,369 @@ const initNote = () => {
 
 
 initNote()
+
+
+/* Here-if — You might be here if… (live room + glass cards) */
+const initHereIf = () => {
+  const section = document.querySelector('[data-here-if]')
+  if (!section) return
+
+  const desktopMq = window.matchMedia('(min-width: 861px)')
+  const finePointer = window.matchMedia('(pointer: fine)')
+  const cards = Array.from(section.querySelectorAll('[data-here-card]'))
+  const features = Array.from(section.querySelectorAll('[data-here-feature]'))
+  const lotus = section.querySelector('[data-here-lotus]')
+  const ctaPanel = section.querySelector('[data-here-cta]')
+  const layers = Array.from(section.querySelectorAll('[data-here-parallax]'))
+
+  let raf = 0
+  let targetX = 0.5
+  let targetY = 0.5
+  let cursorX = 0.5
+  let cursorY = 0.5
+  let ctaX = 0.5
+  let ctaY = 0.5
+  let ctaXT = 0.5
+  let ctaYT = 0.5
+  let ctaGlow = 0
+  let ctaGlowT = 0
+
+  const proximity = (nx, ny, el, soft = 0.08, hard = 0.28) => {
+    const sectionRect = section.getBoundingClientRect()
+    const rect = el.getBoundingClientRect()
+    if (rect.width <= 0 || sectionRect.width <= 0) return 0
+    const cx = (rect.left + rect.width / 2 - sectionRect.left) / sectionRect.width
+    const cy = (rect.top + rect.height / 2 - sectionRect.top) / sectionRect.height
+    const dist = Math.hypot(nx - cx, ny - cy)
+    return Math.max(0, Math.min(1, 1 - (dist - soft) / hard))
+  }
+
+  const applyLive = (nx, ny) => {
+    section.style.setProperty('--mx', nx.toFixed(4))
+    section.style.setProperty('--my', ny.toFixed(4))
+
+    const dx = nx - 0.5
+    const dy = ny - 0.5
+    layers.forEach((el) => {
+      const depth = Number(el.getAttribute('data-here-parallax')) || 0.04
+      el.style.setProperty('--plx', `${(-dx * depth * 100).toFixed(2)}px`)
+      el.style.setProperty('--ply', `${(-dy * depth * 70).toFixed(2)}px`)
+    })
+
+    cards.forEach((card) => {
+      const glow = proximity(nx, ny, card, 0.04, 0.22)
+      const prev = Number(card.style.getPropertyValue('--glow') || 0)
+      const next = prev + (glow - prev) * 0.4
+      card.style.setProperty('--glow', next.toFixed(3))
+    })
+
+    features.forEach((feature) => {
+      const glow = proximity(nx, ny, feature, 0.02, 0.16)
+      const prev = Number(feature.style.getPropertyValue('--glow') || 0)
+      const next = prev + (glow - prev) * 0.4
+      feature.style.setProperty('--glow', next.toFixed(3))
+    })
+
+    if (lotus) {
+      const glow = proximity(nx, ny, lotus, 0.03, 0.2)
+      const prev = Number(lotus.style.getPropertyValue('--glow') || 0)
+      const next = prev + (glow - prev) * 0.42
+      lotus.style.setProperty('--glow', next.toFixed(3))
+    }
+
+    if (ctaPanel) {
+      ctaX += (ctaXT - ctaX) * 0.28
+      ctaY += (ctaYT - ctaY) * 0.28
+      ctaGlow += (ctaGlowT - ctaGlow) * 0.3
+      ctaPanel.style.setProperty('--cx', ctaX.toFixed(4))
+      ctaPanel.style.setProperty('--cy', ctaY.toFixed(4))
+      ctaPanel.style.setProperty('--glow', ctaGlow.toFixed(3))
+    }
+  }
+
+  const tick = () => {
+    raf = 0
+    cursorX += (targetX - cursorX) * 0.24
+    cursorY += (targetY - cursorY) * 0.24
+
+    if (desktopMq.matches && finePointer.matches && !prefersReducedMotion) {
+      applyLive(cursorX, cursorY)
+    }
+
+    const moving =
+      Math.abs(targetX - cursorX) > 0.001 ||
+      Math.abs(targetY - cursorY) > 0.001 ||
+      Math.abs(ctaXT - ctaX) > 0.001 ||
+      Math.abs(ctaYT - ctaY) > 0.001 ||
+      Math.abs(ctaGlowT - ctaGlow) > 0.002
+
+    const stillGlowing = [...cards, ...features, lotus, ctaPanel].some((el) => {
+      if (!el) return false
+      return Number(el.style.getPropertyValue('--glow') || 0) > 0.008
+    })
+
+    if (moving || (stillGlowing && desktopMq.matches && finePointer.matches && !prefersReducedMotion)) {
+      raf = requestAnimationFrame(tick)
+    }
+  }
+
+  const onMove = (event) => {
+    if (prefersReducedMotion || !desktopMq.matches || !finePointer.matches) return
+    const rect = section.getBoundingClientRect()
+    if (rect.height <= 0) return
+    targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
+    targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
+    section.classList.add('is-cursor')
+
+    if (ctaPanel) {
+      const cRect = ctaPanel.getBoundingClientRect()
+      const inside =
+        event.clientX >= cRect.left &&
+        event.clientX <= cRect.right &&
+        event.clientY >= cRect.top &&
+        event.clientY <= cRect.bottom
+      if (inside && cRect.width > 0 && cRect.height > 0) {
+        ctaXT = Math.max(0, Math.min(1, (event.clientX - cRect.left) / cRect.width))
+        ctaYT = Math.max(0, Math.min(1, (event.clientY - cRect.top) / cRect.height))
+        ctaGlowT = 1
+      } else {
+        ctaGlowT = proximity(targetX, targetY, ctaPanel, 0.04, 0.2) * 0.45
+        ctaXT = 0.5
+        ctaYT = 0.5
+      }
+    }
+
+    if (!raf) raf = requestAnimationFrame(tick)
+  }
+
+  const onLeave = () => {
+    section.classList.remove('is-cursor')
+    targetX = 0.5
+    targetY = 0.5
+    ctaGlowT = 0
+    ctaXT = 0.5
+    ctaYT = 0.5
+    if (!raf) raf = requestAnimationFrame(tick)
+  }
+
+  const syncPointer = () => {
+    section.removeEventListener('pointermove', onMove)
+    section.removeEventListener('pointerleave', onLeave)
+    if (!prefersReducedMotion && desktopMq.matches && finePointer.matches) {
+      section.addEventListener('pointermove', onMove, { passive: true })
+      section.addEventListener('pointerleave', onLeave)
+    } else {
+      section.classList.remove('is-cursor')
+      cards.forEach((card) => card.style.setProperty('--glow', '0'))
+      features.forEach((feature) => feature.style.setProperty('--glow', '0'))
+      if (lotus) lotus.style.setProperty('--glow', '0')
+      if (ctaPanel) ctaPanel.style.setProperty('--glow', '0')
+      ctaGlow = 0
+      ctaGlowT = 0
+      applyLive(0.5, 0.5)
+    }
+  }
+
+  if (!prefersReducedMotion) {
+    syncPointer()
+    if (typeof desktopMq.addEventListener === 'function') {
+      desktopMq.addEventListener('change', syncPointer)
+      finePointer.addEventListener('change', syncPointer)
+    }
+  }
+
+  const reveal = () => section.classList.add('is-ready')
+
+  if (prefersReducedMotion) {
+    reveal()
+    return
+  }
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal()
+            io.disconnect()
+          }
+        })
+      },
+      { threshold: 0.14, rootMargin: '0px 0px -6% 0px' },
+    )
+    io.observe(section)
+  } else {
+    reveal()
+  }
+}
+
+initHereIf()
+
+
+/* Topics — orbital common experiences + cursor live */
+const initTopics = () => {
+  const section = document.querySelector('[data-topics]')
+  if (!section) return
+
+  const desktopMq = window.matchMedia('(min-width: 861px)')
+  const finePointer = window.matchMedia('(pointer: fine)')
+  const layers = Array.from(section.querySelectorAll('[data-topics-parallax]'))
+  const core = section.querySelector('[data-topics-core]')
+  const ring = section.querySelector('.topics__ring')
+
+  let raf = 0
+  let targetX = 0.5
+  let targetY = 0.5
+  let cursorX = 0.5
+  let cursorY = 0.5
+  let glow = 0
+  let targetGlow = 0
+  let zoom = 1
+  let targetZoom = 1
+  let orbitGlow = 0
+  let targetOrbitGlow = 0
+
+  const applyLive = (nx, ny) => {
+    section.style.setProperty('--mx', nx.toFixed(4))
+    section.style.setProperty('--my', ny.toFixed(4))
+
+    const dx = nx - 0.5
+    const dy = ny - 0.5
+
+    layers.forEach((el) => {
+      const depth = Number(el.getAttribute('data-topics-parallax')) || 0.04
+      const invert = el.hasAttribute('data-topics-core') ? 1 : -1
+      const amp = depth >= 0.05 ? 120 : 80
+      el.style.setProperty('--plx', `${(invert * dx * depth * amp).toFixed(2)}px`)
+      el.style.setProperty('--ply', `${(invert * dy * depth * amp * 0.75).toFixed(2)}px`)
+    })
+
+    if (core) {
+      core.style.setProperty('--tilt-y', `${(dx * 7).toFixed(2)}deg`)
+      core.style.setProperty('--tilt-x', `${(-dy * 5).toFixed(2)}deg`)
+
+      const coreRect = core.getBoundingClientRect()
+      const sectionRect = section.getBoundingClientRect()
+      if (coreRect.width > 0 && sectionRect.width > 0) {
+        const cx = (coreRect.left + coreRect.width / 2 - sectionRect.left) / sectionRect.width
+        const cy = (coreRect.top + coreRect.height / 2 - sectionRect.top) / sectionRect.height
+        const dist = Math.hypot(nx - cx, ny - cy)
+        // Stronger when over / near lotus
+        targetGlow = Math.max(0, Math.min(1, 1 - (dist - 0.06) / 0.26))
+        // Little zoom when cursor is over the lotus
+        targetZoom = 1 + targetGlow * 0.12
+        // Outer sphere / orbit glow tracks proximity too
+        targetOrbitGlow = Math.max(0, Math.min(1, 1 - (dist - 0.1) / 0.34))
+      }
+    }
+  }
+
+  const tick = () => {
+    raf = 0
+    cursorX += (targetX - cursorX) * 0.22
+    cursorY += (targetY - cursorY) * 0.22
+    glow += (targetGlow - glow) * 0.38
+    zoom += (targetZoom - zoom) * 0.34
+    orbitGlow += (targetOrbitGlow - orbitGlow) * 0.36
+
+    if (desktopMq.matches && finePointer.matches && !prefersReducedMotion) {
+      applyLive(cursorX, cursorY)
+      if (core) {
+        core.style.setProperty('--glow', glow.toFixed(3))
+        core.style.setProperty('--zoom', zoom.toFixed(4))
+      }
+      if (ring) ring.style.setProperty('--orbit-glow', orbitGlow.toFixed(3))
+    }
+
+    const moving =
+      Math.abs(targetX - cursorX) > 0.001 ||
+      Math.abs(targetY - cursorY) > 0.001 ||
+      Math.abs(targetGlow - glow) > 0.002 ||
+      Math.abs(targetZoom - zoom) > 0.002 ||
+      Math.abs(targetOrbitGlow - orbitGlow) > 0.002
+
+    if (moving) raf = requestAnimationFrame(tick)
+  }
+
+  const onMove = (event) => {
+    if (prefersReducedMotion || !desktopMq.matches || !finePointer.matches) return
+    const rect = section.getBoundingClientRect()
+    if (rect.height <= 0) return
+    targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
+    targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
+    section.classList.add('is-cursor')
+    if (!raf) raf = requestAnimationFrame(tick)
+  }
+
+  const onLeave = () => {
+    section.classList.remove('is-cursor')
+    targetX = 0.5
+    targetY = 0.5
+    targetGlow = 0
+    targetZoom = 1
+    targetOrbitGlow = 0
+    if (!raf) raf = requestAnimationFrame(tick)
+  }
+
+  const syncPointer = () => {
+    section.removeEventListener('pointermove', onMove)
+    section.removeEventListener('pointerleave', onLeave)
+    if (!prefersReducedMotion && desktopMq.matches && finePointer.matches) {
+      section.addEventListener('pointermove', onMove, { passive: true })
+      section.addEventListener('pointerleave', onLeave)
+    } else {
+      section.classList.remove('is-cursor')
+      targetGlow = 0
+      targetZoom = 1
+      targetOrbitGlow = 0
+      glow = 0
+      zoom = 1
+      orbitGlow = 0
+      if (core) {
+        core.style.setProperty('--glow', '0')
+        core.style.setProperty('--zoom', '1')
+        core.style.setProperty('--tilt-x', '0deg')
+        core.style.setProperty('--tilt-y', '0deg')
+      }
+      if (ring) ring.style.setProperty('--orbit-glow', '0')
+      applyLive(0.5, 0.5)
+    }
+  }
+
+  if (!prefersReducedMotion) {
+    syncPointer()
+    if (typeof desktopMq.addEventListener === 'function') {
+      desktopMq.addEventListener('change', syncPointer)
+      finePointer.addEventListener('change', syncPointer)
+    }
+  }
+
+  const reveal = () => section.classList.add('is-ready')
+
+  if (prefersReducedMotion) {
+    reveal()
+    return
+  }
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal()
+            io.disconnect()
+          }
+        })
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -6% 0px' },
+    )
+    io.observe(section)
+  } else {
+    reveal()
+  }
+}
+
+initTopics()
 
 
 /* Approach — Our Approach to Therapy */
