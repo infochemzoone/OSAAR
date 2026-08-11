@@ -122,7 +122,6 @@ if (discover && discoverTrigger && discoverMega) {
 if (header) {
   let lastY = window.scrollY
   let ticking = false
-  let locked = false
 
   const isNavBusy = () =>
     Boolean(nav?.classList.contains('is-open') || discover?.classList.contains('is-open'))
@@ -139,9 +138,8 @@ if (header) {
 
   const syncHeader = () => {
     ticking = false
-    if (locked) return
 
-    const y = Math.max(0, window.scrollY || window.pageYOffset || 0)
+    const y = Math.max(0, window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0)
     const delta = y - lastY
     lastY = y
 
@@ -154,15 +152,15 @@ if (header) {
     }
 
     /* Ignore micro jitter */
-    if (Math.abs(delta) < 2) return
+    if (Math.abs(delta) < 4) return
 
-    /* Scroll down → hide quickly once past hero strip */
+    /* Scroll down → hide once past hero strip */
     if (delta > 0 && y > 72) {
       hideHeader()
       return
     }
 
-    /* Scroll up → reveal immediately */
+    /* Scroll up → reveal */
     if (delta < 0) {
       showHeader()
     }
@@ -174,24 +172,15 @@ if (header) {
     requestAnimationFrame(syncHeader)
   }
 
-  /* Pause hide/show while the user is interacting with the header */
-  header.addEventListener('mouseenter', () => {
-    locked = true
-    showHeader()
-  })
-  header.addEventListener('mouseleave', () => {
-    locked = false
-  })
-  header.addEventListener('focusin', () => {
-    locked = true
-    showHeader()
-  })
-  header.addEventListener('focusout', (event) => {
-    if (!header.contains(event.relatedTarget)) locked = false
-  })
+  /* Keep visible while focusing inside the bar, but never block scroll-hide */
+  header.addEventListener('focusin', showHeader)
 
   syncHeader()
   window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', () => {
+    lastY = Math.max(0, window.scrollY || 0)
+    syncHeader()
+  }, { passive: true })
 }
 
 const reveals = document.querySelectorAll('.reveal')

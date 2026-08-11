@@ -123,7 +123,14 @@ main,
 
 .site-header.is-hidden {
   transform: translate3d(0, calc(-100% - 1.5rem), 0);
-  pointer-events: none;
+  pointer-events: none !important;
+}
+
+.site-header.is-hidden .site-header__shell,
+.site-header.is-hidden .nav-toggle,
+.site-header.is-hidden a,
+.site-header.is-hidden button {
+  pointer-events: none !important;
 }
 
 .site-header__ambient {
@@ -222,11 +229,9 @@ main,
 @keyframes nav-shell-in {
   from {
     opacity: 0;
-    transform: translateY(-12px) scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
@@ -15917,6 +15922,7 @@ html.intro-pending .site-header,
 html.intro-active .site-header {
   opacity: 0;
   filter: blur(6px);
+  pointer-events: none;
 }
 
 html.intro-pending main,
@@ -15931,7 +15937,7 @@ html.intro-active .site-footer {
 html.intro-exit .site-header,
 body.intro-complete .site-header {
   opacity: 1;
-  filter: blur(0);
+  filter: none;
   transition:
     opacity 1.15s cubic-bezier(0.22, 0.61, 0.36, 1),
     filter 1.15s cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -15942,7 +15948,7 @@ html.intro-exit .site-footer,
 body.intro-complete main,
 body.intro-complete .site-footer {
   opacity: 1;
-  filter: blur(0);
+  filter: none;
   transform: translate3d(0, 0, 0);
   transition:
     opacity 1.15s cubic-bezier(0.22, 0.61, 0.36, 1),
