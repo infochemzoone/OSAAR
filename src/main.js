@@ -1073,7 +1073,7 @@ const initRelease = () => {
 
 initRelease()
 
-/* Note — Editorial founder composition */
+/* Note — Cinematic founder composition (Ref2 exact) */
 const initNote = () => {
   const section = document.querySelector('[data-note]')
   if (!section) return
@@ -1084,10 +1084,21 @@ const initNote = () => {
   let cursorY = 0.5
   let targetX = 0.5
   let targetY = 0.5
+  let mothBoost = 1
+  let waveBoost = 1
+  let portraitBoost = 1
+  let mothBoostT = 1
+  let waveBoostT = 1
+  let portraitBoostT = 1
+
+  const mothStage = section.querySelector('.note__moth-stage')
+  const wavesEl = section.querySelector('.note__waves')
+  const heroEl = section.querySelector('.note__hero')
 
   const layers = Array.from(section.querySelectorAll('[data-note-layer]')).map((el) => ({
     el,
     depth: Number(el.getAttribute('data-note-layer')) || 0.05,
+    zone: el.getAttribute('data-note-zone') || '',
   }))
 
   const revealOrder = ['portrait', 'credit', 'eyebrow', 'headline', 'lede', 'axioms', 'cta']
@@ -1095,25 +1106,51 @@ const initNote = () => {
     .map((key) => section.querySelector(`[data-note-reveal="${key}"]`))
     .filter(Boolean)
 
+  const zoneProximity = (el, nx, ny, radius = 0.28) => {
+    if (!el) return 0
+    const sec = section.getBoundingClientRect()
+    const r = el.getBoundingClientRect()
+    const cx = (r.left + r.width * 0.5 - sec.left) / Math.max(1, sec.width)
+    const cy = (r.top + r.height * 0.5 - sec.top) / Math.max(1, sec.height)
+    const dx = nx - cx
+    const dy = ny - cy
+    const d = Math.sqrt(dx * dx + dy * dy)
+    return Math.max(0, 1 - d / radius)
+  }
+
   const applyLayers = () => {
     const dx = cursorX - 0.5
     const dy = cursorY - 0.5
-    layers.forEach(({ el, depth }) => {
-      el.style.setProperty('--plx', `${(dx * depth * 36).toFixed(2)}px`)
-      el.style.setProperty('--ply', `${(dy * depth * 24).toFixed(2)}px`)
+    layers.forEach(({ el, depth, zone }) => {
+      let scale = depth >= 0.12 ? 34 : depth >= 0.08 ? 26 : depth >= 0.05 ? 18 : 12
+      if (zone === 'moth') scale *= 1 + (mothBoost - 1) * 0.55
+      if (zone === 'waves') scale *= 1 + (waveBoost - 1) * 0.45
+      if (zone === 'portrait') scale *= 1 + (portraitBoost - 1) * 0.35
+      el.style.setProperty('--plx', `${(dx * depth * scale).toFixed(2)}px`)
+      el.style.setProperty('--ply', `${(dy * depth * scale * 0.7).toFixed(2)}px`)
     })
+    if (mothStage) mothStage.style.setProperty('--moth-boost', mothBoost.toFixed(3))
+    if (wavesEl) wavesEl.style.setProperty('--wave-boost', waveBoost.toFixed(3))
+    if (heroEl) heroEl.style.setProperty('--portrait-boost', portraitBoost.toFixed(3))
   }
 
   const tickCursor = () => {
     cursorRaf = 0
     cursorX += (targetX - cursorX) * 0.08
     cursorY += (targetY - cursorY) * 0.08
+    mothBoost += (mothBoostT - mothBoost) * 0.1
+    waveBoost += (waveBoostT - waveBoost) * 0.1
+    portraitBoost += (portraitBoostT - portraitBoost) * 0.1
     section.style.setProperty('--nx', cursorX.toFixed(4))
     section.style.setProperty('--ny', cursorY.toFixed(4))
     if (desktopMq.matches && !prefersReducedMotion) applyLayers()
-    if (Math.abs(targetX - cursorX) > 0.001 || Math.abs(targetY - cursorY) > 0.001) {
-      cursorRaf = requestAnimationFrame(tickCursor)
-    }
+    const still =
+      Math.abs(targetX - cursorX) > 0.001 ||
+      Math.abs(targetY - cursorY) > 0.001 ||
+      Math.abs(mothBoostT - mothBoost) > 0.002 ||
+      Math.abs(waveBoostT - waveBoost) > 0.002 ||
+      Math.abs(portraitBoostT - portraitBoost) > 0.002
+    if (still) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
   const onPointerMove = (event) => {
@@ -1122,12 +1159,23 @@ const initNote = () => {
     if (rect.height <= 0) return
     targetX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
     targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
+
+    const nearMoth = zoneProximity(mothStage, targetX, targetY, 0.32)
+    const nearWaves = zoneProximity(wavesEl, targetX, targetY, 0.4)
+    const nearPortrait = zoneProximity(heroEl, targetX, targetY, 0.3)
+    mothBoostT = 1 + nearMoth * 0.85
+    waveBoostT = 1 + nearWaves * 0.7
+    portraitBoostT = 1 + nearPortrait * 0.55
+
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
   const onPointerLeave = () => {
     targetX = 0.5
     targetY = 0.5
+    mothBoostT = 1
+    waveBoostT = 1
+    portraitBoostT = 1
     if (!cursorRaf) cursorRaf = requestAnimationFrame(tickCursor)
   }
 
@@ -1163,9 +1211,9 @@ const initNote = () => {
         const x = (event.clientX - rect.left) / rect.width - 0.5
         const y = (event.clientY - rect.top) / rect.height - 0.5
         gsap.to(magnetic, {
-          x: x * 6,
-          y: y * 3,
-          duration: 0.45,
+          x: x * 10,
+          y: y * 5,
+          duration: 0.4,
           ease: 'power3.out',
           overwrite: 'auto',
         })
@@ -1179,7 +1227,7 @@ const initNote = () => {
 
   const canvas = section.querySelector('[data-note-particles]')
   if (canvas && !prefersReducedMotion && desktopMq.matches) {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
     let ctx = canvas.getContext('2d')
     const resize = () => {
       const rect = section.getBoundingClientRect()
@@ -1193,36 +1241,144 @@ const initNote = () => {
     resize()
     window.addEventListener('resize', resize, { passive: true })
 
-    const count = Math.min(28, Math.max(14, Math.floor((section.clientWidth * section.clientHeight) / 38000)))
-    const particles = Array.from({ length: count }, () => ({
-      x: Math.random() * section.clientWidth,
-      y: Math.random() * section.clientHeight,
-      r: 0.3 + Math.random() * 0.75,
-      vx: -0.02 + Math.random() * 0.04,
-      vy: -0.03 - Math.random() * 0.05,
-      a: 0.03 + Math.random() * 0.08,
-    }))
+    const makeAmbient = (kind) => {
+      const soft = kind === 'soft'
+      return {
+        kind,
+        x: Math.random() * section.clientWidth,
+        y: Math.random() * section.clientHeight,
+        r: soft ? 1.5 + Math.random() * 3 : 0.4 + Math.random() * 1.35,
+        vx: 0.012 + Math.random() * 0.04,
+        vy: -0.018 - Math.random() * (soft ? 0.035 : 0.07),
+        a: soft ? 0.035 + Math.random() * 0.06 : 0.07 + Math.random() * 0.15,
+        depth: soft ? 0.3 + Math.random() * 0.35 : 0.65 + Math.random() * 0.35,
+        phase: Math.random() * Math.PI * 2,
+      }
+    }
+
+    const makeTrail = () => ({
+      kind: 'trail',
+      t: Math.random(),
+      r: 0.7 + Math.random() * 2.4,
+      a: 0.14 + Math.random() * 0.4,
+      age: Math.random(),
+      wobble: 5 + Math.random() * 12,
+      phase: Math.random() * Math.PI * 2,
+      depth: 0.85 + Math.random() * 0.15,
+    })
+
+    const area = section.clientWidth * section.clientHeight
+    const countSharp = Math.min(84, Math.max(42, Math.floor(area / 16000)))
+    const countSoft = Math.min(32, Math.max(16, Math.floor(countSharp * 0.4)))
+    const countTrail = Math.min(64, Math.max(36, Math.floor(countSharp * 0.75)))
+    const particles = [
+      ...Array.from({ length: countSharp }, () => makeAmbient('sharp')),
+      ...Array.from({ length: countSoft }, () => makeAmbient('soft')),
+      ...Array.from({ length: countTrail }, () => makeTrail()),
+    ]
+
+    let time = 0
+
+    const trailPoint = (t, w, h, mothRect, secRect) => {
+      const mx = mothRect
+        ? mothRect.left - secRect.left + mothRect.width * 0.55
+        : w * 0.86
+      const my = mothRect
+        ? mothRect.top - secRect.top + mothRect.height * 0.38
+        : h * 0.14
+      const sx = w * 0.52
+      const sy = h * 0.62
+      const cx = w * 0.74
+      const cy = h * 0.3
+      const u = 1 - t
+      return {
+        x: u * u * sx + 2 * u * t * cx + t * t * mx,
+        y: u * u * sy + 2 * u * t * cy + t * t * my,
+      }
+    }
 
     const tick = () => {
       if (!ctx) return
       const w = section.clientWidth
       const h = section.clientHeight
+      const secRect = section.getBoundingClientRect()
+      const mothRect = mothStage ? mothStage.getBoundingClientRect() : null
+      time += 0.016
       ctx.clearRect(0, 0, w, h)
-      const driftX = (cursorX - 0.5) * 4
-      const driftY = (cursorY - 0.5) * 3
+      const driftX = (cursorX - 0.5) * 16
+      const driftY = (cursorY - 0.5) * 10
+      const mx = cursorX * w
+      const my = cursorY * h
+      const trailAmp = 0.85 + (mothBoost - 1) * 0.9
+
       for (const p of particles) {
-        p.x += p.vx
-        p.y += p.vy
-        if (p.y < -4) {
-          p.y = h + 4
-          p.x = Math.random() * w
+        if (p.kind === 'trail') {
+          p.age += 0.0048
+          if (p.age > 1) {
+            p.age = 0
+            p.t = Math.random() * 0.85
+            p.a = 0.14 + Math.random() * 0.4
+            p.r = 0.55 + Math.random() * 2.6
+          }
+          const prog = Math.min(1, p.t + p.age * 0.35)
+          const pt = trailPoint(prog, w, h, mothRect, secRect)
+          const wob =
+            Math.sin(time * 1.7 + p.phase) * p.wobble * (1 - prog) +
+            Math.cos(time * 1.15 + p.phase * 0.7) * (p.wobble * 0.45)
+          const px = pt.x + wob + driftX * p.depth
+          const py = pt.y + wob * 0.55 + driftY * p.depth
+          const fade = Math.sin(p.age * Math.PI) * (0.35 + prog * 0.65) * trailAmp
+          const alpha = p.a * fade
+          const g = ctx.createRadialGradient(px, py, 0, px, py, p.r * 3.4)
+          g.addColorStop(0, `rgba(255, 236, 200, ${alpha})`)
+          g.addColorStop(0.45, `rgba(232, 200, 140, ${alpha * 0.55})`)
+          g.addColorStop(1, 'rgba(224, 188, 120, 0)')
+          ctx.fillStyle = g
+          ctx.beginPath()
+          ctx.arc(px, py, p.r * 3.4, 0, Math.PI * 2)
+          ctx.fill()
+          continue
         }
-        if (p.x < -4) p.x = w + 4
-        if (p.x > w + 4) p.x = -4
-        ctx.beginPath()
-        ctx.fillStyle = `rgba(224, 188, 120, ${p.a})`
-        ctx.arc(p.x + driftX, p.y + driftY, p.r, 0, Math.PI * 2)
-        ctx.fill()
+
+        const fdx = p.x - mx
+        const fdy = p.y - my
+        const fdist = Math.sqrt(fdx * fdx + fdy * fdy) || 1
+        if (fdist < 120) {
+          const force = ((120 - fdist) / 120) * 0.55 * p.depth
+          p.x += (fdx / fdist) * force
+          p.y += (fdy / fdist) * force
+        }
+
+        p.x += p.vx * p.depth
+        p.y += p.vy * p.depth
+        p.x += 0.014 * p.depth
+        p.x += Math.sin(time * 0.7 + p.phase) * 0.09 * p.depth
+        if (p.y < -10) {
+          p.y = h + 8
+          p.x = Math.random() * w * 0.75
+        }
+        if (p.x > w + 10) {
+          p.x = -8
+          p.y = Math.random() * h
+        }
+
+        const px = p.x + driftX * p.depth
+        const py = p.y + driftY * p.depth
+
+        if (p.kind === 'soft') {
+          const g = ctx.createRadialGradient(px, py, 0, px, py, p.r * 3.5)
+          g.addColorStop(0, `rgba(224, 188, 120, ${p.a})`)
+          g.addColorStop(1, 'rgba(224, 188, 120, 0)')
+          ctx.fillStyle = g
+          ctx.beginPath()
+          ctx.arc(px, py, p.r * 3.5, 0, Math.PI * 2)
+          ctx.fill()
+        } else {
+          ctx.beginPath()
+          ctx.fillStyle = `rgba(240, 214, 160, ${p.a})`
+          ctx.arc(px, py, p.r, 0, Math.PI * 2)
+          ctx.fill()
+        }
       }
       requestAnimationFrame(tick)
     }
@@ -1237,9 +1393,15 @@ const initNote = () => {
     return
   }
 
-  gsap.set(reveals, { opacity: 0, y: 14, filter: 'blur(4px)' })
+  gsap.set(reveals, { opacity: 0, y: 16, filter: 'blur(5px)' })
   const portrait = section.querySelector('[data-note-reveal="portrait"]')
-  if (portrait) gsap.set(portrait, { y: 18 })
+  if (portrait) gsap.set(portrait, { y: 22 })
+
+  const mothImg = section.querySelector('.note__moth')
+  const mothGlow = section.querySelector('.note__moth-glow')
+  const wavesPhoto = section.querySelector('.note__waves-photo')
+  if (mothImg) gsap.set([mothImg, mothGlow].filter(Boolean), { opacity: 0 })
+  if (wavesPhoto) gsap.set(wavesPhoto, { opacity: 0 })
 
   ScrollTrigger.create({
     trigger: section,
@@ -1248,6 +1410,42 @@ const initNote = () => {
     onEnter: () => {
       section.classList.add('is-ready')
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      if (wavesPhoto) {
+        tl.to(
+          wavesPhoto,
+          {
+            opacity: 0.88,
+            duration: 1.4,
+            ease: 'power2.out',
+            onComplete: () => gsap.set(wavesPhoto, { clearProps: 'opacity' }),
+          },
+          0,
+        )
+      }
+      if (mothImg) {
+        tl.to(
+          mothImg,
+          {
+            opacity: 1,
+            duration: 1.3,
+            ease: 'power2.out',
+            onComplete: () => gsap.set(mothImg, { clearProps: 'opacity' }),
+          },
+          0.2,
+        )
+        if (mothGlow) {
+          tl.to(
+            mothGlow,
+            {
+              opacity: 1,
+              duration: 1.15,
+              ease: 'power2.out',
+              onComplete: () => gsap.set(mothGlow, { clearProps: 'opacity' }),
+            },
+            0.35,
+          )
+        }
+      }
       reveals.forEach((el, i) => {
         const isPortrait = el.getAttribute('data-note-reveal') === 'portrait'
         tl.to(
@@ -1256,7 +1454,7 @@ const initNote = () => {
             opacity: 1,
             y: 0,
             filter: 'blur(0px)',
-            duration: isPortrait ? 1 : 0.85,
+            duration: isPortrait ? 1.15 : 0.85,
             onComplete: () => {
               gsap.set(el, { clearProps: 'transform,filter' })
             },

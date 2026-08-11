@@ -2939,15 +2939,15 @@ main,
 }
 
 /* ═══════════════════════════════════════════
-   Note — Editorial founder composition
-   One immersive environment · no card UI
+   Note — Cinematic founder editorial (Ref2)
+   Soft portrait · moth · ethereal waves
    ═══════════════════════════════════════════ */
 .note {
   --nx: 0.5;
   --ny: 0.5;
   --note-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --note-wine: #6e2a3a;
-  --note-deep: #2e1018;
+  --note-deep: #1a0a10;
   --note-mid: #5a2230;
   --note-ivory: #fff7ee;
   --note-gold: #d8b46a;
@@ -2961,7 +2961,7 @@ main,
   align-items: center;
   padding: clamp(2.5rem, 4.5vh, 3.75rem) clamp(4vw, 6vw, 7vw);
   color: var(--note-ivory);
-  background: var(--note-deep);
+  background: #12070b;
 }
 
 .note__world {
@@ -2979,44 +2979,245 @@ main,
 
 .note__depth--back {
   background:
-    radial-gradient(ellipse 70% 65% at 28% 48%, #6e2a3a 0%, transparent 62%),
-    radial-gradient(ellipse 55% 50% at 78% 42%, #4a1c28 0%, transparent 58%),
-    linear-gradient(155deg, #241018 0%, #3d1622 32%, #5a2230 58%, #241018 100%);
+    radial-gradient(ellipse 48% 55% at 20% 40%, #6e2a3a 0%, transparent 58%),
+    radial-gradient(ellipse 42% 40% at 84% 14%, #5a2230 0%, transparent 55%),
+    radial-gradient(ellipse 55% 48% at 68% 82%, #3a1620 0%, transparent 55%),
+    linear-gradient(168deg, #0c0406 0%, #2a1018 24%, #5a2230 46%, #1a0a10 72%, #080305 100%);
+}
+
+.note__depth--mid {
+  background:
+    radial-gradient(ellipse 46% 50% at 24% 46%, rgba(110, 42, 58, 0.58), transparent 70%),
+    radial-gradient(ellipse 38% 36% at 68% 42%, rgba(90, 35, 48, 0.22), transparent 72%);
+  opacity: 0.92;
 }
 
 .note__depth--warm {
-  background: radial-gradient(ellipse 44% 58% at 24% 46%, rgba(216, 180, 106, 0.18), transparent 70%);
+  background: radial-gradient(
+    ellipse 44% 52% at 24% 40%,
+    rgba(224, 188, 120, 0.22),
+    rgba(184, 110, 70, 0.07) 44%,
+    transparent 74%
+  );
   mix-blend-mode: soft-light;
   opacity: 0.95;
-  animation: note-haze 32s ease-in-out infinite reverse;
+  animation: note-light-drift 36s ease-in-out infinite;
 }
 
-.note__depth--glow {
-  background: radial-gradient(
-    ellipse 36% 34% at calc(var(--nx) * 100%) calc(var(--ny) * 100%),
-    rgba(224, 188, 120, 0.14),
-    transparent 60%
-  );
-  transition: background 0.45s var(--note-ease);
+.note__bokeh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 4px at 72% 28%, rgba(232, 200, 140, 0.18), transparent 70%),
+    radial-gradient(circle 7px at 84% 42%, rgba(224, 188, 120, 0.1), transparent 70%),
+    radial-gradient(circle 3px at 62% 18%, rgba(255, 236, 210, 0.12), transparent 70%),
+    radial-gradient(circle 5px at 90% 58%, rgba(184, 110, 70, 0.14), transparent 70%),
+    radial-gradient(circle 6px at 18% 62%, rgba(232, 200, 140, 0.07), transparent 70%),
+    radial-gradient(circle 3.5px at 48% 72%, rgba(224, 188, 120, 0.08), transparent 70%);
+  filter: blur(1.5px);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+  animation: note-bokeh-drift 42s ease-in-out infinite;
+}
+
+.note__bloom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.note__bloom--core {
+  left: calc(var(--nx) * 100%);
+  top: calc(var(--ny) * 100%);
+  width: min(52vw, 34rem);
+  height: min(52vw, 34rem);
+  translate: -50% -50%;
+  background: radial-gradient(circle, rgba(224, 188, 120, 0.2), rgba(184, 100, 70, 0.05) 42%, transparent 68%);
+  opacity: 0.65;
+  transition: left 0.7s var(--note-ease), top 0.7s var(--note-ease);
+  mix-blend-mode: screen;
+}
+
+.note__bloom--side {
+  right: 6%;
+  top: 4%;
+  width: min(18vw, 12rem);
+  height: min(18vw, 12rem);
+  background: radial-gradient(circle, rgba(255, 236, 200, 0.14), transparent 68%);
+  opacity: 0.35;
+  filter: blur(36px);
+  animation: note-bloom-breathe 14s ease-in-out infinite;
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+
+.note__starlight {
+  position: absolute;
+  right: 4%;
+  top: 2%;
+  width: min(16vw, 10rem);
+  height: min(16vw, 10rem);
+  background: radial-gradient(circle at 70% 30%, rgba(255, 247, 230, 0.22) 0%, transparent 58%);
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  animation: note-star-pulse 9s ease-in-out infinite;
+  z-index: 1;
+}
+
+.note__mist {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+}
+
+.note__mist--a {
+  left: 8%;
+  top: 22%;
+  width: min(50vw, 30rem);
+  height: min(36vh, 20rem);
+  background: linear-gradient(120deg, rgba(224, 188, 120, 0.14), transparent 60%);
+  animation: note-mist-drift 40s ease-in-out infinite;
+}
+
+.note__mist--b {
+  right: 4%;
+  bottom: 18%;
+  width: min(42vw, 26rem);
+  height: min(32vh, 18rem);
+  background: linear-gradient(-40deg, rgba(255, 236, 210, 0.08), transparent 65%);
+  animation: note-mist-drift 48s ease-in-out infinite reverse;
 }
 
 .note__haze {
   position: absolute;
-  inset: -8%;
+  inset: -10%;
   background:
-    radial-gradient(ellipse 50% 40% at 20% 30%, rgba(255, 236, 210, 0.05), transparent 62%),
-    radial-gradient(ellipse 60% 50% at 85% 70%, rgba(90, 30, 45, 0.35), transparent 65%);
-  animation: note-haze 28s ease-in-out infinite;
+    radial-gradient(ellipse 55% 42% at 22% 28%, rgba(255, 236, 210, 0.06), transparent 60%),
+    radial-gradient(ellipse 65% 55% at 88% 72%, rgba(60, 18, 28, 0.45), transparent 62%);
+  animation: note-haze 32s ease-in-out infinite;
 }
 
-.note__flow {
+/* Ethereal silk / long-exposure waves */
+.note__waves {
+  --wave-boost: 1;
   position: absolute;
-  inset: 8% 0 12%;
+  left: -10%;
+  right: -10%;
+  bottom: -8%;
+  height: min(48vh, 28rem);
+  z-index: 2;
+  pointer-events: none;
+  filter: brightness(calc(0.95 + var(--wave-boost) * 0.18));
+  transition: filter 0.55s var(--note-ease);
+}
+
+.note__waves-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  animation: note-wave-flow 22s ease-in-out infinite;
+}
+
+.note__waves-photo img {
   width: 100%;
-  height: 80%;
-  color: rgba(216, 180, 106, 0.22);
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  filter: contrast(1.06) saturate(1.1) brightness(1.02);
+}
+
+.note__wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  border-radius: 50% 50% 0 0 / 18% 22% 0 0;
+  mix-blend-mode: screen;
+  filter: blur(18px);
   opacity: 0.4;
-  z-index: 0;
+  transform-origin: 50% 100%;
+}
+
+.note__wave--1 {
+  background:
+    radial-gradient(ellipse 70% 55% at 28% 78%, rgba(224, 140, 100, 0.38), transparent 68%),
+    radial-gradient(ellipse 55% 48% at 62% 88%, rgba(184, 80, 70, 0.32), transparent 70%),
+    linear-gradient(12deg, transparent 20%, rgba(232, 180, 120, 0.16) 48%, transparent 78%);
+  animation: note-wave-flow 18s ease-in-out infinite;
+  filter: blur(22px);
+}
+
+.note__wave--2 {
+  height: 78%;
+  bottom: 4%;
+  background:
+    radial-gradient(ellipse 60% 50% at 48% 82%, rgba(255, 210, 150, 0.24), transparent 65%),
+    radial-gradient(ellipse 48% 42% at 78% 70%, rgba(200, 90, 80, 0.18), transparent 70%);
+  animation: note-wave-flow 24s ease-in-out infinite reverse;
+  opacity: 0.42;
+  filter: blur(16px);
+}
+
+.note__wave--3 {
+  height: 62%;
+  bottom: 8%;
+  background:
+    linear-gradient(100deg, transparent 10%, rgba(232, 200, 140, 0.18) 36%, transparent 55%, rgba(184, 90, 70, 0.16) 72%, transparent 90%);
+  animation: note-wave-flow 14s ease-in-out infinite;
+  animation-delay: -4s;
+  opacity: 0.38;
+  filter: blur(12px);
+  mix-blend-mode: soft-light;
+}
+
+/* Moth toward upper-right light — clean, no muddy bloom */
+.note__moth-stage {
+  --moth-boost: 1;
+  position: absolute;
+  right: clamp(0%, 1.5vw, 3%);
+  top: clamp(1%, 2vh, 4%);
+  width: min(28vw, 18rem);
+  height: min(28vw, 18rem);
+  z-index: 4;
+  pointer-events: none;
+  filter: brightness(calc(0.98 + var(--moth-boost) * 0.18));
+  transition: filter 0.5s var(--note-ease);
+}
+
+.note__moth-glow {
+  display: none;
+}
+
+.note__moth-picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.note__moth {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  display: block;
+  mix-blend-mode: normal;
+  filter:
+    drop-shadow(0 0 10px rgba(232, 200, 140, 0.2))
+    drop-shadow(0 8px 18px rgba(20, 4, 8, 0.35));
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: note-moth-drift 10s ease-in-out infinite;
+  will-change: transform;
 }
 
 .note__dust {
@@ -3024,13 +3225,15 @@ main,
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.35;
+  opacity: 0.9;
+  z-index: 3;
 }
 
 .note__grain {
   position: absolute;
   inset: 0;
-  opacity: 0.04;
+  opacity: 0.035;
+  z-index: 5;
   background-image:
     radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0.4px, transparent 0.55px),
     radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.28) 0.35px, transparent 0.5px);
@@ -3041,147 +3244,109 @@ main,
 .note__veil {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 78% 72% at 45% 48%, transparent 45%, rgba(20, 6, 10, 0.38) 100%);
+  z-index: 5;
+  background:
+    radial-gradient(ellipse 76% 72% at 38% 42%, transparent 34%, rgba(12, 4, 8, 0.34) 100%),
+    linear-gradient(90deg, rgba(10, 4, 6, 0.14), transparent 14%, transparent 86%, rgba(10, 4, 6, 0.16));
+  pointer-events: none;
 }
 
 .note [data-note-layer] {
   --plx: 0px;
   --ply: 0px;
   transform: translate3d(var(--plx), var(--ply), 0);
-  transition: transform 0.6s var(--note-ease);
+  transition: transform 0.7s var(--note-ease);
   will-change: transform;
 }
 
 .note__compose {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
-  gap: clamp(0.75rem, 2.2vw, 2rem);
+  grid-template-columns: minmax(0, 0.34fr) minmax(0, 0.66fr);
+  gap: clamp(1rem, 3vw, 3rem);
   align-items: center;
-  width: min(100%, 90rem);
-  max-width: 1450px;
+  width: min(100%, 94rem);
+  max-width: 1520px;
   margin: 0 auto;
-  min-height: clamp(34rem, 78vh, 46rem);
+  min-height: clamp(34rem, 84vh, 50rem);
+  padding-bottom: clamp(2rem, 5vh, 4rem);
 }
 
-/* ─── Hero / Founder ─── */
+/* Soft-blended founder portrait — smaller, balanced */
 .note__hero {
+  --portrait-boost: 1;
   position: relative;
   margin: 0;
-  width: min(100%, 29rem);
+  width: min(100%, 22rem);
   justify-self: end;
-  aspect-ratio: 3 / 4.15;
+  aspect-ratio: 3 / 3.9;
   display: grid;
   place-items: center;
-}
-
-.note__portal {
-  position: absolute;
-  inset: -2% -4% 4%;
-  z-index: 1;
-  pointer-events: none;
-  color: rgba(224, 188, 120, 0.22);
-}
-
-.note__portal-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.55;
-}
-
-.note__portal-arc {
-  fill: none;
-}
-
-.note__portal-arc--a,
-.note__portal-arc--b {
-  opacity: 0.55;
-}
-
-.note__portal-light {
-  position: absolute;
-  left: 50%;
-  top: 36%;
-  width: 72%;
-  height: 58%;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(224, 188, 120, 0.22), transparent 70%);
-  filter: blur(32px);
-  opacity: 0.65;
-  z-index: 0;
-  animation: note-portal-breathe 10s ease-in-out infinite;
-}
-
-.note__organic {
-  position: absolute;
-  left: -14%;
-  top: 2%;
-  width: 44%;
-  height: 92%;
-  z-index: 2;
-  color: rgba(216, 180, 106, 0.32);
-  opacity: 0.45;
-  pointer-events: none;
+  filter: brightness(calc(0.97 + var(--portrait-boost) * 0.08));
+  transition: filter 0.55s var(--note-ease);
 }
 
 .note__subject {
   position: relative;
   z-index: 3;
-  width: 94%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  filter: drop-shadow(0 32px 52px rgba(12, 4, 8, 0.5));
+  filter: drop-shadow(0 30px 50px rgba(12, 4, 8, 0.4));
 }
 
 .note__subject-glow {
   position: absolute;
-  left: 50%;
-  top: 38%;
-  width: 78%;
-  height: 70%;
+  left: 48%;
+  top: 34%;
+  width: 92%;
+  height: 80%;
   translate: -50% -50%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(224, 188, 120, 0.26), transparent 68%);
-  filter: blur(26px);
+  background: radial-gradient(circle, rgba(224, 188, 120, 0.42), rgba(184, 100, 70, 0.12) 46%, transparent 72%);
+  filter: blur(36px);
   z-index: 0;
-  animation: note-portal-breathe 9s ease-in-out infinite;
+  animation: note-halo-breathe 10s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: calc(0.7 + var(--portrait-boost) * 0.3);
+}
+
+.note__subject-halo {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  width: 64%;
+  height: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 200, 0.32), transparent 68%);
+  filter: blur(24px);
+  z-index: 0;
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  animation: note-halo-breathe 12s ease-in-out infinite reverse;
   pointer-events: none;
 }
 
 .note__subject-haze {
   position: absolute;
-  left: -4%;
-  right: -4%;
-  bottom: 0;
-  height: 38%;
+  left: -10%;
+  right: -10%;
+  bottom: -4%;
+  height: 52%;
   z-index: 4;
   pointer-events: none;
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(58, 22, 32, 0.12) 35%,
-    rgba(46, 16, 24, 0.38) 72%,
-    rgba(36, 12, 18, 0.55) 100%
+    rgba(40, 14, 22, 0.1) 26%,
+    rgba(28, 10, 16, 0.45) 58%,
+    rgba(16, 5, 10, 0.85) 100%
   );
-  mix-blend-mode: multiply;
-}
-
-.note__subject-rim {
-  position: absolute;
-  inset: 4% 6% 18%;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: 42% 42% 28% 28%;
-  box-shadow:
-    inset -10px 0 28px rgba(224, 188, 120, 0.08),
-    inset 8px 0 22px rgba(40, 12, 18, 0.12);
-  mix-blend-mode: soft-light;
 }
 
 .note__photo {
@@ -3191,45 +3356,64 @@ main,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  mix-blend-mode: screen;
-  /* Soft feather only at the very bottom — body stays clear */
-  -webkit-mask-image: linear-gradient(180deg, #000 78%, rgba(0, 0, 0, 0.75) 90%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 78%, rgba(0, 0, 0, 0.75) 90%, transparent 100%);
-  filter: brightness(1.04) contrast(1.03) saturate(1.03);
+  object-position: center 10%;
+  -webkit-mask-image:
+    radial-gradient(ellipse 78% 72% at 48% 38%, #000 42%, rgba(0, 0, 0, 0.75) 68%, transparent 100%),
+    linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.7) 80%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 78% 72% at 48% 38%, #000 42%, rgba(0, 0, 0, 0.75) 68%, transparent 100%),
+    linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.7) 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  filter: brightness(1.06) contrast(1.06) saturate(1.04);
 }
 
 .note__credit {
   position: absolute;
-  left: 6%;
-  bottom: 5%;
+  left: 10%;
+  bottom: 3%;
   z-index: 6;
   display: flex;
   flex-direction: column;
-  gap: 0.22rem;
-  max-width: 13rem;
-  text-shadow: 0 2px 18px rgba(20, 6, 10, 0.55);
+  align-items: flex-start;
+  gap: 0.38rem;
+  max-width: 15rem;
+  text-shadow: 0 2px 20px rgba(20, 6, 10, 0.6);
 }
 
 .note__credit-role {
   font-family: var(--font-body);
   font-size: 0.56rem;
   font-weight: 500;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.36em;
   text-transform: uppercase;
-  color: rgba(224, 188, 120, 0.68);
+  color: rgba(224, 188, 120, 0.78);
+}
+
+.note__credit-flourish {
+  display: block;
+  width: 9.5rem;
+  height: 0.9rem;
+  color: rgba(216, 180, 106, 0.82);
+  line-height: 0;
+}
+
+.note__credit-flourish svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .note__credit-name {
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.5vw, 1.38rem);
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.15;
-  color: rgba(255, 247, 238, 0.9);
+  color: rgba(255, 247, 238, 0.94);
 }
 
-/* ─── Editorial content ─── */
+/* Editorial — left-aligned center-right, matching reference */
 .note__editorial {
   position: relative;
   z-index: 2;
@@ -3237,74 +3421,44 @@ main,
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  text-align: left;
   max-width: 34rem;
-  margin-left: clamp(-0.5rem, -1vw, 0);
-  padding: 0.25rem 0 0.25rem 0;
+  margin: 0 auto 0 clamp(0rem, 2vw, 2.5rem);
+  padding: 1.25rem 0.5rem 1.5rem 0.25rem;
 }
 
-.note__editorial::before {
-  content: '';
+.note__glass {
   position: absolute;
-  inset: -6% -18% -8% -22%;
-  z-index: -1;
-  border-radius: 46% 34% 40% 48%;
-  background: radial-gradient(ellipse at 28% 42%, rgba(62, 24, 34, 0.28), transparent 68%);
-  filter: blur(10px);
-  pointer-events: none;
-}
-
-.note__mark {
-  position: absolute;
-  right: -18%;
-  top: -4%;
-  bottom: auto;
-  width: min(72%, 20rem);
-  height: auto;
-  color: rgba(216, 180, 106, 0.1);
-  pointer-events: none;
+  inset: -6% -10% -8% -12%;
   z-index: 0;
-}
-
-.note__mark-curve {
-  transform-origin: 160px 200px;
-}
-
-.note__mark-curve--1 { animation: note-mark-pulse 8.5s ease-in-out infinite; }
-.note__mark-curve--2 { animation: note-mark-pulse 8.5s ease-in-out infinite 0.7s; }
-.note__mark-curve--3 { animation: note-mark-pulse 8.5s ease-in-out infinite 1.3s; }
-.note__mark-curve--4 { animation: note-mark-pulse 8.5s ease-in-out infinite 1.8s; }
-
-.note__mark-body {
-  transform-origin: 160px 200px;
-  animation: note-mark-breathe 7.5s ease-in-out infinite;
-}
-
-.note__mark-spark {
-  animation: note-mark-orbit 8.5s ease-in-out infinite;
+  border-radius: 2rem;
+  background: radial-gradient(ellipse at 34% 40%, rgba(50, 18, 28, 0.12), transparent 70%);
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .note__eyebrow {
   position: relative;
   z-index: 1;
-  margin: 0 0 1rem;
+  margin: 0 0 1.05rem;
   font-family: var(--font-body);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 500;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: rgba(224, 188, 120, 0.62);
+  color: rgba(224, 188, 120, 0.78);
 }
 
 .note__headline {
   position: relative;
   z-index: 1;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.15rem;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.05rem, 3.5vw, 3.05rem);
-  line-height: 1.2;
-  letter-spacing: -0.028em;
-  color: rgba(255, 247, 238, 0.96);
+  font-size: clamp(2.15rem, 3.7vw, 3.2rem);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  color: rgba(255, 247, 238, 0.98);
   text-wrap: balance;
 }
 
@@ -3312,57 +3466,60 @@ main,
   font-style: italic;
   font-weight: 500;
   color: var(--note-champagne);
+  text-shadow: 0 0 32px rgba(216, 180, 106, 0.28);
 }
 
 .note__lede {
   position: relative;
   z-index: 1;
-  margin: 0 0 1.85rem;
+  margin: 0 0 1.7rem;
   font-family: var(--font-body);
-  font-size: clamp(0.94rem, 1.1vw, 1.02rem);
-  line-height: 1.78;
+  font-size: clamp(0.95rem, 1.12vw, 1.05rem);
+  line-height: 1.75;
   font-weight: 400;
-  color: rgba(255, 247, 238, 0.52);
+  color: rgba(255, 247, 238, 0.62);
 }
 
 .note__axioms {
   position: relative;
   z-index: 1;
   list-style: none;
-  margin: 0 0 2rem;
+  margin: 0 0 1.9rem;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.15rem 1.75rem;
+  justify-content: flex-start;
+  gap: 1.1rem 1.7rem;
   font-family: var(--font-body);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: rgba(247, 236, 216, 0.62);
+  color: rgba(247, 236, 216, 0.74);
 }
 
 .note__axioms li {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  transition: color 0.35s var(--note-ease);
+  transition: color 0.35s var(--note-ease), transform 0.35s var(--note-ease);
 }
 
 .note__axioms li:hover {
-  color: rgba(255, 247, 238, 0.88);
+  color: rgba(255, 247, 238, 0.95);
+  transform: translateY(-1px);
 }
 
 .note__axioms li:hover .note__axiom-icon {
-  color: rgba(224, 188, 120, 0.85);
+  color: rgba(224, 188, 120, 0.95);
 }
 
 .note__axiom-icon {
   display: grid;
   place-items: center;
-  width: 0.95rem;
-  height: 0.95rem;
-  color: rgba(216, 180, 106, 0.55);
+  width: 1rem;
+  height: 1rem;
+  color: rgba(216, 180, 106, 0.78);
   transition: color 0.35s var(--note-ease);
 }
 
@@ -3371,55 +3528,50 @@ main,
   height: 100%;
 }
 
+/* Pill / ghost CTA — serif like reference */
 .note__link {
   position: relative;
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0.5rem 0 0.55rem;
-  border: 0;
-  background: transparent;
-  color: rgba(255, 247, 238, 0.92);
+  gap: 0.75rem;
+  padding: 0.8rem 1.6rem 0.85rem;
+  border: 1px solid rgba(216, 180, 106, 0.62);
+  border-radius: 999px;
+  background: rgba(40, 14, 22, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 247, 238, 0.96);
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1.3vw, 1.22rem);
+  font-size: clamp(1.02rem, 1.2vw, 1.15rem);
   font-weight: 500;
   letter-spacing: 0.02em;
-  transition: color 0.4s var(--note-ease), text-shadow 0.4s var(--note-ease);
+  text-transform: none;
+  transition:
+    color 0.4s var(--note-ease),
+    border-color 0.4s var(--note-ease),
+    box-shadow 0.4s var(--note-ease),
+    background 0.4s var(--note-ease);
   will-change: transform;
-}
-
-.note__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0.15rem;
-  width: 100%;
-  height: 1px;
-  background: rgba(216, 180, 106, 0.4);
-  transform: scaleX(1);
-  transform-origin: left center;
-  transition: transform 0.45s var(--note-ease), background 0.4s var(--note-ease), box-shadow 0.4s var(--note-ease);
 }
 
 .note__link-arrow {
   color: var(--note-champagne);
+  font-size: 1.05em;
   transition: transform 0.4s var(--note-ease);
 }
 
 .note__link:hover {
-  text-shadow: 0 0 22px rgba(216, 180, 106, 0.2);
-}
-
-.note__link:hover::after {
-  transform: scaleX(1.08);
-  background: rgba(224, 188, 120, 0.75);
-  box-shadow: 0 0 12px rgba(216, 180, 106, 0.25);
+  border-color: rgba(232, 200, 140, 0.95);
+  background: rgba(80, 30, 42, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(216, 180, 106, 0.16),
+    0 0 34px rgba(216, 180, 106, 0.3);
 }
 
 .note__link:hover .note__link-arrow {
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
 
 .note [data-note-reveal] {
@@ -3432,30 +3584,54 @@ main,
 
 @keyframes note-haze {
   0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.85; }
-  50% { transform: translate3d(12px, -7px, 0); opacity: 1; }
+  50% { transform: translate3d(14px, -8px, 0); opacity: 1; }
 }
 
-@keyframes note-portal-breathe {
-  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.78; transform: translate(-50%, -50%) scale(1.05); }
+@keyframes note-light-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.9; }
+  50% { transform: translate3d(18px, -10px, 0) scale(1.04); opacity: 1; }
 }
 
-@keyframes note-mark-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(0.985); }
-  50% { opacity: 0.95; transform: scale(1.025); }
+@keyframes note-bloom-breathe {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.1); }
 }
 
-@keyframes note-mark-breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.015); }
+@keyframes note-mist-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(24px, -14px, 0) rotate(2deg); }
 }
 
-@keyframes note-mark-orbit {
-  0% { transform: translate(0, 0); opacity: 0.3; }
-  25% { transform: translate(28px, 22px); opacity: 0.7; }
-  50% { transform: translate(12px, 52px); opacity: 0.35; }
-  75% { transform: translate(-22px, 24px); opacity: 0.6; }
-  100% { transform: translate(0, 0); opacity: 0.3; }
+@keyframes note-bokeh-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.75; }
+  50% { transform: translate3d(-12px, 8px, 0); opacity: 0.95; }
+}
+
+@keyframes note-star-pulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes note-halo-breathe {
+  0%, 100% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.92; transform: translate(-50%, -50%) scale(1.07); }
+}
+
+@keyframes note-wave-flow {
+  0%, 100% { transform: translate3d(0, 0, 0) scaleX(1) skewX(0deg); opacity: 0.45; }
+  33% { transform: translate3d(18px, -6px, 0) scaleX(1.04) skewX(1.5deg); opacity: 0.62; }
+  66% { transform: translate3d(-14px, 4px, 0) scaleX(0.97) skewX(-1deg); opacity: 0.5; }
+}
+
+@keyframes note-moth-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  40% { transform: translate3d(8px, -10px, 0) scale(1.02); }
+  70% { transform: translate3d(-5px, 5px, 0) scale(0.99); }
+}
+
+@keyframes note-trail-shimmer {
+  0%, 100% { opacity: 0.65; transform: translate3d(0, 0, 0) scale(1); }
+  50% { opacity: 0.95; transform: translate3d(4px, -3px, 0) scale(1.03); }
 }
 
 @media (max-width: 1100px) {
@@ -3466,7 +3642,7 @@ main,
   }
 
   .note__hero {
-    width: min(100%, 23rem);
+    width: min(100%, 18rem);
     justify-self: center;
   }
 
@@ -3474,9 +3650,9 @@ main,
     font-size: clamp(1.9rem, 3.4vw, 2.7rem);
   }
 
-  .note__mark {
-    width: min(58%, 15rem);
-    right: -8%;
+  .note__moth-stage {
+    width: min(22vw, 14rem);
+    height: min(22vw, 14rem);
   }
 }
 
@@ -3496,45 +3672,60 @@ main,
   }
 
   .note__hero {
-    width: min(100%, 18rem);
-    aspect-ratio: 3 / 4;
+    width: min(100%, 15rem);
+    aspect-ratio: 3 / 3.9;
   }
 
   .note__editorial {
     width: 100%;
     max-width: none;
     margin: 0;
-    padding: 0;
+    padding: 1.25rem 0.5rem 1.5rem;
+    text-align: left;
+    align-items: flex-start;
   }
 
   .note__headline {
     font-size: clamp(1.8rem, 7vw, 2.3rem);
   }
 
-  .note__mark {
-    width: 11rem;
-    right: -0.5rem;
-    top: -1rem;
-    opacity: 0.85;
-  }
-
   .note__credit {
-    left: 4%;
-    bottom: 3%;
+    left: 6%;
+    bottom: 2%;
   }
 
   .note__axioms {
     gap: 0.9rem 1.25rem;
+    justify-content: flex-start;
+  }
+
+  .note__moth-stage {
+    width: 10.5rem;
+    height: 10.5rem;
+    right: -0.5rem;
+    top: -0.25rem;
+    opacity: 0.92;
+  }
+
+  .note__waves {
+    height: 44%;
+    opacity: 0.9;
   }
 }
 
 @media (max-width: 860px) {
   .note__haze,
-  .note__portal-light,
+  .note__depth--warm,
+  .note__bloom--side,
+  .note__mist,
+  .note__bokeh,
+  .note__starlight,
   .note__subject-glow,
-  .note__mark-curve,
-  .note__mark-body,
-  .note__mark-spark {
+  .note__subject-halo,
+  .note__wave,
+  .note__waves-photo,
+  .note__moth,
+  .note__moth-glow {
     animation: none;
   }
 
@@ -3545,11 +3736,17 @@ main,
 
 @media (prefers-reduced-motion: reduce) {
   .note__haze,
-  .note__portal-light,
+  .note__depth--warm,
+  .note__bloom--side,
+  .note__mist,
+  .note__bokeh,
+  .note__starlight,
   .note__subject-glow,
-  .note__mark-curve,
-  .note__mark-body,
-  .note__mark-spark {
+  .note__subject-halo,
+  .note__wave,
+  .note__waves-photo,
+  .note__moth,
+  .note__moth-glow {
     animation: none !important;
   }
 
@@ -3557,7 +3754,9 @@ main,
     opacity: 1 !important;
   }
 
-  .note__dust { display: none !important; }
+  .note__dust {
+    display: none !important;
+  }
 }
 
 /* Here-if */
