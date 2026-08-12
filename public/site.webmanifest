@@ -1,0 +1,24 @@
+{
+  "name": "O-SAAR",
+  "short_name": "O-SAAR",
+  "description": "A reflective therapy space for understanding patterns, emotions, and your inner world.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf3e8",
+  "theme_color": "#5c1a2a",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/images/osaar-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/osaar-icon-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
