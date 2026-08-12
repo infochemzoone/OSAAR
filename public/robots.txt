@@ -4,4 +4,4 @@ Allow: /
 Disallow: /thank-you.html
 Disallow: /contact.html
 
-Sitemap: https://www.osaar.in/sitemap.xml
+Sitemap: https://osaar.in/sitemap.xml
