@@ -147,7 +147,7 @@
       </div>
     </header>
 
-    <main class="letter">
+    <main class="page-inner letter">
       <div class="letter-ambient" aria-hidden="true">
         <span class="letter-ambient__orb letter-ambient__orb--a"></span>
         <span class="letter-ambient__orb letter-ambient__orb--b"></span>
@@ -160,21 +160,32 @@
         </svg>
       </div>
 
-      <section class="letter-hero" aria-labelledby="letter-title">
+      <section class="page-hero page-hero--maroon page-hero--compact" aria-labelledby="letter-title">
+        <div class="page-hero__atmosphere" aria-hidden="true">
+          <span class="page-hero__glow page-hero__glow--1"></span>
+          <span class="page-hero__glow page-hero__glow--2"></span>
+          <span class="page-hero__grain"></span>
+          <span class="page-hero__dust page-hero__dust--1"></span>
+          <span class="page-hero__dust page-hero__dust--2"></span>
+        </div>
+        <div class="page-hero__inner">
+          <p class="section-label section-label--light">
+            <span class="section-label__text">The O-SAAR Letter</span>
+            <span class="section-label__mark" aria-hidden="true">+</span>
+          </p>
+          <h1 class="page-hero__title" id="letter-title">A little more clarity, delivered <em>gently</em>.</h1>
+          <p class="page-hero__lead">
+            Thoughtful reflections, practical insights, and gentle reminders for your emotional wellbeing — delivered occasionally, never overwhelmingly.
+          </p>
+        </div>
+      </section>
+
+      <section class="letter-hero letter-hero--signup" aria-label="Newsletter signup">
         <div class="letter-hero__atmosphere" aria-hidden="true">
           <span class="letter-hero__grain"></span>
         </div>
         <div class="letter-hero__layout">
           <div class="letter-hero__copy">
-            <p class="letter-hero__eyebrow">The O-SAAR Letter</p>
-            <h1 class="letter-hero__title" id="letter-title">
-              A little more clarity,<br />
-              delivered <em>gently</em>.
-            </h1>
-            <p class="letter-hero__lead">
-              Thoughtful reflections, practical insights and gentle reminders for your emotional wellbeing — delivered occasionally, never overwhelmingly.
-            </p>
-
             <form
               class="letter-invite"
               action="https://formsubmit.co/info.osaar@gmail.com"

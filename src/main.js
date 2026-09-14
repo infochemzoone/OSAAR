@@ -1,4 +1,5 @@
 import './style.css'
+import './inner-pages.css'
 import { initIntro, markSiteBrowsedInTab, dismissIntroShell } from './intro.js'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -49,10 +50,17 @@ const scheduleCloseDiscover = () => {
   discoverCloseTimer = window.setTimeout(() => setDiscoverOpen(false), 160)
 }
 
+const syncHeaderHeight = () => {
+  if (!header) return
+  const h = Math.ceil(header.getBoundingClientRect().height)
+  document.documentElement.style.setProperty('--header-h', `${h}px`)
+}
+
 const revealHeader = () => {
   if (!header) return
   requestAnimationFrame(() => {
     header.classList.add('is-ready')
+    syncHeaderHeight()
   })
 }
 
@@ -118,17 +126,36 @@ if (discover && discoverTrigger && discoverMega) {
   })
 }
 
-/* Sticky glass navbar — always visible; denser blur + shadow on scroll */
+/* Sticky glass navbar — fully hidden on scroll down, visible on scroll up */
 if (header) {
   let ticking = false
+  let lastY = 0
+  let wasScrolled = header.classList.contains('is-scrolled')
 
   const syncHeader = () => {
     ticking = false
 
     const y = Math.max(0, window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0)
+    const delta = y - lastY
+    const navOpen = nav?.classList.contains('is-open')
+    const discoverOpen = discover?.classList.contains('is-open')
+    const scrolled = y > 12
 
-    header.classList.toggle('is-scrolled', y > 12)
-    header.classList.remove('is-hidden')
+    header.classList.toggle('is-scrolled', scrolled)
+    if (scrolled !== wasScrolled) {
+      syncHeaderHeight()
+      wasScrolled = scrolled
+    }
+
+    if (navOpen || discoverOpen || y <= 24) {
+      header.classList.remove('is-hidden')
+    } else if (delta < 0) {
+      header.classList.remove('is-hidden')
+    } else if (delta > 0) {
+      header.classList.add('is-hidden')
+    }
+
+    lastY = y
   }
 
   const onScroll = () => {
@@ -139,7 +166,10 @@ if (header) {
 
   syncHeader()
   window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', syncHeader, { passive: true })
+  window.addEventListener('resize', () => {
+    syncHeaderHeight()
+    syncHeader()
+  }, { passive: true })
 }
 
 const initReveals = () => {

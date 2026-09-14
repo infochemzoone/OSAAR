@@ -117,12 +117,19 @@ main,
   isolation: isolate;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.22s ease,
+    visibility 0.28s;
+  will-change: transform, opacity;
 }
 
 .site-header.is-hidden {
-  transform: translate3d(0, calc(-100% - 1.5rem), 0);
+  transform: translate3d(0, calc(-100% - 2rem), 0);
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none !important;
 }
 
@@ -1329,6 +1336,8 @@ main,
 
   .site-header.is-hidden {
     transform: none;
+    opacity: 0;
+    visibility: hidden;
   }
 
   .brand,
@@ -16377,11 +16386,11 @@ main,
 }
 
 [data-reveal-stagger] .reveal {
-  transition-delay: calc(var(--reveal-i, 0) * 0.09s);
+  transition-delay: calc(var(--reveal-i, 0) * 0.08s);
 }
 
 [data-reveal-stagger] .reveal.is-visible {
-  transition-delay: calc(var(--reveal-i, 0) * 0.09s + 0.04s);
+  transition-delay: calc(var(--reveal-i, 0) * 0.08s + 0.04s);
 }
 
 @media (max-width: 1100px) {
@@ -16927,6 +16936,14 @@ body.intro-complete .site-footer {
   opacity: 1 !important;
 }
 
+html:not(.intro-pending):not(.intro-active) .site-header.is-hidden,
+body.intro-complete .site-header.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate3d(0, calc(-100% - 2rem), 0) !important;
+  pointer-events: none !important;
+}
+
 body.intro-complete .osaar-intro,
 .osaar-intro.is-gone {
   display: none !important;
@@ -17201,6 +17218,15 @@ body.intro-complete .site-header {
     filter 1.15s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+body.intro-complete .site-header.is-hidden,
+html.intro-exit .site-header.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, calc(-100% - 2rem), 0);
+  pointer-events: none !important;
+  filter: none;
+}
+
 html.intro-exit main,
 html.intro-exit .site-footer,
 body.intro-complete main,
@@ -17268,7 +17294,7 @@ html.intro-pending .osaar-intro {
    ═══════════════════════════════════════════ */
 
 .page-home {
-  --section-y: clamp(5rem, 8vw, 7.5rem);
+  --section-y: clamp(6rem, 9vw, 7.5rem);
   --card-radius: 1.35rem;
   --card-shadow: 0 14px 34px rgba(47, 41, 37, 0.06);
   --card-shadow-hover: 0 22px 44px rgba(47, 41, 37, 0.1);
@@ -19397,7 +19423,7 @@ html.intro-pending .osaar-intro {
 /* ── 768px — tablet portrait ── */
 @media (max-width: 768px) {
   .page-home {
-    --section-y: clamp(3.5rem, 8vw, 5rem);
+    --section-y: clamp(3.5rem, 8vw, 4rem);
   }
 
   .trust-band__inner {
@@ -19446,7 +19472,7 @@ html.intro-pending .osaar-intro {
 /* ── 375px — small mobile ── */
 @media (max-width: 375px) {
   .page-home {
-    --section-y: clamp(3rem, 9vw, 4rem);
+    --section-y: clamp(3.5rem, 9vw, 4rem);
   }
 
   .trust-stats {
@@ -19457,12 +19483,12 @@ html.intro-pending .osaar-intro {
     padding: 0.75rem 0.85rem;
   }
 
-  .voice-card,
-  .therapist-card,
-  .how-step,
-  .pricing-card,
-  .resource-card {
-    padding: 1rem;
+  .page-home .voice-card,
+  .page-home .therapist-card,
+  .page-home .how-step,
+  .page-home .pricing-card,
+  .page-home .resource-card {
+    padding: clamp(1.25rem, 4vw, var(--card-pad));
   }
 
   .pricing-card__amount {
@@ -19544,7 +19570,7 @@ html.intro-pending .osaar-intro {
 }
 
 /* ═══════════════════════════════════════════
-   v2 Part B — Typographic system (homepage)
+   v2 Part B — Typography, rhythm, section polish
    ═══════════════════════════════════════════ */
 
 .page-home {
@@ -19557,9 +19583,31 @@ html.intro-pending .osaar-intro {
   --type-lead-max: 38rem;
   --type-body-max: 36rem;
   --type-em-color: var(--burgundy);
+  --intro-eyebrow-gap: 0.75rem;
+  --intro-title-gap: 1.125rem;
+  --intro-lead-gap: 2.5rem;
+  --card-pad: clamp(1.75rem, 2.5vw, 2.5rem);
+  --card-ease: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.page-home [class$='__eyebrow'],
+.page-home .voice-card__quote p,
+.page-home .therapist-card__bio,
+.page-home .how-step__text,
+.page-home .resource-card__desc,
+.page-home .faq-item__a p,
+.page-home .topics__card-text {
+  max-width: var(--type-body-max);
+  line-height: 1.65;
+}
+
+/* ── 1. Typographic system ── */
+
+.page-home .home-voices__eyebrow,
+.page-home .home-therapists__eyebrow,
+.page-home .how-it-works__eyebrow,
+.page-home .home-pricing__eyebrow,
+.page-home .home-resources__eyebrow,
+.page-home .home-faq__eyebrow,
 .page-home .topics__eyebrow,
 .page-home .approach__eyebrow {
   font-size: var(--type-eyebrow-size);
@@ -19568,8 +19616,14 @@ html.intro-pending .osaar-intro {
   text-transform: uppercase;
 }
 
-.page-home [class$='__title'],
+.page-home .home-voices__title,
+.page-home .home-therapists__title,
+.page-home .how-it-works__title,
+.page-home .home-pricing__title,
+.page-home .home-resources__title,
+.page-home .home-faq__title,
 .page-home .topics__title,
+.page-home .here-if__title,
 .page-home .approach__philosophy-line:first-child {
   font-family: var(--font-display);
   font-size: var(--type-h2-size);
@@ -19578,8 +19632,14 @@ html.intro-pending .osaar-intro {
   line-height: var(--type-h2-lh);
 }
 
-.page-home [class$='__lead'],
-.page-home .topics__lead {
+.page-home .home-voices__lead,
+.page-home .home-therapists__lead,
+.page-home .how-it-works__lead,
+.page-home .home-pricing__lead,
+.page-home .home-resources__lead,
+.page-home .home-faq__lead,
+.page-home .topics__lead,
+.page-home .here-if__lead {
   font-size: var(--type-lead-size);
   line-height: var(--type-lead-lh);
   max-width: var(--type-lead-max);
@@ -19587,40 +19647,277 @@ html.intro-pending .osaar-intro {
   margin-right: auto;
 }
 
-.page-home em,
-.page-home .hero__title-accent,
+.page-home em:not(.hero__title-accent),
 .page-home .here-if__title-em,
 .page-home .here-if__statement-em,
 .page-home .release__gently,
 .page-home .release__home-focus,
-.page-home .approach__begin {
+.page-home .approach__begin,
+.page-home .note__alone {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 500;
-  color: var(--type-em-color);
 }
 
 .page-home .here-if__statement-em,
 .page-home .approach__begin,
 .page-home .release__gently,
-.page-home .release__home-focus {
+.page-home .release__home-focus,
+.page-home .note__alone {
   color: var(--hp-gold, var(--gold-soft));
 }
 
-.page-home [class$='__header'] {
+.page-home .home-voices__header,
+.page-home .home-therapists__header,
+.page-home .how-it-works__header,
+.page-home .home-pricing__header,
+.page-home .home-resources__header,
+.page-home .home-faq__header,
+.page-home .topics__header {
   text-align: center;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--intro-lead-gap);
 }
 
-.page-home [class$='__header'] [class$='__eyebrow'] {
-  margin-bottom: 0.75rem;
+.page-home .home-voices__header [class$='__eyebrow'],
+.page-home .home-therapists__header [class$='__eyebrow'],
+.page-home .how-it-works__header [class$='__eyebrow'],
+.page-home .home-pricing__header [class$='__eyebrow'],
+.page-home .home-resources__header [class$='__eyebrow'],
+.page-home .home-faq__header [class$='__eyebrow'] {
+  margin-bottom: var(--intro-eyebrow-gap);
 }
 
-.page-home [class$='__header'] [class$='__title'] {
+.page-home .home-voices__header [class$='__title'],
+.page-home .home-therapists__header [class$='__title'],
+.page-home .how-it-works__header [class$='__title'],
+.page-home .home-pricing__header [class$='__title'],
+.page-home .home-resources__header [class$='__title'],
+.page-home .home-faq__header [class$='__title'] {
+  margin-bottom: var(--intro-title-gap);
+}
+
+/* ── 2. Unified card system ── */
+
+.page-home .voice-card,
+.page-home .therapist-card,
+.page-home .how-step,
+.page-home .pricing-card,
+.page-home .resource-card {
+  padding: var(--card-pad);
+  transition:
+    transform var(--card-ease),
+    box-shadow var(--card-ease),
+    border-color var(--card-ease);
+}
+
+.page-home .pill-badge,
+.page-home .pricing-card__badge,
+.page-home .voice-card__tag {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+}
+
+.page-home .pricing-card__badge {
+  color: #fff;
+  background: var(--burgundy-deep);
+  box-shadow: 0 6px 16px rgba(92, 26, 42, 0.22);
+}
+
+.page-home .voice-card__tag {
+  color: var(--burgundy);
+  background: rgba(122, 36, 56, 0.07);
+  padding: 0.25rem 0.55rem;
+}
+
+/* ── 3. Hero ── */
+
+.page-home .hero__copy {
+  max-width: 36rem;
+}
+
+.page-home .hero__title {
+  margin-bottom: 1.75rem;
+}
+
+.page-home .hero__quote {
+  margin-bottom: 1.5rem;
+}
+
+.page-home .hero__text {
+  max-width: 32rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+
+.page-home .hero__actions {
+  margin-bottom: 2.25rem;
+}
+
+.page-home .hero__trust-rating {
   margin-bottom: 1rem;
 }
 
-/* FAQ accordion animation */
+.page-home .hero__trust-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.page-home .hero__badge {
+  min-height: 2.35rem;
+  padding: 0 1rem 0 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ── 4. Release (MASKS? EXPECTATIONS?) ── */
+
+.page-home .release__question {
+  max-width: 28rem;
+  font-size: clamp(1.1rem, 1.65vw, 1.35rem);
+  line-height: 1.5;
+  color: rgba(91, 34, 51, 0.82);
+}
+
+.page-home .release__invite {
+  border-left: 3px solid rgba(216, 180, 106, 0.75);
+  border-radius: 0 999px 999px 1.25rem;
+  padding-left: 1.35rem;
+}
+
+.page-home .release__statement {
+  font-size: clamp(1.3rem, 2.1vw, 1.85rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.45;
+  white-space: normal;
+  text-wrap: balance;
+  max-width: 28rem;
+}
+
+.page-home .release__home-climax {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 22rem;
+  margin-left: auto;
+}
+
+/* ── 5. Founder note ── */
+
+.page-home .note__compose {
+  align-items: start;
+  column-gap: clamp(2rem, 4vw, 4rem);
+  row-gap: clamp(1.25rem, 2.5vh, 2rem);
+}
+
+.page-home .note__hero {
+  justify-self: end;
+  align-self: start;
+}
+
+.page-home .note__editorial {
+  align-self: center;
+  max-width: 36rem;
+}
+
+.page-home .note__lede {
+  max-width: 34rem;
+  line-height: 1.65;
+}
+
+.page-home .note__expect {
+  margin-top: 0.5rem;
+}
+
+.page-home .note__expect-grid {
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.page-home .note__expect-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--card-pad) 1.25rem;
+  border-radius: var(--card-radius);
+  background: rgba(255, 248, 240, 0.06);
+  border: 1px solid rgba(216, 180, 106, 0.18);
+  box-shadow: 0 10px 28px rgba(20, 6, 10, 0.12);
+  transition:
+    transform var(--card-ease),
+    box-shadow var(--card-ease),
+    border-color var(--card-ease);
+}
+
+.page-home .note__expect-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216, 180, 106, 0.38);
+  box-shadow: 0 16px 36px rgba(20, 6, 10, 0.16);
+}
+
+.page-home .note__expect-num {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.page-home .note__expect-heading {
+  margin-bottom: 0.45rem;
+}
+
+.page-home .note__expect-text {
+  max-width: 14rem;
+  line-height: 1.6;
+}
+
+/* ── 6. Pricing featured card ── */
+
+@media (min-width: 901px) {
+  .page-home .home-pricing__grid {
+    align-items: stretch;
+    grid-template-columns: 1fr 1.08fr 1fr;
+  }
+
+  .page-home .pricing-card--featured {
+    padding: calc(var(--card-pad) + 0.35rem) var(--card-pad);
+    border-width: 1.5px;
+    border-color: rgba(92, 26, 42, 0.28);
+    box-shadow:
+      0 24px 52px rgba(92, 26, 42, 0.14),
+      0 0 0 1px rgba(92, 26, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  .page-home .pricing-card--featured.reveal.is-visible:hover,
+  .page-home .pricing-card--featured:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 28px 56px rgba(92, 26, 42, 0.18),
+      0 0 32px rgba(92, 26, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* ── 7. FAQ accordion ── */
+
+.home-faq__list .faq-item {
+  transition: background 0.35s var(--ease);
+}
+
+.home-faq__list .faq-item[open] {
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: 0.65rem;
+}
+
 .home-faq__list .faq-item__a {
   display: grid;
   grid-template-rows: 0fr;
@@ -19642,10 +19939,89 @@ html.intro-pending .osaar-intro {
   overflow: hidden;
 }
 
+.home-faq__list .faq-item[open] .faq-item__q {
+  color: var(--burgundy-deep);
+}
+
+@media (max-width: 900px) {
+  .page-home .note__compose {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'hero'
+      'editorial'
+      'strip'
+      'expect';
+  }
+
+  .page-home .note__hero {
+    justify-self: center;
+    width: min(100%, 16rem);
+  }
+
+  .page-home .note__expect-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .page-home .note__expect-grid {
+    grid-template-columns: 1fr;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-home .hero__trust-list {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .page-home .pricing-card--featured {
+    border-color: rgba(92, 26, 42, 0.26);
+    box-shadow:
+      0 20px 44px rgba(92, 26, 42, 0.12),
+      0 0 0 1px rgba(92, 26, 42, 0.08);
+  }
+
+  .page-home .release__statement {
+    font-size: clamp(1.2rem, 4.2vw, 1.55rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-faq__list .faq-item__a {
     transition: none;
   }
+
+  .page-home .note__expect-item:hover {
+    transform: none;
+  }
+}
+
+/* ── 8. Final polish — secondary CTAs ── */
+
+.page-home .home-resources__btn {
+  min-height: 2.75rem;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border-color: rgba(92, 26, 42, 0.22);
+  transition:
+    transform 0.45s var(--ease),
+    border-color 0.45s var(--ease),
+    color 0.45s var(--ease),
+    box-shadow 0.45s var(--ease);
+}
+
+.page-home .home-resources__btn:hover,
+.page-home .home-resources__btn:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--burgundy-deep);
+  color: var(--burgundy-deep);
+  box-shadow: 0 10px 24px rgba(92, 26, 42, 0.1);
 }
 
 
