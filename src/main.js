@@ -2214,13 +2214,14 @@ const initMeetStatCounts = () => {
       return
     }
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || Number(el.textContent) >= target) {
       el.textContent = String(target)
       return
     }
 
     const duration = target >= 800 ? 1600 : 1200
     const start = performance.now()
+    el.textContent = '0'
 
     const tick = (now) => {
       const t = Math.min(1, (now - start) / duration)
@@ -2239,6 +2240,18 @@ const initMeetStatCounts = () => {
     root.querySelectorAll('[data-count]').forEach(animateCount)
   }
 
+  roots.forEach((root) => {
+    root.querySelectorAll('[data-count]').forEach((el) => {
+      const target = el.getAttribute('data-count')
+      if (target) el.textContent = target
+    })
+
+    const rect = root.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      run(root)
+    }
+  })
+
   if (!('IntersectionObserver' in window)) {
     roots.forEach(run)
     return
@@ -2253,10 +2266,12 @@ const initMeetStatCounts = () => {
         }
       })
     },
-    { threshold: 0.35 },
+    { threshold: 0.15, rootMargin: '0px 0px -5% 0px' },
   )
 
-  roots.forEach((root) => spy.observe(root))
+  roots.forEach((root) => {
+    if (root.dataset.counted !== 'true') spy.observe(root)
+  })
 }
 
 initMeetStatCounts()

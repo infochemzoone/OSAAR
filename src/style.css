@@ -4634,6 +4634,23 @@ main,
   white-space: nowrap;
 }
 
+.here-if__state-desc {
+  margin: 0.35rem 0 0.45rem;
+  max-width: 14rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 0.28vw + 0.62rem, 0.84rem);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgba(255, 248, 242, calc(0.58 + var(--glow) * 0.22));
+}
+
+.here-if__state--2 .here-if__state-desc,
+.here-if__state--4 .here-if__state-desc {
+  margin-left: auto;
+  text-align: right;
+}
+
 .here-if__state-rule {
   display: block;
   width: 100%;
@@ -4742,6 +4759,19 @@ main,
   font-weight: 300;
   letter-spacing: 0.02em;
   color: var(--hi-light-muted);
+}
+
+.here-if__closing {
+  margin: 0;
+  max-width: 20rem;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 0.45vw + 0.78rem, 1.12rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: rgba(255, 248, 242, 0.72);
+  text-align: right;
 }
 
 .here-if__promises {
@@ -5009,6 +5039,22 @@ main,
   .here-if__statement {
     text-align: center;
     max-width: none;
+  }
+
+  .here-if__closing {
+    text-align: center;
+    max-width: none;
+  }
+
+  .here-if__state-desc {
+    max-width: none;
+    text-align: left;
+  }
+
+  .here-if__state--2 .here-if__state-desc,
+  .here-if__state--4 .here-if__state-desc {
+    text-align: left;
+    margin-left: 0;
   }
 
   .here-if__promises {
@@ -17866,9 +17912,12 @@ html.intro-pending .osaar-intro {
 
 .home-therapists__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  max-width: 52rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .therapist-card {
@@ -18039,29 +18088,10 @@ html.intro-pending .osaar-intro {
   transition-delay: 0.22s;
 }
 
-@media (max-width: 1024px) {
-  .home-therapists__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .home-therapists__grid .therapist-card:nth-child(3) {
-    grid-column: 1 / -1;
-    max-width: 22rem;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-
 @media (max-width: 640px) {
   .home-therapists__grid {
     grid-template-columns: 1fr;
     max-width: 22rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .home-therapists__grid .therapist-card:nth-child(3) {
-    max-width: none;
   }
 }
 
@@ -18665,9 +18695,6 @@ html.intro-pending .osaar-intro {
 .voice-card__meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
   margin-bottom: 0.85rem;
 }
 
@@ -19513,6 +19540,111 @@ html.intro-pending .osaar-intro {
   .page-home .home-resources,
   .page-home .home-faq {
     content-visibility: visible;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   v2 Part B — Typographic system (homepage)
+   ═══════════════════════════════════════════ */
+
+.page-home {
+  --type-eyebrow-size: 0.7rem;
+  --type-eyebrow-track: 0.28em;
+  --type-h2-size: clamp(2rem, 3.6vw, 2.65rem);
+  --type-h2-lh: 1.12;
+  --type-lead-size: clamp(0.98rem, 1.2vw, 1.08rem);
+  --type-lead-lh: 1.65;
+  --type-lead-max: 38rem;
+  --type-body-max: 36rem;
+  --type-em-color: var(--burgundy);
+}
+
+.page-home [class$='__eyebrow'],
+.page-home .topics__eyebrow,
+.page-home .approach__eyebrow {
+  font-size: var(--type-eyebrow-size);
+  font-weight: 500;
+  letter-spacing: var(--type-eyebrow-track);
+  text-transform: uppercase;
+}
+
+.page-home [class$='__title'],
+.page-home .topics__title,
+.page-home .approach__philosophy-line:first-child {
+  font-family: var(--font-display);
+  font-size: var(--type-h2-size);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: var(--type-h2-lh);
+}
+
+.page-home [class$='__lead'],
+.page-home .topics__lead {
+  font-size: var(--type-lead-size);
+  line-height: var(--type-lead-lh);
+  max-width: var(--type-lead-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-home em,
+.page-home .hero__title-accent,
+.page-home .here-if__title-em,
+.page-home .here-if__statement-em,
+.page-home .release__gently,
+.page-home .release__home-focus,
+.page-home .approach__begin {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--type-em-color);
+}
+
+.page-home .here-if__statement-em,
+.page-home .approach__begin,
+.page-home .release__gently,
+.page-home .release__home-focus {
+  color: var(--hp-gold, var(--gold-soft));
+}
+
+.page-home [class$='__header'] {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.page-home [class$='__header'] [class$='__eyebrow'] {
+  margin-bottom: 0.75rem;
+}
+
+.page-home [class$='__header'] [class$='__title'] {
+  margin-bottom: 1rem;
+}
+
+/* FAQ accordion animation */
+.home-faq__list .faq-item__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition:
+    grid-template-rows 0.45s var(--ease),
+    padding 0.45s var(--ease);
+}
+
+.home-faq__list .faq-item[open] .faq-item__a {
+  grid-template-rows: 1fr;
+  padding-bottom: 1.45rem;
+}
+
+.home-faq__list .faq-item__a > p {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-faq__list .faq-item__a {
+    transition: none;
   }
 }
 
