@@ -118,52 +118,17 @@ if (discover && discoverTrigger && discoverMega) {
   })
 }
 
-/* Floating glass navbar — denser glass on scroll; hide on scroll down, show on scroll up */
+/* Sticky glass navbar — always visible; denser blur + shadow on scroll */
 if (header) {
-  let lastY = window.scrollY
   let ticking = false
-
-  const isNavBusy = () =>
-    Boolean(nav?.classList.contains('is-open') || discover?.classList.contains('is-open'))
-
-  const showHeader = () => {
-    header.classList.remove('is-hidden')
-  }
-
-  const hideHeader = () => {
-    if (isNavBusy()) return
-    header.classList.add('is-hidden')
-    closeDiscover()
-  }
 
   const syncHeader = () => {
     ticking = false
 
     const y = Math.max(0, window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0)
-    const delta = y - lastY
-    lastY = y
 
     header.classList.toggle('is-scrolled', y > 12)
-
-    /* Always visible at top or while menus are open */
-    if (y < 48 || isNavBusy()) {
-      showHeader()
-      return
-    }
-
-    /* Ignore micro jitter */
-    if (Math.abs(delta) < 4) return
-
-    /* Scroll down → hide once past hero strip */
-    if (delta > 0 && y > 72) {
-      hideHeader()
-      return
-    }
-
-    /* Scroll up → reveal */
-    if (delta < 0) {
-      showHeader()
-    }
+    header.classList.remove('is-hidden')
   }
 
   const onScroll = () => {
@@ -172,36 +137,59 @@ if (header) {
     requestAnimationFrame(syncHeader)
   }
 
-  /* Keep visible while focusing inside the bar, but never block scroll-hide */
-  header.addEventListener('focusin', showHeader)
-
   syncHeader()
   window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', () => {
-    lastY = Math.max(0, window.scrollY || 0)
-    syncHeader()
-  }, { passive: true })
+  window.addEventListener('resize', syncHeader, { passive: true })
 }
 
-const reveals = document.querySelectorAll('.reveal')
+const initReveals = () => {
+  const reveals = document.querySelectorAll('.reveal')
+  if (!reveals.length) return
 
-if (reveals.length && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.15, rootMargin: '0px 0px -5% 0px' },
-  )
+  const revealOptions = {
+    threshold: 0.12,
+    rootMargin: '0px 0px -6% 0px',
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('is-visible'))
+    return
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+      entry.target.classList.add('is-visible')
+      observer.unobserve(entry.target)
+    })
+  }, revealOptions)
 
   reveals.forEach((el) => observer.observe(el))
-} else {
-  reveals.forEach((el) => el.classList.add('is-visible'))
+
+  document.querySelectorAll('[data-reveal-stagger]').forEach((group) => {
+    const items = group.querySelectorAll('.reveal')
+    if (!items.length) return
+
+    const staggerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          items.forEach((item, index) => {
+            item.style.setProperty('--reveal-i', String(index))
+            requestAnimationFrame(() => item.classList.add('is-visible'))
+          })
+          staggerObserver.unobserve(entry.target)
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -8% 0px' },
+    )
+
+    staggerObserver.observe(group)
+    items.forEach((item) => observer.unobserve(item))
+  })
 }
+
+initReveals()
 
 const parallaxRoot = document.querySelector('[data-parallax]')
 
@@ -1547,10 +1535,10 @@ const initHereIf = () => {
 
   const desktopMq = window.matchMedia('(min-width: 861px)')
   const finePointer = window.matchMedia('(pointer: fine)')
-  const cards = Array.from(section.querySelectorAll('[data-here-card]'))
+  const states = Array.from(section.querySelectorAll('[data-here-state]'))
   const features = Array.from(section.querySelectorAll('[data-here-feature]'))
-  const lotus = section.querySelector('[data-here-lotus]')
-  const ctaPanel = section.querySelector('[data-here-cta]')
+  const core = section.querySelector('[data-here-core]')
+  const statement = section.querySelector('[data-here-statement]')
   const layers = Array.from(section.querySelectorAll('[data-here-parallax]'))
 
   let raf = 0
@@ -1587,11 +1575,11 @@ const initHereIf = () => {
       el.style.setProperty('--ply', `${(-dy * depth * 70).toFixed(2)}px`)
     })
 
-    cards.forEach((card) => {
-      const glow = proximity(nx, ny, card, 0.04, 0.22)
-      const prev = Number(card.style.getPropertyValue('--glow') || 0)
+    states.forEach((state) => {
+      const glow = proximity(nx, ny, state, 0.03, 0.18)
+      const prev = Number(state.style.getPropertyValue('--glow') || 0)
       const next = prev + (glow - prev) * 0.4
-      card.style.setProperty('--glow', next.toFixed(3))
+      state.style.setProperty('--glow', next.toFixed(3))
     })
 
     features.forEach((feature) => {
@@ -1601,20 +1589,20 @@ const initHereIf = () => {
       feature.style.setProperty('--glow', next.toFixed(3))
     })
 
-    if (lotus) {
-      const glow = proximity(nx, ny, lotus, 0.03, 0.2)
-      const prev = Number(lotus.style.getPropertyValue('--glow') || 0)
-      const next = prev + (glow - prev) * 0.42
-      lotus.style.setProperty('--glow', next.toFixed(3))
+    if (core) {
+      const glow = proximity(nx, ny, core, 0.02, 0.22)
+      const prev = Number(core.style.getPropertyValue('--glow') || 0)
+      const next = prev + (glow - prev) * 0.35
+      core.style.setProperty('--glow', next.toFixed(3))
     }
 
-    if (ctaPanel) {
+    if (statement) {
       ctaX += (ctaXT - ctaX) * 0.28
       ctaY += (ctaYT - ctaY) * 0.28
       ctaGlow += (ctaGlowT - ctaGlow) * 0.3
-      ctaPanel.style.setProperty('--cx', ctaX.toFixed(4))
-      ctaPanel.style.setProperty('--cy', ctaY.toFixed(4))
-      ctaPanel.style.setProperty('--glow', ctaGlow.toFixed(3))
+      statement.style.setProperty('--cx', ctaX.toFixed(4))
+      statement.style.setProperty('--cy', ctaY.toFixed(4))
+      statement.style.setProperty('--glow', ctaGlow.toFixed(3))
     }
   }
 
@@ -1634,7 +1622,7 @@ const initHereIf = () => {
       Math.abs(ctaYT - ctaY) > 0.001 ||
       Math.abs(ctaGlowT - ctaGlow) > 0.002
 
-    const stillGlowing = [...cards, ...features, lotus, ctaPanel].some((el) => {
+    const stillGlowing = [...states, ...features, core, statement].some((el) => {
       if (!el) return false
       return Number(el.style.getPropertyValue('--glow') || 0) > 0.008
     })
@@ -1652,19 +1640,19 @@ const initHereIf = () => {
     targetY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
     section.classList.add('is-cursor')
 
-    if (ctaPanel) {
-      const cRect = ctaPanel.getBoundingClientRect()
+    if (statement) {
+      const sRect = statement.getBoundingClientRect()
       const inside =
-        event.clientX >= cRect.left &&
-        event.clientX <= cRect.right &&
-        event.clientY >= cRect.top &&
-        event.clientY <= cRect.bottom
-      if (inside && cRect.width > 0 && cRect.height > 0) {
-        ctaXT = Math.max(0, Math.min(1, (event.clientX - cRect.left) / cRect.width))
-        ctaYT = Math.max(0, Math.min(1, (event.clientY - cRect.top) / cRect.height))
+        event.clientX >= sRect.left &&
+        event.clientX <= sRect.right &&
+        event.clientY >= sRect.top &&
+        event.clientY <= sRect.bottom
+      if (inside && sRect.width > 0 && sRect.height > 0) {
+        ctaXT = Math.max(0, Math.min(1, (event.clientX - sRect.left) / sRect.width))
+        ctaYT = Math.max(0, Math.min(1, (event.clientY - sRect.top) / sRect.height))
         ctaGlowT = 1
       } else {
-        ctaGlowT = proximity(targetX, targetY, ctaPanel, 0.04, 0.2) * 0.45
+        ctaGlowT = proximity(targetX, targetY, statement, 0.04, 0.2) * 0.45
         ctaXT = 0.5
         ctaYT = 0.5
       }
@@ -1691,10 +1679,10 @@ const initHereIf = () => {
       section.addEventListener('pointerleave', onLeave)
     } else {
       section.classList.remove('is-cursor')
-      cards.forEach((card) => card.style.setProperty('--glow', '0'))
+      states.forEach((state) => state.style.setProperty('--glow', '0'))
       features.forEach((feature) => feature.style.setProperty('--glow', '0'))
-      if (lotus) lotus.style.setProperty('--glow', '0')
-      if (ctaPanel) ctaPanel.style.setProperty('--glow', '0')
+      if (core) core.style.setProperty('--glow', '0')
+      if (statement) statement.style.setProperty('--glow', '0')
       ctaGlow = 0
       ctaGlowT = 0
       applyLive(0.5, 0.5)
@@ -1716,6 +1704,11 @@ const initHereIf = () => {
     return
   }
 
+  if (desktopMq.matches) {
+    reveal()
+    return
+  }
+
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(
       (entries) => {
@@ -1726,7 +1719,7 @@ const initHereIf = () => {
           }
         })
       },
-      { threshold: 0.14, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.08, rootMargin: '0px' },
     )
     io.observe(section)
   } else {
@@ -2267,4 +2260,22 @@ const initMeetStatCounts = () => {
 }
 
 initMeetStatCounts()
+
+const initHomeFaq = () => {
+  const list = document.querySelector('[data-home-faq]')
+  if (!list) return
+
+  const items = [...list.querySelectorAll('details.faq-item')]
+
+  items.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return
+      items.forEach((other) => {
+        if (other !== item) other.open = false
+      })
+    })
+  })
+}
+
+initHomeFaq()
 

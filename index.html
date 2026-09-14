@@ -123,6 +123,7 @@
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <div
       class="osaar-intro"
       id="osaar-intro"
@@ -308,7 +309,7 @@
       </div>
     </header>
 
-    <main>
+    <main class="page-home" id="main-content" tabindex="-1">
       <section class="hero" aria-label="O-Saar introduction">
         <div class="hero__world" aria-hidden="true">
           <div class="hero__paper"></div>
@@ -452,6 +453,78 @@
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="trust-band" aria-label="Trust and credentials">
+        <div class="trust-band__inner">
+          <div class="trust-stats reveal" data-meet-stats aria-label="Impact at a glance">
+            <div class="trust-stats__item">
+              <p class="trust-stats__value">
+                <span data-count="500">0</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
+              </p>
+              <p class="trust-stats__label">Sessions held</p>
+            </div>
+            <span class="trust-stats__divider" aria-hidden="true"></span>
+            <div class="trust-stats__item">
+              <p class="trust-stats__value">
+                <span data-count="200">0</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
+              </p>
+              <p class="trust-stats__label">People supported</p>
+            </div>
+            <span class="trust-stats__divider" aria-hidden="true"></span>
+            <div class="trust-stats__item trust-stats__item--rating">
+              <p class="trust-stats__value">
+                <span class="trust-stats__rating" aria-label="4.9 out of 5 stars">4.9</span>
+                <span class="trust-stats__stars" aria-hidden="true">★</span>
+              </p>
+              <p class="trust-stats__label">Average rating</p>
+            </div>
+          </div>
+
+          <ul class="trust-credentials reveal" aria-label="Professional standards">
+            <li class="trust-credentials__item">
+              <span class="trust-credentials__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 3 4 7v5c0 4.2 3.4 7.8 8 9 4.6-1.2 8-4.8 8-9V7l-8-4z"
+                    stroke="currentColor"
+                    stroke-width="1.3"
+                    stroke-linejoin="round"
+                  />
+                  <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="trust-credentials__text">
+                <strong>Licensed counsellors</strong>
+                <span>Qualified, registered practitioners</span>
+              </span>
+            </li>
+            <li class="trust-credentials__item">
+              <span class="trust-credentials__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3" />
+                  <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="trust-credentials__text">
+                <strong>Confidential sessions</strong>
+                <span>Private, trauma-informed care</span>
+              </span>
+            </li>
+            <li class="trust-credentials__item">
+              <span class="trust-credentials__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                  <path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="trust-credentials__text">
+                <strong>Data privacy</strong>
+                <span>Secure, compliant record-keeping</span>
+              </span>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -734,174 +807,203 @@
         style="--mx: 0.5; --my: 0.5"
       >
         <div class="here-if__atmosphere" aria-hidden="true">
-          <picture class="here-if__bg" data-here-parallax="0.04">
-            <source srcset="/images/here-if-room.webp" type="image/webp" />
-            <img src="/images/here-if-room.jpg" alt="" width="1536" height="1024" decoding="async" />
+          <div class="here-if__base"></div>
+          <div class="here-if__wash here-if__wash--upper"></div>
+          <div class="here-if__wash here-if__wash--mid"></div>
+          <div class="here-if__wash here-if__wash--lower"></div>
+          <div class="here-if__bloom" data-here-parallax="0.015"></div>
+          <div class="here-if__blob here-if__blob--1" data-here-parallax="0.04"></div>
+          <div class="here-if__blob here-if__blob--2" data-here-parallax="0.06"></div>
+          <div class="here-if__blob here-if__blob--3" data-here-parallax="0.03"></div>
+          <div class="here-if__blob here-if__blob--4" data-here-parallax="0.025"></div>
+          <div class="here-if__shadow here-if__shadow--1"></div>
+          <div class="here-if__shadow here-if__shadow--2"></div>
+          <div class="here-if__haze"></div>
+          <picture class="here-if__frond here-if__frond--left" data-here-parallax="0.045" aria-hidden="true">
+            <source srcset="/images/topics-leaf-left.webp" type="image/webp" />
+            <img src="/images/topics-leaf-left.png" alt="" width="640" height="960" decoding="async" />
           </picture>
-          <div class="here-if__wash"></div>
+          <picture class="here-if__frond here-if__frond--right" data-here-parallax="0.035" aria-hidden="true">
+            <source srcset="/images/topics-leaf-right.webp" type="image/webp" />
+            <img src="/images/topics-leaf-right.png" alt="" width="640" height="960" decoding="async" />
+          </picture>
+          <div class="here-if__vignette"></div>
+          <div class="here-if__grain"></div>
           <div class="here-if__cursor-glow"></div>
-          <div class="here-if__fall here-if__fall--left">
-            <svg class="here-if__fall-leaf here-if__fall-leaf--1" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--2" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--3" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--4" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-          </div>
-          <div class="here-if__fall here-if__fall--right">
-            <svg class="here-if__fall-leaf here-if__fall-leaf--5" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--6" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--7" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-            <svg class="here-if__fall-leaf here-if__fall-leaf--8" viewBox="0 0 24 36" fill="none"><path d="M12 34C12 34 4 24 4 14C4 8 8 4 12 2C16 4 20 8 20 14C20 24 12 34 12 34Z" fill="currentColor"/><path d="M12 34V10" stroke="currentColor" stroke-width="0.7" opacity="0.45"/></svg>
-          </div>
         </div>
 
         <div class="here-if__inner">
-          <header class="here-if__header" data-here-reveal="header">
-            <p class="here-if__eyebrow">It’s Okay to Not Be Okay</p>
-            <div class="here-if__divider" aria-hidden="true">
-              <span class="here-if__divider-rule"></span>
-              <svg class="here-if__divider-lotus" viewBox="0 0 28 28" width="14" height="14">
-                <path d="M14 4c1.2 3.2 3.4 5.4 6.8 6.4-3.4 1-5.6 3.2-6.8 6.4-1.2-3.2-3.4-5.4-6.8-6.4C10.6 9.4 12.8 7.2 14 4z" fill="currentColor" />
-              </svg>
-              <span class="here-if__divider-rule"></span>
+          <div class="here-if__canvas">
+            <header class="here-if__intro" data-here-reveal="intro">
+              <p class="here-if__eyebrow">It’s okay to not be okay</p>
+              <h2 class="here-if__title" id="here-if-title">
+                You might be<br />
+                <em class="here-if__title-em">here if…</em>
+              </h2>
+            </header>
+
+            <div class="here-if__lead-panel" data-here-reveal="intro">
+              <p class="here-if__lead">
+                Sometimes the hardest part isn’t knowing what’s wrong. It’s finding words for what
+                you’re feeling.
+              </p>
             </div>
-            <h2 class="here-if__title" id="here-if-title">
-              You might be <em class="here-if__title-em">here if…</em>
-            </h2>
-            <p class="here-if__lead">
-              Sometimes the hardest part isn’t knowing what’s wrong. It’s finding words for what
-              you’re feeling.
-            </p>
-          </header>
 
-          <div class="here-if__grid" data-here-reveal="grid">
-            <article class="here-if__card" data-here-card style="--glow: 0">
-              <span class="here-if__card-num">01</span>
-              <div class="here-if__sphere" aria-hidden="true">
-                <svg class="here-if__sphere-icon" viewBox="0 0 64 64" fill="none">
-                  <path d="M22 28c6-10 18-10 22-2 3 6-1 12-7 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                  <path d="M42 36c6 8-2 16-12 16-8 0-14-6-12-14 1-5 6-8 11-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                  <path d="M29 31c-7 2-10 10-6 16 5 7 16 5 18-3" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" />
-                  <path d="M34 24c8 1 12 8 8 14-2 4-7 6-12 5" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" opacity="0.75" />
-                  <circle cx="32" cy="33" r="2.2" fill="currentColor" opacity="0.9" />
-                </svg>
-              </div>
-              <h3 class="here-if__card-title">Overthinking</h3>
-              <p class="here-if__card-text">
-                You replay conversations, decisions, and moments long after they’ve passed.
-              </p>
-            </article>
-
-            <article class="here-if__card" data-here-card style="--glow: 0">
-              <span class="here-if__card-num">02</span>
-              <div class="here-if__sphere" aria-hidden="true">
-                <svg class="here-if__sphere-icon" viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="18" r="5.2" stroke="currentColor" stroke-width="1.6" />
-                  <path d="M22 46c1.5-9 5-15 10-18 5 3 8.5 9 10 18" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M24 36c3-1 5.5 1 8 4 2.5-3 5-5 8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7" />
-                  <path d="M23 46h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.55" />
-                </svg>
-              </div>
-              <h3 class="here-if__card-title">Feeling Stuck</h3>
-              <p class="here-if__card-text">
-                You know something feels off, but can’t explain why.
-              </p>
-            </article>
-
-            <article class="here-if__card" data-here-card style="--glow: 0">
-              <span class="here-if__card-num">03</span>
-              <div class="here-if__sphere" aria-hidden="true">
-                <svg class="here-if__sphere-icon" viewBox="0 0 64 64" fill="none">
-                  <path d="M18 30a14 14 0 0 1 22-9" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" />
-                  <path d="M36 15l3.2 6.5 6.8-1.2" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M46 34a14 14 0 0 1-22 9" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" />
-                  <path d="M28 49l-3.2-6.5-6.8 1.2" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </div>
-              <h3 class="here-if__card-title">Repeating Patterns</h3>
-              <p class="here-if__card-text">
-                You notice the same emotional cycles repeating again and again.
-              </p>
-            </article>
-
-            <article class="here-if__card" data-here-card style="--glow: 0">
-              <span class="here-if__card-num">04</span>
-              <div class="here-if__sphere" aria-hidden="true">
-                <svg class="here-if__sphere-icon" viewBox="0 0 64 64" fill="none">
-                  <path d="M18 30c0-6.5 5.2-11.5 11.5-11.5 1.8 0 3.5.4 5 1.2A9.2 9.2 0 0 1 46 28c4 0 6.5 2.8 6.5 6.4S50 41 46 41H20c-4 0-6.5-3-6.5-6.6S14 30 18 30z" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round" />
-                  <path d="M24 45v5M32 45v6.5M40 45v5" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" opacity="0.85" />
-                  <path d="M28 48v3.5M36 48v3.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" opacity="0.5" />
-                </svg>
-              </div>
-              <h3 class="here-if__card-title">Feeling Misunderstood</h3>
-              <p class="here-if__card-text">
-                You’re tired of hearing “just be positive” when that’s not what you need.
-              </p>
-            </article>
-          </div>
-
-          <div class="here-if__cta" data-here-reveal="cta" data-here-cta style="--glow: 0; --cx: 0.5; --cy: 0.5">
-            <div class="here-if__cta-glow" aria-hidden="true"></div>
-            <div class="here-if__cta-main">
-              <div class="here-if__cta-leaf" aria-hidden="true">
-                <svg viewBox="0 0 72 140" fill="none">
-                  <path d="M30 132c5-32 3-60-7-92C19 24 22 10 34 4" stroke="currentColor" stroke-width="1.15" opacity="0.75" />
-                  <path d="M26 44c-11 3.5-20-1.5-23-11 9-5.5 18-5.5 23 2z" fill="currentColor" opacity="0.38" />
-                  <path d="M28 72c-12.5 2.5-21.5-3.5-25-12.5 10.5-5.5 19.5-3.5 25 3.5z" fill="currentColor" opacity="0.3" />
-                  <path d="M30 100c-10.5 2-18-3.5-20-11 9-4.5 16-2.5 20 2.5z" fill="currentColor" opacity="0.24" />
-                  <path d="M34 32c9-2 16 2 20 9-7.5 5.5-14.5 5.5-20 2z" fill="currentColor" opacity="0.22" />
-                </svg>
-              </div>
-              <div class="here-if__cta-body">
-                <p class="here-if__cta-kicker">You don’t need fixing.</p>
-                <span class="here-if__cta-rule" aria-hidden="true"></span>
-                <p class="here-if__cta-line">You need <em>understanding.</em></p>
-                <div class="here-if__cta-mark" aria-hidden="true">
-                  <span class="here-if__cta-mark-rule"></span>
-                  <svg class="here-if__cta-lotus" data-here-lotus viewBox="0 0 48 28" aria-hidden="true" style="--glow: 0">
-                    <path d="M24 26c-6-8-4-16 0-20 4 4 6 12 0 20z" fill="currentColor" opacity=".85" />
-                    <path d="M24 26c-10-6-12-14-8-18 6 4 8 10 8 18z" fill="currentColor" opacity=".55" />
-                    <path d="M24 26c10-6 12-14 8-18-6 4-8 10-8 18z" fill="currentColor" opacity=".45" />
-                  </svg>
-                  <span class="here-if__cta-mark-rule"></span>
-                </div>
-                <p class="here-if__cta-note">This is where O-SAAR begins.</p>
-              </div>
-            </div>
-            <div class="here-if__features">
-              <div class="here-if__feature" data-here-feature style="--glow: 0">
-                <span class="here-if__feature-icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32" fill="none">
-                    <path d="M16 4l10 4v8c0 7-4.5 11.5-10 14-5.5-2.5-10-7-10-14V8l10-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
-                    <path d="M11.5 16.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
-                <span class="here-if__feature-text">A safe space to be honest and heard</span>
-              </div>
-              <div class="here-if__feature" data-here-feature style="--glow: 0">
-                <span class="here-if__feature-icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32" fill="none">
-                    <path d="M16 6c1.4 3.6 3.8 6 7.6 7.2-3.8 1.2-6.2 3.6-7.6 7.2-1.4-3.6-3.8-6-7.6-7.2C12.2 12 14.6 9.6 16 6z" fill="currentColor" />
-                  </svg>
-                </span>
-                <span class="here-if__feature-text">Therapy that meets you where you are</span>
-              </div>
-              <div class="here-if__feature" data-here-feature style="--glow: 0">
-                <span class="here-if__feature-icon" aria-hidden="true">
-                  <svg viewBox="0 0 32 32" fill="none">
-                    <path d="M16 27s-9-5.8-9-13a5.2 5.2 0 0 1 9-3.5A5.2 5.2 0 0 1 25 14c0 7.2-9 13-9 13z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" />
-                  </svg>
-                </span>
-                <span class="here-if__feature-text">Support that helps you move forward</span>
-              </div>
-            </div>
-          </div>
-
-          <footer class="here-if__values" data-here-reveal="values">
-            <p class="here-if__values-text">Compassion · Clarity · Connection · Growth</p>
-            <svg class="here-if__values-lotus" viewBox="0 0 28 28" width="14" height="14" aria-hidden="true">
-              <path d="M14 4c1.2 3.2 3.4 5.4 6.8 6.4-3.4 1-5.6 3.2-6.8 6.4-1.2-3.2-3.4-5.4-6.8-6.4C10.6 9.4 12.8 7.2 14 4z" fill="currentColor" />
+            <svg class="here-if__threads" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
+              <path class="here-if__thread here-if__thread--1" d="M16 34 C28 36 40 40 50 46" />
+              <path class="here-if__thread here-if__thread--2" d="M84 34 C72 36 60 40 50 46" />
+              <path class="here-if__thread here-if__thread--3" d="M16 60 C28 58 40 54 50 50" />
+              <path class="here-if__thread here-if__thread--4" d="M84 60 C72 58 60 54 50 50" />
+              <circle class="here-if__thread-dot here-if__thread-dot--1" cx="16" cy="34" r="0.28" />
+              <circle class="here-if__thread-dot here-if__thread-dot--2" cx="84" cy="34" r="0.28" />
+              <circle class="here-if__thread-dot here-if__thread-dot--3" cx="16" cy="60" r="0.28" />
+              <circle class="here-if__thread-dot here-if__thread-dot--4" cx="84" cy="60" r="0.28" />
             </svg>
-          </footer>
+
+            <div class="here-if__core" data-here-core style="--glow: 0" aria-hidden="true" data-here-reveal="hero">
+              <div class="here-if__core-aura"></div>
+              <svg class="here-if__core-flows" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+                <path d="M250 250c-60-90-140-80-170-10s20 130 90 150 130-40 80-140" fill="url(#hiFlowA)" opacity="0.55" />
+                <path d="M250 250c70-75 150-45 140 25s-95 105-165 70-70-105 25-95" fill="url(#hiFlowB)" opacity="0.48" />
+                <path d="M250 250c-40 80-120 90-150 30s50 110 120 100 90-70 30-130" fill="url(#hiFlowC)" opacity="0.42" />
+                <defs>
+                  <linearGradient id="hiFlowA" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(255,248,240,0.5)" />
+                    <stop offset="50%" stop-color="rgba(232,196,180,0.35)" />
+                    <stop offset="100%" stop-color="rgba(99,42,53,0.25)" />
+                  </linearGradient>
+                  <linearGradient id="hiFlowB" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(255,252,246,0.45)" />
+                    <stop offset="55%" stop-color="rgba(216,185,125,0.2)" />
+                    <stop offset="100%" stop-color="rgba(110,42,58,0.22)" />
+                  </linearGradient>
+                  <linearGradient id="hiFlowC" x1="50%" y1="100%" x2="50%" y2="0%">
+                    <stop offset="0%" stop-color="rgba(176,125,129,0.3)" />
+                    <stop offset="100%" stop-color="rgba(255,248,240,0.38)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="here-if__core-petals">
+                <span class="here-if__petal here-if__petal--1"></span>
+                <span class="here-if__petal here-if__petal--2"></span>
+                <span class="here-if__petal here-if__petal--3"></span>
+                <span class="here-if__petal here-if__petal--4"></span>
+                <span class="here-if__petal here-if__petal--5"></span>
+                <span class="here-if__petal here-if__petal--6"></span>
+              </div>
+              <div class="here-if__core-shell"></div>
+              <div class="here-if__core-heart"></div>
+              <div class="here-if__core-lens"></div>
+              <svg class="here-if__core-orbit" viewBox="0 0 500 500" fill="none">
+                <ellipse cx="250" cy="250" rx="210" ry="145" stroke="currentColor" stroke-width="0.55" opacity="0.28" transform="rotate(-24 250 250)" />
+                <ellipse cx="250" cy="250" rx="175" ry="210" stroke="currentColor" stroke-width="0.5" opacity="0.22" transform="rotate(16 250 250)" />
+                <ellipse cx="250" cy="250" rx="230" ry="120" stroke="currentColor" stroke-width="0.45" opacity="0.16" transform="rotate(42 250 250)" />
+                <path d="M250 250c-92-122-172-96-202-24s34 158 114 174 146-64 88-150" stroke="currentColor" stroke-width="0.65" opacity="0.34" />
+                <path d="M250 250c105-86 188-50 178 28s-112 118-192 82-86-128-8-110" stroke="currentColor" stroke-width="0.6" opacity="0.3" />
+                <circle cx="455" cy="250" r="2.5" fill="currentColor" opacity="0.6" />
+                <circle cx="45" cy="250" r="2" fill="currentColor" opacity="0.5" />
+                <circle cx="250" cy="45" r="2" fill="currentColor" opacity="0.55" />
+                <circle cx="250" cy="455" r="2.5" fill="currentColor" opacity="0.45" />
+                <circle cx="390" cy="110" r="1.5" fill="currentColor" opacity="0.4" />
+                <circle cx="110" cy="390" r="1.5" fill="currentColor" opacity="0.38" />
+                <circle cx="370" cy="370" r="1.2" fill="currentColor" opacity="0.32" />
+                <circle cx="130" cy="130" r="1.2" fill="currentColor" opacity="0.32" />
+              </svg>
+              <span class="here-if__core-ring here-if__core-ring--1"></span>
+              <span class="here-if__core-ring here-if__core-ring--2"></span>
+            </div>
+
+            <article class="here-if__state here-if__state--1" data-here-state style="--glow: 0" aria-label="Overthinking">
+              <div class="here-if__state-head">
+                <span class="here-if__state-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M11 11c2 1 3 3 2 5s-3 3-5 2M17 13c-1 2-1 4 1 5s4 0 5-2M13 19c1 2 3 3 5 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" /></svg>
+                </span>
+                <h3 class="here-if__state-title">Overthinking</h3>
+              </div>
+              <span class="here-if__state-rule" aria-hidden="true"></span>
+            </article>
+
+            <article class="here-if__state here-if__state--2" data-here-state style="--glow: 0" aria-label="Feeling Stuck">
+              <div class="here-if__state-head">
+                <span class="here-if__state-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M8 16c2-3 5-4 8-2s4 6 2 9M20 14c-2 2-2 5 0 7" stroke="currentColor" stroke-width="1" stroke-linecap="round" /></svg>
+                </span>
+                <h3 class="here-if__state-title">Feeling Stuck</h3>
+              </div>
+              <span class="here-if__state-rule" aria-hidden="true"></span>
+            </article>
+
+            <article class="here-if__state here-if__state--3" data-here-state style="--glow: 0" aria-label="Repeating Patterns">
+              <div class="here-if__state-head">
+                <span class="here-if__state-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M20 12a6 6 0 0 0-8 8" stroke="currentColor" stroke-width="1.05" /><path d="M12 20a6 6 0 0 0 8-8" stroke="currentColor" stroke-width="1.05" /></svg>
+                </span>
+                <h3 class="here-if__state-title">Repeating Patterns</h3>
+              </div>
+              <span class="here-if__state-rule" aria-hidden="true"></span>
+            </article>
+
+            <article class="here-if__state here-if__state--4" data-here-state style="--glow: 0" aria-label="Feeling Misunderstood">
+              <div class="here-if__state-head">
+                <span class="here-if__state-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="3.5" stroke="currentColor" stroke-width="1.05" /><path d="M10 24c2-4 4-5 6-5s4 1 6 5" stroke="currentColor" stroke-width="1.05" /></svg>
+                </span>
+                <h3 class="here-if__state-title">Feeling Misunderstood</h3>
+              </div>
+              <span class="here-if__state-rule" aria-hidden="true"></span>
+            </article>
+
+            <div class="here-if__foot" data-here-reveal="foot">
+              <div class="here-if__foot-row">
+                <div
+                  class="here-if__statement"
+                  data-here-statement
+                  style="--glow: 0; --cx: 0.5; --cy: 0.5"
+                >
+                  <div class="here-if__statement-glow" aria-hidden="true"></div>
+                  <p class="here-if__statement-kicker">You don’t need fixing.</p>
+                  <p class="here-if__statement-line">
+                    <span class="here-if__statement-you">You need</span>
+                    <em class="here-if__statement-em">understanding.</em>
+                  </p>
+                  <p class="here-if__statement-note">This is where O-SAAR begins.</p>
+                </div>
+
+                <ul class="here-if__promises">
+                  <li class="here-if__promise" data-here-feature style="--glow: 0">
+                    <span class="here-if__promise-icon" aria-hidden="true">
+                      <svg viewBox="0 0 32 32" fill="none">
+                        <path d="M16 4l10 4v8c0 7-4.5 11.5-10 14-5.5-2.5-10-7-10-14V8l10-4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                    <span class="here-if__promise-label">Safe Space</span>
+                  </li>
+                  <li class="here-if__promise" data-here-feature style="--glow: 0">
+                    <span class="here-if__promise-icon" aria-hidden="true">
+                      <svg viewBox="0 0 32 32" fill="none">
+                        <path d="M16 6c1.4 3.6 3.8 6 7.6 7.2-3.8 1.2-6.2 3.6-7.6 7.2-1.4-3.6-3.8-6-7.6-7.2C12.2 12 14.6 9.6 16 6z" fill="currentColor" />
+                      </svg>
+                    </span>
+                    <span class="here-if__promise-label">Therapy</span>
+                  </li>
+                  <li class="here-if__promise" data-here-feature style="--glow: 0">
+                    <span class="here-if__promise-icon" aria-hidden="true">
+                      <svg viewBox="0 0 32 32" fill="none">
+                        <path d="M16 27s-9-5.8-9-13a5.2 5.2 0 0 1 9-3.5A5.2 5.2 0 0 1 25 14c0 7.2-9 13-9 13z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                    <span class="here-if__promise-label">Support</span>
+                  </li>
+                </ul>
+              </div>
+
+              <footer class="here-if__values">
+                <span class="here-if__values-line" aria-hidden="true"></span>
+                <p class="here-if__values-text">Compassion · Clarity · Connection · Growth</p>
+                <span class="here-if__values-line" aria-hidden="true"></span>
+              </footer>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1122,6 +1224,385 @@
       </section>
 
       <section
+        class="home-voices"
+        id="testimonials"
+        aria-labelledby="home-voices-title"
+      >
+        <div class="home-voices__inner">
+          <header class="home-voices__header reveal">
+            <p class="home-voices__eyebrow">Voices of O-SAAR</p>
+            <h2 class="home-voices__title" id="home-voices-title">
+              Sometimes, being heard changes everything
+            </h2>
+            <p class="home-voices__lead">
+              Reflections from people who chose a space where they could be met — not fixed.
+            </p>
+          </header>
+
+          <div class="home-voices__grid" role="list" data-reveal-stagger>
+            <article class="voice-card reveal" role="listitem">
+              <div class="voice-card__meta">
+                <span class="voice-card__stars" aria-label="5 out of 5 stars">
+                  <span aria-hidden="true">★★★★★</span>
+                </span>
+                <span class="voice-card__badge">Verified client</span>
+              </div>
+              <blockquote class="voice-card__quote">
+                <p>“I finally felt heard — not rushed to fix anything, just held.”</p>
+              </blockquote>
+              <footer class="voice-card__footer">
+                <cite class="voice-card__attr">Anonymous</cite>
+                <span class="voice-card__tag">Individual Therapy</span>
+              </footer>
+            </article>
+
+            <article class="voice-card reveal" role="listitem">
+              <div class="voice-card__meta">
+                <span class="voice-card__stars" aria-label="5 out of 5 stars">
+                  <span aria-hidden="true">★★★★★</span>
+                </span>
+                <span class="voice-card__badge">O-SAAR client</span>
+              </div>
+              <blockquote class="voice-card__quote">
+                <p>“The space helped me understand my patterns without shame.”</p>
+              </blockquote>
+              <footer class="voice-card__footer">
+                <cite class="voice-card__attr">Anonymous</cite>
+                <span class="voice-card__tag">Counselling</span>
+              </footer>
+            </article>
+
+            <article class="voice-card reveal" role="listitem">
+              <div class="voice-card__meta">
+                <span class="voice-card__stars" aria-label="5 out of 5 stars">
+                  <span aria-hidden="true">★★★★★</span>
+                </span>
+                <span class="voice-card__badge">Verified client</span>
+              </div>
+              <blockquote class="voice-card__quote">
+                <p>“Soft, steady, and deeply human. I keep coming back to myself.”</p>
+              </blockquote>
+              <footer class="voice-card__footer">
+                <cite class="voice-card__attr">Anonymous</cite>
+                <span class="voice-card__tag">Online Session</span>
+              </footer>
+            </article>
+
+            <article class="voice-card reveal" role="listitem">
+              <div class="voice-card__meta">
+                <span class="voice-card__stars" aria-label="5 out of 5 stars">
+                  <span aria-hidden="true">★★★★★</span>
+                </span>
+                <span class="voice-card__badge">O-SAAR client</span>
+              </div>
+              <blockquote class="voice-card__quote">
+                <p>“For the first time, my silence felt welcome. That alone changed how I speak to myself.”</p>
+              </blockquote>
+              <footer class="voice-card__footer">
+                <cite class="voice-card__attr">Anonymous</cite>
+                <span class="voice-card__tag">Therapy Journey</span>
+              </footer>
+            </article>
+          </div>
+
+          <div class="home-voices__cta reveal">
+            <a class="home-voices__link" href="/testimonials.html">
+              Read more reflections <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="home-therapists"
+        id="therapists"
+        aria-labelledby="therapists-title"
+      >
+        <div class="home-therapists__inner">
+          <header class="home-therapists__header reveal">
+            <p class="home-therapists__eyebrow">Meet Our Therapists</p>
+            <h2 class="home-therapists__title" id="therapists-title">
+              Warm guides for your unfolding
+            </h2>
+            <p class="home-therapists__lead">
+              Each therapist brings depth, care, and a steady presence — so you can explore at your
+              own pace.
+            </p>
+          </header>
+
+          <div class="home-therapists__grid" data-reveal-stagger>
+            <article class="therapist-card reveal">
+              <div class="therapist-card__photo">
+                <picture>
+                  <source srcset="/images/team-jahanvi-cut.webp" type="image/webp" />
+                  <img
+                    src="/images/team-jahanvi-cut.png"
+                    alt="Jahanvi Khurana, therapist at O-SAAR"
+                    width="480"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(max-width: 640px) 352px, (max-width: 1024px) 320px, 380px"
+                  />
+                </picture>
+              </div>
+              <div class="therapist-card__body">
+                <h3 class="therapist-card__name">Jahanvi Khurana</h3>
+                <p class="therapist-card__credential">MA Counselling Psychology</p>
+                <ul class="therapist-card__meta">
+                  <li><span class="therapist-card__meta-label">Experience</span> 7+ years</li>
+                  <li>
+                    <span class="therapist-card__meta-label">Focus</span> Trauma · Relationships · Anxiety
+                  </li>
+                  <li><span class="therapist-card__meta-label">Languages</span> English · Hindi</li>
+                </ul>
+                <p class="therapist-card__bio">
+                  She creates a space safe enough to meet yourself — without judgement, at your own
+                  rhythm.
+                </p>
+                <a class="therapist-card__link" href="/about.html#meet">
+                  View profile <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="therapist-card reveal">
+              <div class="therapist-card__photo">
+                <img
+                  src="/images/team-soharab.jpg"
+                  alt="Soharab Singh Grewal, co-founder at O-SAAR"
+                  width="480"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 640px) 352px, (max-width: 1024px) 320px, 380px"
+                />
+              </div>
+              <div class="therapist-card__body">
+                <h3 class="therapist-card__name">Soharab Singh Grewal</h3>
+                <p class="therapist-card__credential">Strategic &amp; Operations Lead</p>
+                <ul class="therapist-card__meta">
+                  <li><span class="therapist-card__meta-label">Experience</span> 5+ years</li>
+                  <li>
+                    <span class="therapist-card__meta-label">Focus</span> Community · Outreach · Care systems
+                  </li>
+                  <li><span class="therapist-card__meta-label">Languages</span> English · Punjabi</li>
+                </ul>
+                <p class="therapist-card__bio">
+                  He leads the vision and operations of O-Saar so more hearts can find a steady,
+                  welcoming space.
+                </p>
+                <a class="therapist-card__link" href="/about.html#meet">
+                  View profile <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="therapist-card therapist-card--placeholder reveal">
+              <div class="therapist-card__photo therapist-card__photo--placeholder" aria-hidden="true">
+                <span class="therapist-card__photo-label">Photo coming soon</span>
+              </div>
+              <div class="therapist-card__body">
+                <h3 class="therapist-card__name">Therapist Name</h3>
+                <p class="therapist-card__credential">Qualification · Credential</p>
+                <ul class="therapist-card__meta">
+                  <li><span class="therapist-card__meta-label">Experience</span> X+ years</li>
+                  <li><span class="therapist-card__meta-label">Focus</span> Specialization · Specialization</li>
+                  <li><span class="therapist-card__meta-label">Languages</span> Language · Language</li>
+                </ul>
+                <p class="therapist-card__bio">
+                  A short bio describing their approach — gentle, reflective, and shaped around
+                  each person’s pace.
+                </p>
+                <a class="therapist-card__link" href="/about.html#meet">
+                  View profile <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="home-therapists__cta reveal">
+            <a class="btn btn--primary home-therapists__btn" href="/about.html#meet">
+              Meet the full team <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="how-it-works"
+        id="how-it-works"
+        aria-labelledby="how-it-works-title"
+      >
+        <div class="how-it-works__inner">
+          <header class="how-it-works__header reveal">
+            <p class="how-it-works__eyebrow">How It Works</p>
+            <h2 class="how-it-works__title" id="how-it-works-title">
+              Three gentle steps to begin
+            </h2>
+            <p class="how-it-works__lead">
+              No pressure, no rush — just a clear path from first hello to your first session.
+            </p>
+          </header>
+
+          <ol class="how-it-works__steps" data-reveal-stagger>
+            <li class="how-step reveal">
+              <div class="how-step__visual">
+                <span class="how-step__num" aria-hidden="true">01</span>
+                <span class="how-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="11" r="5" stroke="currentColor" stroke-width="1.4" />
+                    <path
+                      d="M8 26c2-5 5-7 8-7s8 2 8 7"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="23" cy="9" r="3" stroke="currentColor" stroke-width="1.2" opacity="0.55" />
+                  </svg>
+                </span>
+              </div>
+              <div class="how-step__body">
+                <h3 class="how-step__title">Choose your therapist</h3>
+                <p class="how-step__text">
+                  Browse profiles, read about their approach, and find someone who feels like a good
+                  fit for where you are.
+                </p>
+              </div>
+            </li>
+
+            <li class="how-step reveal">
+              <div class="how-step__visual">
+                <span class="how-step__num" aria-hidden="true">02</span>
+                <span class="how-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none">
+                    <rect x="6" y="8" width="20" height="18" rx="2.5" stroke="currentColor" stroke-width="1.4" />
+                    <path d="M6 13h20M11 6v4M21 6v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                    <path d="M13 18h6M13 22h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                  </svg>
+                </span>
+              </div>
+              <div class="how-step__body">
+                <h3 class="how-step__title">Book a slot that works for you</h3>
+                <p class="how-step__text">
+                  Pick a time that fits your rhythm — mornings, evenings, or weekends. Online or
+                  in-person, as available.
+                </p>
+              </div>
+            </li>
+
+            <li class="how-step reveal">
+              <div class="how-step__visual">
+                <span class="how-step__num" aria-hidden="true">03</span>
+                <span class="how-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none">
+                    <rect x="4" y="9" width="17" height="14" rx="2" stroke="currentColor" stroke-width="1.4" />
+                    <path d="M21 14l7-4v12l-7-4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+                    <circle cx="12.5" cy="16" r="2" fill="currentColor" opacity="0.35" />
+                  </svg>
+                </span>
+              </div>
+              <div class="how-step__body">
+                <h3 class="how-step__title">Begin your session</h3>
+                <p class="how-step__text">
+                  Join via video, audio, or chat — from a private space where you can speak openly,
+                  at your own pace.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="home-pricing"
+        id="pricing"
+        aria-labelledby="pricing-title"
+      >
+        <div class="home-pricing__inner">
+          <header class="home-pricing__header reveal">
+            <p class="home-pricing__eyebrow">Session Options</p>
+            <h2 class="home-pricing__title" id="pricing-title">
+              Clear, flexible ways to begin
+            </h2>
+            <p class="home-pricing__lead">
+              Choose what feels right for now — you can always adjust as your journey unfolds.
+            </p>
+          </header>
+
+          <div class="home-pricing__grid" data-reveal-stagger>
+            <article class="pricing-card reveal">
+              <div class="pricing-card__head">
+                <h3 class="pricing-card__name">Single Session</h3>
+                <p class="pricing-card__desc">One focused conversation, at your pace.</p>
+              </div>
+              <p class="pricing-card__price">
+                <span class="pricing-card__currency" aria-hidden="true">₹</span>
+                <span class="pricing-card__amount">2,500</span>
+                <span class="pricing-card__period">/ session</span>
+              </p>
+              <ul class="pricing-card__features">
+                <li>50-minute private session</li>
+                <li>Video, audio, or chat</li>
+                <li>Trauma-informed care</li>
+              </ul>
+              <a class="btn btn--primary pricing-card__cta" href="/start.html">
+                Book Session <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="pricing-card pricing-card--featured reveal">
+              <span class="pricing-card__badge">Most chosen</span>
+              <div class="pricing-card__head">
+                <h3 class="pricing-card__name">Session Package</h3>
+                <p class="pricing-card__desc">Space to return, reflect, and go deeper.</p>
+              </div>
+              <p class="pricing-card__price">
+                <span class="pricing-card__currency" aria-hidden="true">₹</span>
+                <span class="pricing-card__amount">6,800</span>
+                <span class="pricing-card__period">/ 3 sessions</span>
+              </p>
+              <ul class="pricing-card__features">
+                <li>Three 50-minute sessions</li>
+                <li>Flexible scheduling</li>
+                <li>Continuity with one therapist</li>
+                <li>Save on per-session rate</li>
+              </ul>
+              <a class="btn btn--primary pricing-card__cta" href="/start.html">
+                Start Your Journey <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="pricing-card reveal">
+              <div class="pricing-card__head">
+                <h3 class="pricing-card__name">Ongoing Care</h3>
+                <p class="pricing-card__desc">Steady support across the weeks ahead.</p>
+              </div>
+              <p class="pricing-card__price">
+                <span class="pricing-card__currency" aria-hidden="true">₹</span>
+                <span class="pricing-card__amount">8,500</span>
+                <span class="pricing-card__period">/ month</span>
+              </p>
+              <ul class="pricing-card__features">
+                <li>Four sessions per month</li>
+                <li>Priority booking slots</li>
+                <li>Check-in between sessions</li>
+                <li>Pause or adjust anytime</li>
+              </ul>
+              <a class="btn btn--primary pricing-card__cta" href="/start.html">
+                Book Session <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+
+          <p class="home-pricing__note reveal">
+            Rates shown are indicative — we’ll confirm details when you reach out. Questions?
+            <a href="/faqs.html">See our FAQs</a>.
+          </p>
+        </div>
+      </section>
+
+      <section
         class="approach"
         id="approach"
         aria-labelledby="approach-title"
@@ -1310,6 +1791,148 @@
         </div>
 
         <div class="approach__bridge" aria-hidden="true"></div>
+      </section>
+
+      <section
+        class="home-resources"
+        id="resources-preview"
+        aria-labelledby="home-resources-title"
+      >
+        <div class="home-resources__inner">
+          <header class="home-resources__header reveal">
+            <p class="home-resources__eyebrow">Featured Resources</p>
+            <h2 class="home-resources__title" id="home-resources-title">
+              Gentle guides for understanding
+            </h2>
+            <p class="home-resources__lead">
+              Short reads and practices to explore at your own pace — no pressure to have it all
+              figured out.
+            </p>
+          </header>
+
+          <div class="home-resources__grid" data-reveal-stagger>
+            <a class="resource-card reveal" href="/resources.html">
+              <span class="resource-card__category">Understanding</span>
+              <h3 class="resource-card__title">What brings people to therapy</h3>
+              <p class="resource-card__excerpt">
+                Anxiety, relationships, burnout, and life transitions — themes we often explore
+                together.
+              </p>
+              <span class="resource-card__link">Read more <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="resource-card reveal" href="/breathing.html">
+              <span class="resource-card__category">Practice</span>
+              <h3 class="resource-card__title">Return to rhythm, one breath at a time</h3>
+              <p class="resource-card__excerpt">
+                Guided breathing exercises to settle your nervous system when everything feels
+                loud.
+              </p>
+              <span class="resource-card__link">Try breathing <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="resource-card reveal" href="/healing-journey.html">
+              <span class="resource-card__category">Reflection</span>
+              <h3 class="resource-card__title">The healing journey isn’t linear</h3>
+              <p class="resource-card__excerpt">
+                A gentle look at how understanding, pause, and return can shape the path forward.
+              </p>
+              <span class="resource-card__link">Explore journey <span aria-hidden="true">→</span></span>
+            </a>
+          </div>
+
+          <div class="home-resources__cta reveal">
+            <a class="btn btn--ghost home-resources__btn" href="/resources.html">
+              View all resources <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="home-faq"
+        id="faq-preview"
+        aria-labelledby="home-faq-title"
+      >
+        <div class="home-faq__inner">
+          <header class="home-faq__header reveal">
+            <p class="home-faq__eyebrow">Common Questions</p>
+            <h2 class="home-faq__title" id="home-faq-title">
+              Clarity before you begin
+            </h2>
+            <p class="home-faq__lead">
+              Starting therapy can come with questions. Here are a few people often ask first.
+            </p>
+          </header>
+
+          <div class="home-faq__list reveal" data-home-faq>
+            <details class="faq-item">
+              <summary class="faq-item__summary">
+                <span class="faq-item__num">01</span>
+                <span class="faq-item__q">What happens during my first session?</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__a">
+                <p>
+                  Your first session is a gentle introduction. We’ll listen to what brought you
+                  here, explore what you’re hoping for, and move at a pace that feels safe. There’s
+                  no script you need to follow — arriving unsure is completely welcome.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-item__summary">
+                <span class="faq-item__num">02</span>
+                <span class="faq-item__q">How do I know if therapy is right for me?</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__a">
+                <p>
+                  If something feels heavy, stuck, or unclear — and you’d like a supportive space to
+                  understand it — therapy can help. You don’t need a crisis to begin. Curiosity,
+                  overwhelm, transitions, and wanting more ease are all valid reasons to start.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-item__summary">
+                <span class="faq-item__num">03</span>
+                <span class="faq-item__q">Is everything I share confidential?</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__a">
+                <p>
+                  Yes. What you share is held with professional care and confidentiality. Rare
+                  exceptions exist only where safety or legal requirements apply — such as serious
+                  risk of harm — and we’ll speak about these boundaries with clarity.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-item__summary">
+                <span class="faq-item__num">04</span>
+                <span class="faq-item__q">How often should I attend therapy?</span>
+                <span class="faq-item__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__a">
+                <p>
+                  Many people begin weekly, then adjust as life and progress allow. Frequency is
+                  personal — we’ll find a rhythm that supports continuity without pressure, and
+                  revisit it together as needs change.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="home-faq__cta reveal">
+            <a class="btn btn--primary home-faq__btn" href="/faqs.html">
+              See all FAQs <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
       </section>
 
 </main>
