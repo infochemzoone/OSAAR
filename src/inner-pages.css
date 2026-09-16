@@ -1,17 +1,17 @@
 /* ═══════════════════════════════════════════════════════════
    O-SAAR Inner Pages — shared design system (v3)
-   Mirrors homepage: maroon/cream, Cormorant + Outfit, gold accents
+   Mirrors homepage Release palette: wine-deep #5b2233, cream, gold accents
    ═══════════════════════════════════════════════════════════ */
 
 .page-inner {
-  --ds-maroon: #5c1a2a;
-  --ds-maroon-mid: #632a35;
-  --ds-maroon-deep: #4a1f28;
-  --ds-cream: #f6e7db;
-  --ds-cream-soft: #fcf8f3;
-  --ds-gold: #d8b97d;
-  --ds-gold-soft: #e8cea0;
-  --ds-ink: #3b1d1f;
+  --ds-maroon: var(--burgundy-deep);
+  --ds-maroon-mid: var(--burgundy);
+  --ds-maroon-deep: var(--burgundy-darker);
+  --ds-cream: var(--cream);
+  --ds-cream-soft: var(--cream-soft);
+  --ds-gold: var(--gold);
+  --ds-gold-soft: var(--gold-soft);
+  --ds-ink: var(--ink);
   --ds-ink-soft: rgba(59, 29, 31, 0.78);
   --ds-section-y: clamp(4rem, 8vw, 6rem);
   --ds-card-radius: 1.35rem;

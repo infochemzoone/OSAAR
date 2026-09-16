@@ -1,25 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Maroon + cream — cream bright, maroon present */
-  --cream: #faf3e8;
-  --cream-deep: #ebe0d0;
-  --cream-soft: #fffaf3;
+  /* O-SAAR palette — anchored to Release section (Masks? Expectations?) */
+  --cream: #f6e7db;
+  --cream-deep: #f0d4c4;
+  --cream-soft: #fff8f0;
   --warm-white: #fffdf9;
-  --ink: #24181c;
-  --ink-soft: #453037;
-  --ink-muted: #655055;
-  --burgundy: #7a2438;
-  --burgundy-deep: #5c1a2a;
-  --maroon: #7a2438;
-  --maroon-soft: #93344c;
+  --peach: #f0d4c4;
+  --blush: #e8c4b4;
+  --wash: #f3dfcf;
+  --ink: #3b1d1f;
+  --ink-soft: #5b2233;
+  --ink-muted: rgba(91, 34, 51, 0.68);
+  --burgundy: #6e2a3a;
+  --burgundy-deep: #5b2233;
+  --burgundy-darker: #4a1a26;
+  --maroon: #6e2a3a;
+  --maroon-soft: #8a3347;
+  --mauve: #9a5260;
   --moss: #6b4f48;
   --moss-soft: #d4c6b8;
   --olive: #c9b8a6;
   --sage: #d8ccc0;
-  --gold: #b8894a;
-  --gold-soft: #d4b06a;
-  --wash: #e6d9c8;
+  --gold: #d8b46a;
+  --gold-soft: #e0bc78;
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-script: 'Great Vibes', cursive;
   --font-body: 'Outfit', system-ui, sans-serif;
@@ -39,7 +43,7 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #fffaf3;
+  background-color: var(--cream-soft);
   overscroll-behavior: none;
 }
 
@@ -49,10 +53,10 @@ body {
   color: var(--ink);
   background: linear-gradient(
     180deg,
-    #fffaf3 0%,
+    var(--cream-soft) 0%,
     var(--cream) 35%,
-    #f5ebe0 70%,
-    #efe3d4 100%
+    var(--cream-deep) 70%,
+    var(--wash) 100%
   );
   background-attachment: fixed;
   line-height: 1.6;
@@ -106,7 +110,7 @@ main,
   --nav-glass: rgba(255, 255, 255, 0.45);
   --nav-border: rgba(255, 255, 255, 0.55);
   --nav-text: #3d2a2a;
-  --nav-burgundy: #6e2a3a;
+  --nav-burgundy: var(--burgundy);
   --nav-gold: #d8b46a;
   --nav-beige: #f8f2ea;
   position: fixed;
@@ -1197,7 +1201,7 @@ main,
   padding: 0 26px;
   border-radius: 999px;
   border: 1px solid rgba(216, 180, 106, 0.72);
-  background: linear-gradient(118deg, #93344c 0%, var(--nav-burgundy) 48%, #4f1a28 100%);
+  background: linear-gradient(118deg, var(--maroon-soft) 0%, var(--nav-burgundy) 48%, var(--burgundy-darker) 100%);
   color: #fff;
   font-family: var(--font-body);
   font-size: 0.92rem;
@@ -1244,7 +1248,7 @@ main,
 .nav__cta:hover {
   transform: translateY(-2px) scale(1.02);
   border-color: var(--nav-gold);
-  background: linear-gradient(118deg, #a3455d 0%, var(--nav-burgundy) 42%, #3d1420 100%);
+  background: linear-gradient(118deg, #a3455d 0%, var(--nav-burgundy) 42%, var(--burgundy-darker) 100%);
   box-shadow:
     0 16px 34px rgba(110, 42, 58, 0.34),
     0 0 24px rgba(216, 180, 106, 0.18),
@@ -1470,7 +1474,7 @@ main,
   --hero-gold: #d8b46a;
   --hero-peach: #edc9a5;
   --hero-rose: #c98a83;
-  --hero-burgundy: #6e2a3a;
+  --hero-burgundy: var(--burgundy);
   --hero-chocolate: #3a2b2a;
   --hero-spring: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -2227,10 +2231,10 @@ main,
   --rel-peach: #f0d4c4;
   --rel-gold: #d8b46a;
   --rel-gold-soft: #e0bc78;
-  --rel-wine: #6e2a3a;
-  --rel-wine-deep: #5b2233;
-  --rel-ivory: #fff8f0;
-  --rel-ink: #5b2233;
+  --rel-wine: var(--burgundy);
+  --rel-wine-deep: var(--burgundy-deep);
+  --rel-ivory: var(--cream-soft);
+  --rel-ink: var(--burgundy-deep);
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -2975,8 +2979,8 @@ main,
   --glow: 0;
   --note-cream: #faf3e8;
   --note-cream-soft: #fffaf3;
-  --note-burgundy: #7a2438;
-  --note-burgundy-deep: #5c1a2a;
+  --note-burgundy: var(--burgundy);
+  --note-burgundy-deep: var(--burgundy-deep);
   --note-gold: #b8894a;
   --note-gold-soft: #d4b06a;
   --note-ink: rgba(250, 243, 232, 0.92);
@@ -3967,9 +3971,9 @@ main,
   --hi-cream: #f6e7db;
   --hi-blush: #e8c4b4;
   --hi-rose: #b07d81;
-  --hi-wine: #632a35;
-  --hi-wine-mid: #6e2a3a;
-  --hi-wine-deep: #5b2233;
+  --hi-wine: var(--burgundy-deep);
+  --hi-wine-mid: var(--burgundy);
+  --hi-wine-deep: var(--burgundy-deep);
   --hi-espresso: #3b1d1f;
   --hi-light: #fff8f2;
   --hi-light-soft: rgba(255, 248, 242, 0.9);
@@ -5123,7 +5127,7 @@ main,
    ═══════════════════════════════════════════ */
 .topics {
   --topics-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --topics-maroon: #7a2438;
+  --topics-maroon: var(--burgundy);
   --topics-ink: #4a2428;
   --topics-gold: #b8894a;
   --topics-champagne: #d4b06a;
@@ -6603,7 +6607,7 @@ main,
   border-radius: 1.15rem;
   background:
     radial-gradient(ellipse 40% 80% at 92% 80%, rgba(216, 180, 106, 0.14), transparent 55%),
-    linear-gradient(135deg, #6e2a3a 0%, #7a2438 48%, #5c2230 100%);
+    linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-deep) 48%, var(--burgundy-darker) 100%);
   color: #f8f1ea;
   text-align: center;
   box-shadow:
@@ -6775,7 +6779,7 @@ main,
   width: 1.5rem;
   height: 1.5rem;
   margin: 0 auto 0.35rem;
-  color: #7a2438;
+  color: var(--burgundy-deep);
 }
 
 .meet-stat__icon svg {
@@ -6859,7 +6863,7 @@ main,
   width: 2.35rem;
   height: 2.35rem;
   border-radius: 0.75rem;
-  color: #7a2438;
+  color: var(--burgundy-deep);
   background: rgba(122, 36, 56, 0.06);
   border: 1px solid rgba(216, 180, 106, 0.28);
 }
@@ -6913,7 +6917,7 @@ main,
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, #d8b46a, #7a2438);
+  background: linear-gradient(180deg, var(--gold), var(--burgundy-deep));
 }
 
 .meet-milestone__year {
@@ -7021,7 +7025,7 @@ main,
   --jy-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --jy-bg: #f3dfcb;
   --jy-gold: #d7b36a;
-  --jy-burgundy: #6e2a3a;
+  --jy-burgundy: var(--burgundy);
   --jy-text: #4a3632;
   --jy-path: 0;
   --jy-dest: 0;
@@ -9283,9 +9287,9 @@ main,
   --ap-peach: #f3dfcb;
   --ap-blush: #e8cfc0;
   --ap-rose: #c49a8a;
-  --ap-wine: #6e2a3a;
-  --ap-wine-deep: #4a1c28;
-  --ap-wine-end: #3d1620;
+  --ap-wine: var(--burgundy);
+  --ap-wine-deep: var(--burgundy-deep);
+  --ap-wine-end: var(--burgundy-darker);
   --ap-ivory: #fff8f0;
   --ap-ink: #3c2a2e;
   --ap-gold: #d8b46a;
@@ -10858,7 +10862,7 @@ main,
    ═══════════════════════════════════════════ */
 .page-letter {
   --lt-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --lt-burgundy: #6e2a3a;
+  --lt-burgundy: var(--burgundy);
   --lt-wine: #5a2230;
   --lt-gold: #d8b46a;
   --lt-gold-soft: #e0bc78;
@@ -11663,7 +11667,7 @@ main,
    ═══════════════════════════════════════════ */
 .page-voices {
   --vo-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --vo-burgundy: #6e2a3a;
+  --vo-burgundy: var(--burgundy);
   --vo-wine: #5a2230;
   --vo-gold: #d8b46a;
   --vo-gold-soft: #e0bc78;
@@ -12571,7 +12575,7 @@ main,
    ═══════════════════════════════════════════ */
 .page-faq {
   --fq-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --fq-burgundy: #6e2a3a;
+  --fq-burgundy: var(--burgundy);
   --fq-wine: #5a2230;
   --fq-gold: #d8b46a;
   --fq-gold-soft: #e0bc78;
@@ -13466,7 +13470,7 @@ main,
    ═══════════════════════════════════════════ */
 .page-support {
   --sp-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --sp-burgundy: #6e2a3a;
+  --sp-burgundy: var(--burgundy);
   --sp-wine: #5a2230;
   --sp-gold: #d8b46a;
   --sp-gold-soft: #e0bc78;
@@ -14159,7 +14163,7 @@ main,
    ═══════════════════════════════════════════ */
 .page-privacy {
   --pv-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --pv-burgundy: #6e2a3a;
+  --pv-burgundy: var(--burgundy);
   --pv-wine: #5a2230;
   --pv-gold: #d8b46a;
   --pv-gold-soft: #e0bc78;
@@ -14944,9 +14948,9 @@ main,
   --sx: 0.5;
   --sy: 0.45;
   --sanct-ease: cubic-bezier(0.37, 0, 0.63, 1);
-  --sanct-wine: #6e2a3a;
-  --sanct-wine-deep: #4a1c28;
-  --sanct-wine-soft: #7a3545;
+  --sanct-wine: var(--burgundy);
+  --sanct-wine-deep: var(--burgundy-deep);
+  --sanct-wine-soft: var(--maroon-soft);
   --sanct-cream: #faf3e8;
   --sanct-ivory: #fff8f0;
   --sanct-gold: #d8b46a;
@@ -17305,17 +17309,17 @@ html.intro-pending .osaar-intro {
   --card-shadow-hover: 0 22px 44px rgba(47, 41, 37, 0.1);
   --card-border: rgba(210, 185, 150, 0.34);
   --card-border-hover: rgba(216, 180, 106, 0.52);
-  --cta-gradient: linear-gradient(118deg, #9a3d55 0%, var(--burgundy-deep) 48%, #4a1a26 100%);
-  --cta-gradient-hover: linear-gradient(118deg, #a3455d 0%, var(--burgundy-deep) 42%, #3d1420 100%);
+  --cta-gradient: linear-gradient(118deg, #9a3d55 0%, var(--burgundy-deep) 48%, var(--burgundy-darker) 100%);
+  --cta-gradient-hover: linear-gradient(118deg, #a3455d 0%, var(--burgundy-deep) 42%, var(--burgundy-darker) 100%);
   --hp-peach: #e4d0c1;
   --hp-cream: #f6e7db;
   --hp-blush: #e8c4b4;
   --hp-rose: #b07d81;
   --hp-mauve: #9a5260;
-  --hp-wine: #632a35;
-  --hp-wine-mid: #6e2a3a;
-  --hp-wine-deep: #5b2233;
-  --hp-wine-end: #4a1f28;
+  --hp-wine: var(--burgundy-deep);
+  --hp-wine-mid: var(--burgundy);
+  --hp-wine-deep: var(--burgundy-deep);
+  --hp-wine-end: var(--burgundy-darker);
   --hp-ink: #3b1d1f;
   --hp-ink-soft: rgba(59, 29, 31, 0.78);
   --hp-light: #ffffff;
