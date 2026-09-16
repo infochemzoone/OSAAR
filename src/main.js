@@ -2249,7 +2249,7 @@ const initMeetStatCounts = () => {
       return
     }
 
-    const duration = target >= 800 ? 1600 : 1200
+    const duration = 1350
     const start = performance.now()
     el.textContent = '0'
 
@@ -2272,8 +2272,12 @@ const initMeetStatCounts = () => {
 
   roots.forEach((root) => {
     root.querySelectorAll('[data-count]').forEach((el) => {
-      const target = el.getAttribute('data-count')
-      if (target) el.textContent = target
+      const target = Number(el.getAttribute('data-count') || 0)
+      if (prefersReducedMotion || !Number.isFinite(target) || target <= 0) {
+        el.textContent = String(target || 0)
+        return
+      }
+      el.textContent = '0'
     })
 
     const rect = root.getBoundingClientRect()
