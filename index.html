@@ -17,7 +17,7 @@
     <!-- osaar-seo:start -->
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="O-SAAR" />
-    <meta name="theme-color" content="#5c1a2a" />
+    <meta name="theme-color" content="#5b2233" />
     <meta name="color-scheme" content="light" />
     <link rel="canonical" href="https://osaar.in/" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -456,34 +456,58 @@
         </div>
       </section>
 
-      <section class="trust-band" aria-label="Trust and credentials">
+      <section class="trust-band" id="trust-band" aria-label="Trust and credentials">
+        <div class="trust-band__atmosphere" aria-hidden="true">
+          <div class="trust-band__fade trust-band__fade--top"></div>
+          <div class="trust-band__fade trust-band__fade--bottom"></div>
+          <span class="trust-band__glow"></span>
+          <span class="trust-band__dust trust-band__dust--1"></span>
+          <span class="trust-band__dust trust-band__dust--2"></span>
+          <span class="trust-band__dust trust-band__dust--3"></span>
+          <span class="trust-band__dust trust-band__dust--4"></span>
+          <svg class="trust-band__petal" viewBox="0 0 64 64" fill="none">
+            <path d="M12 44c12-22 28-30 40-34-2 16-10 32-24 42-6 4-12 2-16-8z" fill="#D8B46A" opacity="0.12" />
+          </svg>
+        </div>
         <div class="trust-band__inner">
           <div class="trust-stats reveal" data-meet-stats aria-label="Impact at a glance">
             <div class="trust-stats__item">
               <p class="trust-stats__value">
-                <span data-count="500">500</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
+                <span class="trust-stats__num" data-count="500">500</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
               </p>
               <p class="trust-stats__label">Sessions held</p>
             </div>
-            <span class="trust-stats__divider" aria-hidden="true"></span>
+            <span class="trust-stats__divider" aria-hidden="true">
+              <span class="trust-stats__divider-line"></span>
+              <span class="trust-stats__divider-gem">◆</span>
+              <span class="trust-stats__divider-line"></span>
+            </span>
             <div class="trust-stats__item">
               <p class="trust-stats__value">
-                <span data-count="200">200</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
+                <span class="trust-stats__num" data-count="200">200</span><span class="trust-stats__suffix" aria-hidden="true">+</span>
               </p>
               <p class="trust-stats__label">People supported</p>
             </div>
-            <span class="trust-stats__divider" aria-hidden="true"></span>
+            <span class="trust-stats__divider" aria-hidden="true">
+              <span class="trust-stats__divider-line"></span>
+              <span class="trust-stats__divider-gem">◆</span>
+              <span class="trust-stats__divider-line"></span>
+            </span>
             <div class="trust-stats__item trust-stats__item--rating">
               <p class="trust-stats__value">
                 <span class="trust-stats__rating" aria-label="4.9 out of 5 stars">4.9</span>
-                <span class="trust-stats__stars" aria-hidden="true">★</span>
+                <span class="trust-stats__star" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3.5l2.35 4.76 5.25.76-3.8 3.71.9 5.23L12 15.9l-4.7 2.47.9-5.23-3.8-3.71 5.25-.76L12 3.5z" fill="currentColor" />
+                  </svg>
+                </span>
               </p>
               <p class="trust-stats__label">Average rating</p>
             </div>
           </div>
 
-          <ul class="trust-credentials reveal" aria-label="Professional standards">
-            <li class="trust-credentials__item">
+          <ul class="trust-credentials" data-reveal-stagger aria-label="Professional standards">
+            <li class="trust-credentials__item reveal">
               <span class="trust-credentials__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path
@@ -500,7 +524,7 @@
                 <span>Qualified, registered practitioners</span>
               </span>
             </li>
-            <li class="trust-credentials__item">
+            <li class="trust-credentials__item reveal">
               <span class="trust-credentials__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3" />
@@ -512,7 +536,7 @@
                 <span>Private, trauma-informed care</span>
               </span>
             </li>
-            <li class="trust-credentials__item">
+            <li class="trust-credentials__item reveal">
               <span class="trust-credentials__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
@@ -578,50 +602,42 @@
           <div class="release__grain"></div>
         </div>
 
-        <div class="release__compose">
-          <div class="release__col release__col--lead">
-            <h2 class="release__words" id="release-title" data-reveal>
-              <span class="release__word">MASKS?</span>
-              <span class="release__word">EXPECTATIONS?</span>
-            </h2>
-            <p class="release__question" data-reveal>
-              What are you carrying that no longer needs to be?
-            </p>
-            <p class="release__home-setup" data-reveal>
-              Because healing isn’t about becoming someone else.
-            </p>
-          </div>
-
-          <div class="release__col release__col--stack">
-            <blockquote class="release__invite release__tilt" data-reveal data-release-tilt>
-              <span class="release__invite-sheen" aria-hidden="true"></span>
-              <p class="release__statement">
-                Therapy invites us to <em class="release__gently">gently</em> put them down.
+        <div class="release__inner">
+          <div class="release__grid">
+            <div class="release__lead">
+              <span class="release__lead-accent" aria-hidden="true"></span>
+              <h2 class="release__words" id="release-title" data-reveal>
+                <span class="release__word">Masks?</span>
+                <span class="release__word">Expectations?</span>
+              </h2>
+              <p class="release__question" data-reveal>
+                What are you carrying that no longer needs to be?
               </p>
-            </blockquote>
-
-            <article class="release__space-card release__tilt" data-reveal data-release-tilt>
-              <span class="release__space-stack" aria-hidden="true"></span>
-              <span class="release__space-stack release__space-stack--2" aria-hidden="true"></span>
-              <span class="release__invite-sheen" aria-hidden="true"></span>
-              <p class="release__card-eyebrow">
-                <span class="release__card-line" aria-hidden="true"></span>
-                <span class="release__card-brand">O-SAAR</span>
-                <span class="release__card-line" aria-hidden="true"></span>
+              <p class="release__setup" data-reveal>
+                Because healing isn’t about becoming someone else.
               </p>
-              <div class="release__card-blocks">
-                <p class="release__card-block">A confidential, trauma-informed space</p>
-                <p class="release__card-block">
-                  where you can safely explore your thoughts, emotions, and experiences at your own
-                  pace.
+            </div>
+
+            <aside class="release__aside">
+              <article class="release__panel" data-reveal>
+                <blockquote class="release__pullquote">
+                  <p>
+                    Therapy invites us to <em class="release__accent-word">gently</em> put them down.
+                  </p>
+                </blockquote>
+                <div class="release__panel-divider" aria-hidden="true"></div>
+                <p class="release__panel-brand">O·SAAR</p>
+                <p class="release__panel-body">
+                  A confidential, trauma-informed space where you can safely explore your thoughts,
+                  emotions, and experiences at your own pace.
                 </p>
-              </div>
-            </article>
-
-            <p class="release__home-climax" data-reveal>
-              It’s about <em class="release__home-focus">coming home</em> to yourself.
-            </p>
+              </article>
+            </aside>
           </div>
+
+          <p class="release__closing" data-reveal>
+            It’s about <em class="release__accent-word">coming home</em> to yourself.
+          </p>
         </div>
       </section>
 

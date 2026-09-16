@@ -902,56 +902,6 @@ const initRelease = () => {
     desktopMq.addEventListener('change', syncDesktopInteraction)
   }
 
-  const tiltCards = section.querySelectorAll('[data-release-tilt]')
-  const resetTilt = (card) => {
-    card.classList.remove('is-tilting')
-    gsap.to(card, {
-      '--tilt-x': '0deg',
-      '--tilt-y': '0deg',
-      '--tilt-lift': '0px',
-      '--sheen-x': '50%',
-      '--sheen-y': '50%',
-      duration: 0.7,
-      ease: 'power3.out',
-      overwrite: 'auto',
-    })
-  }
-
-  const attachTilt = () => {
-    if (prefersReducedMotion || !desktopMq.matches) {
-      tiltCards.forEach(resetTilt)
-      return
-    }
-    tiltCards.forEach((card) => {
-      if (card.dataset.tiltBound === '1') return
-      card.dataset.tiltBound = '1'
-      card.addEventListener('pointerenter', () => card.classList.add('is-tilting'))
-      card.addEventListener('pointerleave', () => resetTilt(card))
-      card.addEventListener(
-        'pointermove',
-        (event) => {
-          if (!desktopMq.matches) return
-          const rect = card.getBoundingClientRect()
-          const px = (event.clientX - rect.left) / Math.max(rect.width, 1)
-          const py = (event.clientY - rect.top) / Math.max(rect.height, 1)
-          gsap.to(card, {
-            '--tilt-x': `${((0.5 - py) * 8).toFixed(2)}deg`,
-            '--tilt-y': `${((px - 0.5) * 10).toFixed(2)}deg`,
-            '--tilt-lift': '-7px',
-            '--sheen-x': `${(px * 100).toFixed(1)}%`,
-            '--sheen-y': `${(py * 100).toFixed(1)}%`,
-            duration: 0.45,
-            ease: 'power3.out',
-            overwrite: 'auto',
-          })
-        },
-        { passive: true },
-      )
-    })
-  }
-
-  attachTilt()
-
   const canvas = section.querySelector('[data-release-particles]')
   let particleRaf = 0
 
@@ -1067,11 +1017,6 @@ const initRelease = () => {
         stagger: 0.09,
         ease: 'power3.out',
         onStart: markAll,
-        onComplete: () => {
-          section.querySelectorAll('[data-release-tilt]').forEach((el) => {
-            gsap.set(el, { clearProps: 'transform,filter' })
-          })
-        },
       })
       gsap.delayedCall(1.3, flyButterfly)
     },
@@ -1369,15 +1314,19 @@ const initNote = () => {
 
     const trailPoint = (t, w, h, mothRect, secRect) => {
       const mx = mothRect
-        ? mothRect.left - secRect.left + mothRect.width * 0.55
-        : w * 0.86
+        ? mothRect.left - secRect.left + mothRect.width * 0.5
+        : w * 0.84
       const my = mothRect
-        ? mothRect.top - secRect.top + mothRect.height * 0.38
-        : h * 0.14
-      const sx = w * 0.52
-      const sy = h * 0.62
-      const cx = w * 0.74
-      const cy = h * 0.3
+        ? mothRect.top - secRect.top + mothRect.height * 0.4
+        : h * 0.12
+      const sx = w * 0.34
+      const sy = h * 0.58
+      const cx = mothRect
+        ? mothRect.left - secRect.left + mothRect.width * 0.68
+        : w * 0.62
+      const cy = mothRect
+        ? mothRect.top - secRect.top + mothRect.height * 0.72
+        : h * 0.46
       const u = 1 - t
       return {
         x: u * u * sx + 2 * u * t * cx + t * t * mx,
@@ -1734,27 +1683,12 @@ const initHereIf = () => {
     return
   }
 
-  if (desktopMq.matches) {
-    reveal()
-    return
-  }
-
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            reveal()
-            io.disconnect()
-          }
-        })
-      },
-      { threshold: 0.08, rootMargin: '0px' },
-    )
-    io.observe(section)
-  } else {
-    reveal()
-  }
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 72%',
+    once: true,
+    onEnter: reveal,
+  })
 }
 
 initHereIf()
@@ -2249,7 +2183,7 @@ const initMeetStatCounts = () => {
       return
     }
 
-    const duration = target >= 800 ? 1600 : 1200
+    const duration = 1350
     const start = performance.now()
     el.textContent = '0'
 
@@ -2272,8 +2206,12 @@ const initMeetStatCounts = () => {
 
   roots.forEach((root) => {
     root.querySelectorAll('[data-count]').forEach((el) => {
-      const target = el.getAttribute('data-count')
-      if (target) el.textContent = target
+      const target = Number(el.getAttribute('data-count') || 0)
+      if (prefersReducedMotion || !Number.isFinite(target) || target <= 0) {
+        el.textContent = String(target || 0)
+        return
+      }
+      el.textContent = '0'
     })
 
     const rect = root.getBoundingClientRect()

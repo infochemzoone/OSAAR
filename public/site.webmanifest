@@ -4,8 +4,8 @@
   "description": "A reflective therapy space for understanding patterns, emotions, and your inner world.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#faf3e8",
-  "theme_color": "#5c1a2a",
+  "background_color": "#f6e7db",
+  "theme_color": "#5b2233",
   "lang": "en-IN",
   "icons": [
     {
